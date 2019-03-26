@@ -1,0 +1,23 @@
+.slide-viewer{
+	position:relative;
+	overflow:hidden;
+	height:700px;
+}
+.slide{
+	height:100%;
+	width:100%;
+	display:none;
+	position:absolute;
+}
+.slide:first-child{
+	display:block;
+}
+.slide-buttons{
+	text-align:center;
+}
+img{
+  background-size:contain;
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
