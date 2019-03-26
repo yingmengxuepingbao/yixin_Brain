@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>开心消消乐</title>
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<script type="text/javascript" src="../js/jquery-1.7.2.js"></script>
+	<!--css start-->
+	<style type="text/css">
+		body {
+		    overflow: hidden;
+		    background:white;
+		    max-width: 100%;
+    		height: auto;
+		}
+		#img_hidden img{
+			max-width: 100%;
+    		height: auto;
+		}
+		.restart{
+	    text-align: center;
+		}
+		.restart>span{
+			position:absolute; 
+		    display: inline-block;
+		    color: #fff;
+		    background-color: #45c01a;
+		    border-radius: 5px;
+		}
+	</style>
+	<!--css end-->
+	<!--js start-->
+	<script type="text/javascript">
+		setTimeout(function(){//定时器 
+			$("#img_hidden").css("display","block");//将图片隐藏div属性设置为none
+			$("#p_show").css("display","none");//将文字显示的display属性设置为block
+			},
+		6000);//设置六千毫秒即6秒
+		
+		//点击‘开始游戏’按钮
+		$("#restart").click(function(){
+			
+		});
+	</script>
+	<!--js end-->
+	</head>
+	<body>
+		<div align="left" > 
+			<img height="50" width="50"  src="../img/tubiao/1.png" border="0" title="返回上一页" style="background-repeat: no-repeat" onClick="javascript:history.back(-1);">
+			<div style="position:absolute;z-index: 10;left: 150px;top: -20px;">
+				<p align="center" style="font-size: 30px;color: black;font-weight:bold;">消消乐</p>
+			</div>
+		</div>
+		<!--文字描述-->
+		<div id="p_show" align="center" style="display: block;">
+			<p style="max-width: 100%;height: auto;font-size: 23px;background-color: #F0A000;font-weight: bold; " >
+				一天晚上，天空中掉下一颗神奇的豌豆种子，正好落在了梦之森林的村长屋附近，
+				种子落地后吸收了池塘的水分，迅速成长，一夜之间变成参天大藤蔓…… 
+				<br>第二天早上，村民们醒来后看到巨大的藤蔓都惊呆了，聚在一起议论纷纷。
+				有人说他似乎看到村长的房子在高耸入云的藤蔓上，房子似乎还在上升，
+				有人号召说应该爬上去救村长，玩家需要爬到藤曼顶部救出村长。</p>
+				<div id="restart" class="restart">
+		            <span>开始游戏</span>
+		        </div>
+		</div>
+		<!--图片展示-->
+		<div id="img_hidden" align="center" style="display: none;">
+			<!--首页图片三秒消失-->
+			<img width="350px" height="350px" src="../img/game-img/happyxiaoxiaole/logo.jpg" id="logo" />
+			
+		</div>
+		<!--游戏页面-->
+		<div >
+			
+		</div>
+	</body>
+</html>
