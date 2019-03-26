@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>专注力训练-圆渐变</title>
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<script type="text/javascript" src="../js/jquery-1.7.2.js" ></script>
+	</head>
+	<body >
+		<div align="left" > 
+			<img height="50" width="50"  src="../img/tubiao/1.png" border="0" title="返回上一页" style="background-repeat: no-repeat" onClick="javascript:history.back(-1);">
+			<div style="position:absolute;z-index: 10;left: 150px;top: -20px;">
+				<p align="center" style="font-size: 30px;color: black;font-weight:bold;">圆渐变</p>
+			</div>
+		</div>
+		<!--遮罩层显示-->
+		<div id="m_mask" align="center" style="top:0%; left:0%; padding:16px; border:3px solid orange; background-color:wheat;position:absolute;z-index:1002; overflow:auto; max-width: 100%;height:100%;display: block; font-weight:bold;"> 
+		<div style="font-size: 15px;flood-color:black" align="left">
+			<p style="font-size: 35px;flood-color: red;" align="center">使用说明： <br /></p>
+				<p>1：专注力训练-盯着圆中心黑点看，会发现周围变白</p>
+				<p>2：每天任务：每天训练1到2分钟。</p>
+			</div>
+			<a href="javascript:void(0)" id="closebt" style="flood-color: blue;font-size: 25px;" >确定 </a>
+		</div>
+		<div id="i_show" style="display: none;">
+		
+			<div style="height: 50px;border-radius:100px;font-size:1rem;">
+				<p align="center" style="color:red;font-weight:bold;font-size:26px">请盯着中间的黑点看 </p>
+			</div>
+			<div id="centerPoint" align="center" style="max-width: 100%;height: auto;display: block;background-size: contain;">	
+				<canvas id="concentration"  align="center" width="400" height="400" style="max-width: 100%;height: auto;border:dashed 2px #CCC">
+			您的浏览器不支持 HTML5 canvas 标签。</canvas>
+			</div>
+		</div>
+	<script>
+		//页面加载执行
+		window.onload=function(){ 
+			$("#m_mask").show();//显示遮罩层
+			closebt.onclick=function(){ //点击确定，隐藏遮罩层。
+				$("#m_mask").hide();
+				$("#i_show").show();
+			} 
+		}
+		//画出中心黑点
+	    var can = document.getElementById("concentration");
+	    var cans = can.getContext('2d'); //得到画笔
+	    cans.beginPath();//开始绘制新路径
+	    //arc(x, y, radius, startAngle, endAngle, counterclockwise)：
+	    //以(x,y)为圆心绘制一条弧线，弧线半径为radius，起始和结束角度（用弧度表示）分别为startAngle 和endAngle。最后一个参数表示startAngle 和endAngle 是否按逆时针方向计算，值为false表示按顺时针方向计算。
+	    cans.arc(200,200,5,0,2*Math.PI);//参数1：左右移动；参数2：上下移动；参数3：大小；参数4：图形显示百分比
+	    cans.closePath();
+	    cans.fillStyle = 'black';
+	    cans.fill();
+		//圆渐变白
+		var canvas = document.getElementById('concentration');
+	    var ctx = canvas.getContext('2d');
+	    var grd = ctx.createRadialGradient(200,200,0,200,200,200);//ctx.createRadialGradient(100, 100, 5, 100, 100, 100);
+	    grd.addColorStop(0, 'black');
+	    grd.addColorStop(1, 'white');
+	    //使用经向渐变
+	    ctx.fillStyle = grd;
+	    ctx.fillRect(0, 0, canvas.width, canvas.height);
+	
+	</script>
+	</body>
+</html>

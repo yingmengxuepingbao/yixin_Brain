@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>专注力训练-小球移动</title>
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<script src="../js/jquery-1.7.2.js"></script>
+	</head>
+<body>
+	<div align="left" > 
+		<img height="50" width="50"  src="../img/tubiao/1.png" border="0" title="返回上一页" style="background-repeat: no-repeat" onClick="javascript:history.back(-1);">
+		<div style="position:absolute;z-index: 10;left: 150px;top: -20px;">
+			<p align="center" style="font-size: 30px;color: black;font-weight:bold;">小球移动</p>
+		</div>
+	</div>
+	<!--遮罩层显示-->
+	<div id="m_mask" align="center" style="top:0%; left:0%; padding:16px; border:3px solid orange; background-color:wheat;position:absolute;z-index:1002; overflow:auto; max-width: 100%;height:100%;display: block; font-weight:bold;"> 
+		<div style="font-size: 15px;flood-color:black" align="left">
+			<p style="font-size: 35px;flood-color: red;" align="center">使用说明： <br /></p>
+			<p>1：专注力训练-眼睛盯着小球移动，训练眼镜的速度</p>
+			<p>2：训练目标：一目十行</p>
+			<p>3：训练任务：每天练习1到2分钟。</p>
+		</div>
+		<a href="javascript:void(0)" id="closebt" style="flood-color: blue;font-size: 25px;" >确定 </a>
+	</div>
+	<!--小球移动-->
+	<div id="i_show" style="display: none;">
+		<div style="height: 50px;border-radius:100px;font-size:1rem;">
+				<p align="center" style="color:red;font-weight:bold;font-size:26px">眼球盯着小球的移动轨迹移动 </p>
+		</div>
+		<!--小球画布-->
+		<div align="center" style="max-width: 100%;height: auto;display: block;background-size: contain;">
+			<canvas id="canvas" style="background:#000;" width="300" height="300">
+			    your browser not support canvas
+			</canvas>
+		</div>
+		<div style="height: 50PX;"></div>
+	</div>	
+<script type="text/javascript">
+	//页面加载执行
+	window.onload=function(){ 
+		$("#m_mask").show();//显示遮罩层
+		closebt.onclick=function(){ //点击确定，隐藏遮罩层。
+			$("#m_mask").hide();
+			$("#i_show").show();
+		} 
+	}
+  var canvas = document.getElementById("canvas");
+  var context = canvas.getContext("2d");//获取画笔
+  var move_x = 5;//像素移动的位置，正数的时候向下，负数向上
+  var x_axis =10;//x轴
+  var move_y = 1;//像素移动的位置，正数的时候向，负数向
+  var y_axis =10;//y轴
+ function draw(){
+ 	//清空画布
+	 context.clearRect(0,0,300,300);
+	 // 参数1：渐变的开始圆的 x 坐标；参数2：渐变的开始圆的 y 坐标；参数3：开始圆的半径；参数4：渐变的结束圆的 x 坐标，参数5：渐变的结束圆的 y 坐标；参数6：结束圆的半径
+	 var gradient = context.createRadialGradient(x_axis,y_axis,0,x_axis,y_axis,20);
+	 gradient.addColorStop(0,'#fff');
+	 gradient.addColorStop(1,'#333');
+	 context.fillStyle = gradient;//定义颜色
+	 
+	 context.beginPath();//重新开始画，防止冲突重叠
+	 context.arc(x_axis,y_axis,10,0,Math.PI*2,10);//x,y坐标,半径,圆周率
+	 context.closePath();//结束画布，防止冲突重叠
+	 context.fill();//渲染结束
+	 x_axis +=move_x;//横轴+移动位置
+	 if(x_axis == 0 || x_axis ==300){//横向移动
+	  move_x = move_x * (-1);//掉头位置
+	 }
+	 y_axis += move_y;
+	 if(y_axis == 0|| y_axis==300){
+	 	move_y = move_y*(-1);
+	 }
+	 window.requestAnimationFrame(draw);
+ }
+ draw(); 
+</script>
+	</body>
+</html>

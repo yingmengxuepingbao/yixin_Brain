@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>黄卡</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<script src="../js/jquery-1.7.2.js"></script>
+<script type="text/javascript">
+//页面加载执行
+window.onload=function(){ 
+	$("#m_mask").show();//显示遮罩层
+	closebt.onclick=function(){ //点击确定，隐藏遮罩层。
+		$("#m_mask").hide();
+		$("#i_show").show();
+	} 
+}
+//touchmove:/手指在屏幕上滑动式触发
+$(document).ready(function (){
+	var flag =1;//标识第几张图片
+	var sum = $("div").children("div").children("div").length;//获取div下元素个数
+	console.log("sum = "+sum);
+	
+	//左右滑动
+	var startX, moveEndX, X;//Y:上下滑动
+	$( "body" ).on( "touchstart", function ( e ) {//touchstart://手指放到屏幕上时触发
+	    startX = e.originalEvent.changedTouches[ 0 ].pageX;
+	});
+	 
+	$( "body" ).on( "touchend", function ( e ) {//touchend://手指离开屏幕时触发
+	    moveEndX = e.originalEvent.changedTouches[ 0 ].pageX;
+	    X = moveEndX - startX;
+	  	
+	    if ( X < 0 ) {//向右滑动
+	    	if(flag>=sum){
+	    		flag =1;
+	    		$(".slide-"+sum).hide();//隐藏
+	    		$(".slide-"+flag).show();//显示
+	    	}else{
+	    		$(".slide-"+flag).hide();//隐藏
+	    		flag++;
+	    		$(".slide-"+flag).show();//隐藏
+	    	}
+	    }
+	});
+	
+});
+</script>
+</head>
+
+<body>
+	<div align="left" > 
+		<img height="50" width="50"  src="../img/tubiao/1.png" border="0" title="返回上一页" style="background-repeat: no-repeat" onClick="javascript:history.back(-1);">
+		<div style="position:absolute;z-index: 10;left: 150px;top: -20px;">
+			<p align="center" style="font-size: 30px;color: black;font-weight:bold;">黄卡训练</p>
+		</div>
+	</div>
+	<!--遮罩层显示-->
+	<div id="m_mask" align="center" style="top:0%; left:0%; padding:16px; border:3px solid orange; background-color:wheat;position:absolute;z-index:1002; overflow:auto; max-width: 100%;height:100%;display: block; font-weight:bold;"> 
+		<div style="font-size: 15px;flood-color:black" align="left">
+			<p style="font-size: 35px;flood-color: red;" align="center">使用说明： <br /></p>
+			<p>1：将黄卡放在距离眼睛 30-40 厘米的地方，凝神 30 秒，然后闭上眼睛，眼前出现残像。再凝神 30 秒后迅速拿开卡片，将视线移到一张白色纸上，这时会在折色纸片上看到残像。凝神残像。
+			</p>
+			
+			<p>2、开始时残像大约维持 20-30 秒就消失了；随着训练的次数的增多，残像保持的时间可以延长至七八十秒钟，有的人甚至可能维持大约 3 分钟。将残像维持在眼前的时间尽可能延长，凝神黄卡时，请尽量不要眨眼 。
+			</p>
+			
+			<p>3、起初，残像是蓝色纸上出现黄色圆形的补色。不断进行残像训练，残像留存的时间就会越来越长，看到的将不再是补色，而是原色。
+			</p>
+			
+			<p>4、有些人从一开始就能够看到原色。这不是因为这些人有什么奇特，而是因为他们的想像力非常好，所以大家可以放心。如果看到的残像是原来的颜色，此时的描绘想象图像的力量就已经被激活了。即使不看黄卡，也能够按照自己的意志自由地看到想看的彩色圆形，所以要坚持训练，不要半途而废。
+			</p>
+		</div>
+		<a href="javascript:void(0)" id="closebt" style="flood-color: blue;font-size: 25px;" >确定 </a>
+	</div>
+	<div id="i_show" style="display: none;">
+		<div style="height: 50px;border-radius:100px;font-size:1rem;">
+			<p align="center" style="color:red;font-weight:bold;font-size:26px">
+			向左滑动，切换图片 
+			</p>
+		</div>
+	<!--图片显示    -->
+		<div class="m-slider" align="center" style="max-width: 100%;height:500px;">
+		        <div class="slide slide-1">
+                	<img  src="../img/yellowcard/1.png" alt="黄卡1"  width="100%" height="outo"/>
+                </div>
+                <div class="slide slide-2" style="display:none;">
+                	<img  src="../img/yellowcard/2.png" alt="黄卡2"  width="100%" height="outo"/>
+                </div>
+                <div class="slide slide-3" style="display:none;">
+                	<img src="../img/yellowcard/3.png" alt="黄卡3"  width="100%" height="outo"/>
+                </div>
+                <div class="slide slide-4" style="display:none;">
+                	<img src="../img/yellowcard/4.png" alt="黄卡4"  width="100%" height="outo"/>
+                </div>
+		</div>
+	</div>
+</body>
+</html>
