@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title>专注力训练-小球移动</title>	
+		<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">	
+		<style>
+			#show{
+				background: #fff;
+			}
+			#show p{
+				text-align: center;
+				font-size: 22px;
+				color: red;
+				margin-top: 10px;
+				padding: 20px 0;
+			}
+			.huabu{
+				
+			}
+			#canvas{
+				background: #000;
+			}
+		</style>
+	</head>
+<body>
+	<div class="container">
+		
+		<!--遮罩层显示-->
+		<div id="mask"> 
+			<div class="wenzi">
+				<h1>使用说明</h1>
+				<p>1. 专注力训练-眼睛盯着小球移动，训练眼睛的速度；</p>
+				<p>2. 训练目标：一目十行；</p>
+				<p>3. 训练任务：每天练习1到2分钟。</p>
+			</div>
+			<button class="btn1">确定</button>
+		</div>
+		
+		<div class="header"> 
+			<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+			<p class="title">小球移动</p>
+		</div>
+		<!--小球移动-->
+		<div id="show">
+			<p>眼球盯着小球的移动轨迹移动 </p>		
+			<!--小球画布-->
+			<div class="huabu" align="center">
+				<canvas id="canvas" style="width="300" height="300" ">
+				    your browser not support canvas
+				</canvas>
+			</div>	
+		</div>	
+	</div>
+	
+	<script src="../../js/jquery-1.7.2.js"></script>
+	<script type="text/javascript">
+		//页面加载执行
+		$(".btn1").on("click",function(){
+			$("#mask").hide();
+			draw(); //小球开始移动
+		})
+		
+		
+	  	var canvas = document.getElementById("canvas");
+	  	var context = canvas.getContext("2d");//获取画笔
+	  	var move_x = 5;//像素移动的位置，正数的时候向下，负数向上
+	  	var x_axis =10;//x轴
+	  	var move_y = 1;//像素移动的位置，正数的时候向，负数向
+	  	var y_axis =10;//y轴
+	 	function draw(){
+		 	//清空画布
+			context.clearRect(0,0,300,300);
+			// 参数1：渐变的开始圆的 x 坐标；参数2：渐变的开始圆的 y 坐标；参数3：开始圆的半径；参数4：渐变的结束圆的 x 坐标，参数5：渐变的结束圆的 y 坐标；参数6：结束圆的半径
+			var gradient = context.createRadialGradient(x_axis,y_axis,0,x_axis,y_axis,20);
+			gradient.addColorStop(0,'#fff');
+			gradient.addColorStop(1,'#333');
+			context.fillStyle = gradient;//定义颜色
+			 
+			context.beginPath();//重新开始画，防止冲突重叠
+			context.arc(x_axis,y_axis,10,0,Math.PI*2,10);//x,y坐标,半径,圆周率
+			context.closePath();//结束画布，防止冲突重叠
+			context.fill();//渲染结束
+			x_axis +=move_x;//横轴+移动位置
+			if(x_axis == 0 || x_axis ==300){//横向移动
+			  	move_x = move_x * (-1);//掉头位置
+			}
+			y_axis += move_y;
+			if(y_axis == 0|| y_axis==300){
+			 	move_y = move_y*(-1);
+			}
+			window.requestAnimationFrame(draw);
+		 }
+	 
+	</script>
+</body>
+</html>

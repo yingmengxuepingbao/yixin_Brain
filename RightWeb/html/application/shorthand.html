@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>应用篇-数字编码速记圆周率后40位</title>
+	<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">
+	<style>
+		.container{
+			padding-top: 60px;
+		}
+		.header{
+			position: fixed;
+			left: 0;
+			top: 0;
+		}
+		#show{
+			background: #fff;
+			padding: 0 20px;
+		}
+		#show .showT{
+			text-align: center;
+			font-size: 22px;
+			color: red;
+			margin-top: 10px;
+			padding-top: 20px;
+		}
+		.yuanzhou{
+			padding: 20px 0;
+			line-height: 30px;		
+		}
+		.analysis{
+			/*margin-top: 10px;*/
+		}
+		.imagine{
+			margin: 20px 0;
+
+		}
+		.title{
+			line-height: 40px;
+			text-align: center;
+			font-size: 20px;
+		}
+		.mess{
+			line-height: 30px;
+		}
+		.iM1 span{
+			font-size: 18px;
+			background: #666;
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<!--遮罩层显示-->
+		<div id="mask1"> 
+			<div class="wenzi">
+				<h1>使用说明</h1>
+				<p>1. 快速记忆；</p>
+				<p>2. 运营联想记忆方法；</p>
+				<p>3. 快速记忆圆周率小数点后40位数字。</p>
+			</div>
+			<button class="btn1">确定</button>
+		</div>
+		
+		<div class="header"> 
+			<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+			<p class="title">圆周率</p>
+		</div>
+		
+		<div id="show">
+			<p class="showT">速记圆周率</p>
+			<p class="yuanzhou">圆周率：3. 14 15 92 65 35    89 79 32 38 46   26 43 38 32 79   50 28 84 19 71</p>
+			<div class="analysis">
+				<p class="title aT">----- 数字解析 ------</p>
+				<p class="mess aM1">14 15 92 65 35    89 79 32 38 46   26 43 38 32 79   50 28 84 19 71</p>
+				<p class="mess aM2">钥匙 月亮 球儿 锣鼓 珊瑚 芭蕉 气球 扇儿 妇女 石榴  二流子 石山 妇女 扇儿 气球 武林盟主 恶霸 巴士 高尔夫 奇异果</p>
+			</div>
+			<div class="imagine">
+				<p class="title iT">----- 画面想象 -----</p>
+				<p class="mess iM1">
+					<span>钥匙</span>上有个
+					<span>月亮</span>的挂饰，连着一个
+					<span>球儿</span>，在
+					<span>锣鼓</span>上跳舞，
+					<span>珊瑚</span>、
+					<span>芭蕉</span>在
+					<span>气球</span>上，气球下坠着把
+					<span>扇儿</span>，扇儿在
+					<span>妇女</span>左手上，妇女右手拿着个
+					<span>石榴</span>准备打
+					<span>二流子</span>，二流子跑到
+					<span>石山</span>上看到另一个
+					<span>妇女</span>拿着
+					<span>扇儿</span>和
+					<span>气球</span>，
+					<span>武林盟主</span>打
+					<span>恶霸</span>，把恶霸打倒在
+					<span>巴士</span>前，巴士里的
+					<span>高尔夫</span>和
+					<span>奇异果</span>，散落一地。
+				</p>
+				<p class="mess iM2">1415926535   8979323846   2643383279   5028841971</p>
+			</div>
+		</div>
+	</div>
+		
+	<script src="../../js/jquery-1.7.2.js"></script>
+	<script type="text/javascript">
+		$(".btn1").on("click",function(){
+			$("#mask1").hide();
+		})
+	</script>
+</body>
+</html>
