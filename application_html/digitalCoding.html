@@ -1,67 +1,209 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBliC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>应用篇-数字编码</title>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-<link rel="stylesheet" type="text/css"  href="../css/css3.css"  charset="utf-8">
-<script src="../js/jquery-1.7.2.js"></script>
-<script type="text/javascript">
-</script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>应用篇-数字编码</title>
+	<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">
+	<style>
+		.container{
+			padding-top: 60px;
+		}
+		.header{
+			position: fixed;
+			left: 0;
+			top: 0;
+		}
+		#show{
+			background: #fff;
+			
+		}
+		#show p{
+			text-align: center;
+			font-size: 22px;
+			color: red;
+			margin-top: 10px;
+			padding-top: 20px;
+		}
+		.numList{
+			/*display: flex;*/
+			padding: 0 20px;	
+		}
+		.numList li{
+			float: left;
+			width: 33.3%;
+			height: 30px;
+			margin-top: 20px;
+			font-size: 18px;
+			color: #666;
+		}
+		.numList li:last-child{
+			margin-bottom: 30px;
+		}
+		.myImg{			
+			z-index: 99999;
+		}
+		.myImg img{
+			width: 70%;
+			height: auto;
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			margin: auto;
+		}
+	</style>
 </head>
-	<body>
-		<div align="left" > 
-			<img height="50" width="50"  src="../img/tubiao/1.png" border="0" title="返回上一页" style="background-repeat: no-repeat" onClick="javascript:history.back(-1);">
-			<div style="position:absolute;z-index: 10;left: 150px;top: -20px;">
-				<p align="center" style="font-size: 30px;color: black;font-weight:bold;">数字编码</p>
+<body>
+	<div class="container">
+		<!--遮罩层显示-->
+		<div id="mask1"> 
+			<div class="wenzi">
+				<h1>使用说明</h1>
+				<p>1. 数字编码是采用数字和有关图像来表示数据和指令的编码；</p>
+				<p>2. 熟练运用数字编码，可以快速记忆电话号码，银行卡号等信息。</p>
 			</div>
+			<button class="btn1">确定</button>
 		</div>
 		
-		<div style="height: 50px;border-radius:100px;font-size:1rem;">
-				<p align="center" style="color:red;font-weight:bold;font-size:26px"> 应用篇-数字编码表</p>
+		<div class="header"> 
+			<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+			<p class="title">数字编码</p>
 		</div>
-		<div style="border-radius:100px;font-size:1rem;flood-color: black;font-weight:bold;" align="center">
-		<p align="center">
-			1：树  &nbsp;&nbsp;&nbsp;&nbsp;2：鸭子 &nbsp;&nbsp;3：耳朵 &nbsp;&nbsp;4：旗子&nbsp;&nbsp;5：钩子 
-			<br />
-			6：勺子   &nbsp;&nbsp;7：拐杖  &nbsp;&nbsp;8：葫芦 &nbsp;&nbsp;9：猫 &nbsp;&nbsp;10：棒球 
-			<br />
-			11：筷子 &nbsp;&nbsp;12：婴儿&nbsp;&nbsp;13：医生&nbsp;&nbsp;14：钥匙&nbsp;&nbsp;15：月亮
-			<br />
-			16：糖果&nbsp;&nbsp;17：弃儿&nbsp;&nbsp;18：彩票&nbsp;&nbsp;19：高尔夫 &nbsp;20：香烟
-			<br />
-			21：鳄鱼 &nbsp;&nbsp;22：双胞胎&nbsp;23：乔丹&nbsp;&nbsp;24：乞丐&nbsp;&nbsp;25：二胡
-			<br />
-			26：二流子 &nbsp;27：耳机&nbsp;&nbsp;28：恶霸&nbsp;&nbsp;29：阿胶&nbsp;&nbsp;30：三菱
-			<br />
-			31：鲨鱼&nbsp;&nbsp;32：扇儿&nbsp;&nbsp;33：姗姗 &nbsp;&nbsp;34：绅士&nbsp;&nbsp;35：珊瑚
-			<br />
-			36：山鹿&nbsp;&nbsp;37：山鸡 &nbsp;&nbsp;38：妇女&nbsp;&nbsp;39：胃泰胶囊    40：司令
-			<br />
-			41：司仪&nbsp;&nbsp;42：柿儿 &nbsp;&nbsp;43：石山&nbsp;&nbsp;44：石狮&nbsp;&nbsp;45：师傅
-			<br />
-			46：石榴 47：司机 48：石板 49：天安门  50：武林盟主
-			<br />
-			51：劳动节&nbsp;52：我儿 &nbsp;&nbsp;53：巫山&nbsp;&nbsp;54：青年节&nbsp;55：火车声
-			<br />
-			56：蜗牛&nbsp;&nbsp;57：武器&nbsp;&nbsp;58：尾巴&nbsp;&nbsp;59：无救（棺材）60：榴莲
-			<br />
-			61：儿童节&nbsp;62：炉儿 &nbsp;&nbsp;63：流沙 &nbsp;&nbsp;64：螺丝 &nbsp;&nbsp;65：锣鼓
-			<br />
-			66：蝌蚪 &nbsp;&nbsp;67：绿旗  &nbsp;&nbsp;68：喇叭&nbsp;&nbsp;69：八卦&nbsp;&nbsp;70：麒麟
-			<br />
-			71：奇异果 &nbsp;&nbsp;72：企鹅&nbsp;&nbsp;73：花旗参 &nbsp;&nbsp;74：骑士 &nbsp;&nbsp;75：起舞&nbsp;&nbsp;
-			<br />
-			76：气流&nbsp;&nbsp;77：七夕鹊桥 78：青蛙&nbsp;&nbsp;79：气球&nbsp;&nbsp;80：巴黎铁塔
-			<br />
-			81：白蚁&nbsp;&nbsp;82：靶儿&nbsp;&nbsp;83：花生&nbsp;&nbsp;84：巴士&nbsp;&nbsp;85：白虎
-			<br />
-			86：八路&nbsp;&nbsp;87：白棋&nbsp;&nbsp;88：爸爸 &nbsp;&nbsp;89：芭蕉&nbsp;&nbsp;90：精灵
-			<br />
-			91：球衣&nbsp;&nbsp;92：球儿 &nbsp;&nbsp;93：救生圈&nbsp;94：调酒师&nbsp;&nbsp;95：酒壶
-			<br />
-			96：九头牛 97：紫金花 98：酒吧 99：舅舅 100：一百人民币
-		</p>
+		
+		<div id="show">		
+			<p>数字编码表</p>		
+			<ul class="numList">
+				<li >00：望远镜</li>
+				<li >1：大树</li>
+				<li >2：鸭子</li>
+				<li >3：耳朵</li>
+				<li >4：旗子</li>
+				<li >5：钩子</li>
+				<li >6：勺子</li>
+				<li >7：镰刀</li>
+				<li >8：葫芦</li>
+				<li >9：猫</li>
+				<li >10：棒球 </li>
+				<li >11：筷子</li>
+				<li >12：婴儿</li>
+				<li >13：医生</li>
+				<li >14：钥匙</li>
+				<li >15：鹦鹉</li>
+				<li >16：杨柳</li>
+				<li >17：仪器</li>
+				<li >18：彩票</li>
+				<li >19：药酒</li>
+				<li >20：摩托车</li>
+				<li >21：鳄鱼</li>
+				<li >22：双胞胎</li>
+				<li >23：乔丹</li>
+				<li >24：乞丐</li>
+				<li >25：二胡</li>
+				<li >26：二流子</li>
+				<li >27：耳机</li>
+				<li >28：恶霸</li>
+				<li >29：阿胶</li>
+				<li >30：三轮车</li>
+				<li >31：鲨鱼</li>
+				<li >32：扇儿</li>
+				<li >33：姗姗（美女）</li>
+				<li >34：绅士</li>
+				<li >35：珊瑚</li>
+				<li >36：山鹿</li>
+				<li >37：山鸡</li>
+				<li >38：妇女</li>
+				<li >39：三角尺</li>
+				<li >40：司令</li>
+				<li >41：司仪</li>
+				<li >42：柿儿</li>
+				<li >43：石山</li>
+				<li >44：石狮</li>
+				<li >45：师傅</li>
+				<li >46：石榴</li>
+				<li >47：司机</li>
+				<li >48：石板</li>
+				<li >49：天安门 </li>
+				<li >50：武林盟主</li>
+				<li >51：工人</li>
+				<li >52：斧儿 </li>
+				<li >53：巫山</li>
+				<li >54：青年</li>
+				<li >55：火车</li>
+				<li >56：蜗牛</li>
+				<li >57：武器</li>
+				<li >58：尾巴</li>
+				<li >59：无救（棺材）</li>
+				<li >60：榴莲</li>
+				<li >61：儿童</li>
+				<li >62：牛儿</li>
+				<li >63：硫酸</li>
+				<li >64：牛屎</li>
+				<li >65：锣鼓</li>
+				<li >66：蝌蚪</li>
+				<li >67：绿旗</li>
+				<li >68：喇叭</li>
+				<li >69：八卦</li>
+				<li >70：麒麟</li>
+				<li >71：奇异果</li>
+				<li >72：企鹅</li>
+				<li >73：旗杆</li>
+				<li >74：骑士</li>
+				<li >75：起舞（芭蕾）</li>
+				<li >76：气流</li>
+				<li >77：喜鹊</li>
+				<li >78：青蛙</li>
+				<li >79：气球</li>
+				<li >80：巴黎铁塔</li>
+				<li >81：白蚁</li>
+				<li >82：靶儿</li>
+				<li >83：爬山背包</li>
+				<li >84：巴士</li>
+				<li >85：白虎</li>
+				<li >86：八路</li>
+				<li >87：白棋</li>
+				<li >88：爸爸 </li>
+				<li >89：芭蕉</li>
+				<li >90：精灵</li>
+				<li >91：球衣</li>
+				<li >92：球儿</li>
+				<li >93：救生圈</li>
+				<li >94：调酒师</li>
+				<li >95：酒壶</li>
+				<li >96：九头牛</li>
+				<li >97：手机</li>
+				<li >98：酒吧 </li>
+				<li >99：舅舅</li>
+				<li >100：一百元</li>
+			</ul>
 		</div>
-	</body>
+		<div class="myImg">
+			<!--添加图片-->
+		</div>
+	</div>
+	
+	<script src="../../js/jquery-1.7.2.js"></script>
+	<script type="text/javascript">
+		//隐藏/显示
+		$(".btn1").on("click",function(){
+			$("#mask1").hide();
+		})
+		//图片隐藏
+		$(".myImg").hide();
+		//点击显示图片
+		$(".numList li").on("click",function(){
+			if($(".myImg").has("img")){//存在子节点删除
+				$(".myImg").html("");
+			}
+			var imgs = $(this).index();
+			var imgShow = '<img src="../../img/digitalCoding/'+imgs+'.png"/>';
+			$(".myImg").append(imgShow);//拼接图片
+			$(".myImg").show();//显示
+			$(".myImg img").on("click",function(){
+				$(this).hide();//点击图片隐藏
+			})
+		});
+	</script>
+</body>
 </html>
