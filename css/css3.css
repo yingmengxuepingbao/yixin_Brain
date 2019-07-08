@@ -1,4 +1,4 @@
-.slide-viewer{
+/*.slide-viewer{
 	position:relative;
 	overflow:hidden;
 	height:700px;
@@ -20,4 +20,142 @@ img{
   display: block;
   height: auto;
   max-width: 100%;
+}*/
+
+body{
+	width:100%;
+	height: 100%;
+	color: #333;
+	margin: 0;
+	padding: 0;
+	/*overflow: hidden;*/
 }
+ul,p,div,button{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	outline: none;
+}
+
+
+
+.container{
+	width: 100%;
+	height: 100%;
+	background: #f6f6f6;
+	position: relative;
+}
+.header{
+	width: 100%;
+	height: 60px;
+	display: flex;
+	background: #fff;
+}
+.header img{
+	width: auto;
+	height: 40px;
+	margin: 10px 0;
+	position: absolute;
+	left: 10px;
+	top: 0;
+}
+.header p{
+	flex: 1;
+	text-align: center;
+	line-height: 60px;
+	font-size: 24px;
+	font-weight: bold;
+}
+.myList{
+	background: #fff;
+	margin-top: 10px;
+	padding-top: 10px;
+}
+.myList li{
+	float: left;
+	width: 40%;
+	height: 80px;
+	line-height: 80px;	
+	margin: 10px 5%;
+}
+.myList li p{
+	color: #fff;
+	font-size: 18px;
+	border-radius: 5px;
+	text-align: center;
+	box-shadow: 5px 5px 8px #888;
+}
+.myList .lis1 p{
+	background: orange;	
+}
+.myList .lis2 p{
+	background: skyblue;	
+}
+.myList .lis3 p{
+	background: #00F000;	
+}
+
+
+#mask{
+	position: fixed;
+	left: 0;
+	top: 0;
+	height: 99.3%;
+	background: wheat;
+	border: 2px solid orange;
+	z-index: 99999;
+}
+.wenzi{
+	padding: 5%;
+}
+.wenzi h1{
+	text-align: center;
+}
+.wenzi p{
+	font-size: 18px;
+	text-indent:2em;
+	margin-top: 10px;
+}
+#mask .btn1{
+	width: 90%;
+	line-height: 50px;
+	background: orange;
+	color: #fff;
+	border: none;
+	border-radius: 10px;
+	font-size: 20px;
+	margin-left: 5%;
+	margin-top: 20px;
+	box-shadow: 5px 5px 8px #888;
+}
+
+#mask1{
+	position: fixed;
+	left: 0;
+	top: 0;
+	width:98.8%;
+	height: 99.3%;
+	background: aqua;
+	border: 2px solid skyblue;
+	z-index: 99999;
+}
+#mask1 .btn1{
+	width: 90%;
+	line-height: 50px;
+	background: skyblue;
+	color: #fff;
+	border: none;
+	border-radius: 10px;
+	font-size: 20px;
+	margin-left: 5%;
+	margin-top: 20px;
+	box-shadow: 5px 5px 8px #888;
+}
+/*.wenzi{
+	padding: 0 20px;
+}*/
+/*.myList li p:hover{ 
+	background: #fff;
+	color: orange;
+	border: 1px solid orange;
+}*/
