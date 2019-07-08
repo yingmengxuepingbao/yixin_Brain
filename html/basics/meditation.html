@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>冥想音乐</title>
+	<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">	
+	<script type="text/javascript" src="../../js/jquery-1.7.2.js" ></script>
+	<style>
+		#show{
+			background: #fff;
+		}
+		.myImg{
+			width: 100%;
+			height: auto;
+		}
+		.myAudio{
+			width: 20%;
+			margin-left: 10%;
+			margin-top: 30px;
+		}
+	</style>
+	
+</head>
+<body>
+	<div class="container">
+		<!--遮罩层显示-->
+		<div id="mask"> 
+			<div class="wenzi">
+				<h1>使用说明</h1>
+				<p>1. 平躺在垫子上，或者以舒适的坐姿坐在垫子上；</p>
+				<p>2. 打开音乐，轻轻的闭上眼镜，放慢呼吸； </p>
+				<p>3. 将意识关注在呼吸之上，深长的吸气，缓慢的呼气；</p>
+				<p>4. 每天冥想10到15分钟。</p>
+			</div>
+			<button class="btn1">确定</button>
+		</div>
+		
+		<div class="header"> 
+			<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+			<p class="title">冥想音乐</p>
+		</div>
+		
+		<div id="show">
+			<!--图片显示    -->
+			<div class="myImg">
+				<img src="../../img/music-img/1.gif"  width="100%" height="outo"/>
+			</div>
+			<!--播放器显示-->	
+			<div class="myAudio">
+				<audio src="../../music/1.mp3" id="audioDom" controls="controls" ></audio>
+			</div>
+			
+			
+			<!--<div>
+				<span>选择文件及文件夹:</span>
+				<input type="file" id="selectFiles" onchange="dealSelectFiles()"  webkitdirectory>
+				<canvas id="myCanvas" width=500 height=500></canvas>
+			</div>-->
+		</div>
+		
+	</div>
+	<script type="text/javascript">
+		//页面加载执行
+//		window.onload=function(){ 
+//			$("#m_mask").show();//显示遮罩层
+//			closebt.onclick=function(){ //点击确定，隐藏遮罩层。
+//				$("#m_mask").hide();
+//				$("#i_show").show();
+//			} 
+//		}
+		$(".btn1").on("click",function(){
+			$("#mask").hide();
+		})
+		/*//文件上传
+		var imgPosX = 100;
+		var imgWidth = 256;
+		function dealSelectFiles(){
+			/// get select files.
+			var selectFiles = document.getElementById("selectFiles").files;
+			for(var file of selectFiles){
+ 				//console.log(file.webkitRelativePath);
+				/// read file content.
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+ 
+				reader.onloadend = function(){
+					/// deal data.
+					var img = new Image();
+					/// after loader, result storage the file content result.
+					img.src = this.result;	
+					img.onload = function(){
+						var myCanvas = document.getElementById("myCanvas");
+						var cxt = myCanvas.getContext('2d');
+						cxt.drawImage(img, imgPosX, 0);
+						imgPosX += imgWidth;
+					}
+				}
+			}
+		}*/
+	</script>
+	
+	
+</body>
+</html>

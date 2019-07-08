@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title>专注力训练-圆渐变</title>
+		<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">	
+		<style>
+			#show{
+				background: #fff;
+			}
+			#show p{
+				text-align: center;
+				font-size: 22px;
+				color: red;
+				margin-top: 10px;
+				padding: 20px 0;
+			}
+			.huabu{
+				
+			}
+			#canvas{
+				background: #000;
+			}
+		</style>
+	</head>
+	<body >
+		<div class="container">		
+			
+			<!--遮罩层显示-->
+			<div id="mask"> 
+			<div class="wenzi">
+				<h1>使用说明</h1>
+					<p>1. 专注力训练-盯着圆中心黑点看，会发现周围变白；</p>
+					<p>2. 每天任务：每天训练1到2分钟。</p>
+				</div>
+				<button class="btn1">确定 </button>
+			</div>
+			
+			<div class="header"> 
+				<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+				<p class="title">圆渐变</p>	
+			</div>
+			<div id="show">
+				<p>请盯着中间的黑点看 </p>
+				<div class="huabu" align="center">	
+					<canvas id="concentration"  align="center" width="400" height="400" style="max-width: 100%;height: auto;border:dashed 2px #CCC">
+					您的浏览器不支持 HTML5 canvas 标签。</canvas>
+				</div>
+			</div>
+		</div>		
+		
+		<script type="text/javascript" src="../../js/jquery-1.7.2.js" ></script>
+		<script>
+			//页面加载执行
+			$(".btn1").on("click",function(){
+				$("#mask").hide();
+			})
+			//画出中心黑点
+		    var can = document.getElementById("concentration");
+		    var cans = can.getContext('2d'); //得到画笔
+		    cans.beginPath();//开始绘制新路径
+		    //arc(x, y, radius, startAngle, endAngle, counterclockwise)：
+		    //以(x,y)为圆心绘制一条弧线，弧线半径为radius，起始和结束角度（用弧度表示）分别为startAngle 和endAngle。最后一个参数表示startAngle 和endAngle 是否按逆时针方向计算，值为false表示按顺时针方向计算。
+		    cans.arc(200,200,5,0,2*Math.PI);//参数1：左右移动；参数2：上下移动；参数3：大小；参数4：图形显示百分比
+		    cans.closePath();
+		    cans.fillStyle = 'black';
+		    cans.fill();
+			//圆渐变白
+			var canvas = document.getElementById('concentration');
+		    var ctx = canvas.getContext('2d');
+		    var grd = ctx.createRadialGradient(200,200,0,200,200,200);//ctx.createRadialGradient(100, 100, 5, 100, 100, 100);
+		    grd.addColorStop(0, 'black');
+		    grd.addColorStop(1, 'white');
+		    //使用经向渐变
+		    ctx.fillStyle = grd;
+		    ctx.fillRect(0, 0, canvas.width, canvas.height);
+		
+		</script>
+	</body>
+</html>

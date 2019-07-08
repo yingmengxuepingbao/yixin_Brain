@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>曼陀罗</title>
+	<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">	
+	<style>
+		#show{
+			background: #fff;
+		}
+		#show p{
+			text-align: center;
+			font-size: 22px;
+			color: red;
+			margin-top: 10px;
+			padding: 20px 0;
+		}
+		#slider img{
+			width: 100%;
+			height: auto;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+				
+		<!--遮罩层显示-->
+		<div id="mask"> 
+			<div class="wenzi">
+				<h1>使用说明</h1>
+				<p>1. 请连续盯着曼陀罗卡片；</p>
+				<p>2. 看 30 秒后闭眼 5 秒，同时暗示自己在闭眼时让图像尽可能长时间地停留在眼前。睁开眼后，看卡片背面的黑白曼陀罗图像，并将它的颜色回忆出来；</p>
+				<p>3. 训练的关键是要持续不断，至少也要用 3 个月，这种方法能够激活右脑。</p>
+			</div>
+			<button class="btn1">确定</button>
+		</div>
+		
+		<div class="header"> 
+			<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+			<p class="title">曼陀罗</p>
+		</div>
+		<div id="show">
+			<p>左右滑动，切换图片</p>
+			<!--图片显示    -->
+			<div id="slider">
+		       	<div class="slide-1" >
+		            <img src="../../img/mantuoluo/5.png" >
+		        </div>
+		        <div class="slide-2" style="display:none;">
+		            <img src="../../img/mantuoluo/6.png" >
+		        </div>
+		        <div class="slide-3" style="display:none;">
+		            <img src="../../img/mantuoluo/7.png" >
+		        </div>
+		        <div class="slide-4" style="display:none;">
+		            <img src="../../img/mantuoluo/8.png" >
+		        </div>
+		        <div class="slide-5" style="display:none;">
+		            <img src="../../img/mantuoluo/9.png" >
+		        </div>
+		        <div class="slide-6" style="display:none;">
+		            <img src="../../img/mantuoluo/10.png" >
+		        </div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="../../js/jquery-1.7.2.js"></script>
+	<script type="text/javascript">
+		//页面加载执行
+		$(".btn1").on("touchstart",function(e){
+			$("#mask").hide();
+			e.preventDefault();
+		})
+		
+		//touchmove:/手指在屏幕上滑动式触发
+		$(document).ready(function (){
+			var flag =1;//标识第几张图片
+			var sum = $("#slider").children("div").length;//获取图片元素个数
+			//console.log("sum = "+sum);
+			
+			//左右滑动
+			var startX, moveEndX, X;//Y:上下滑动
+			$( "body" ).on( "touchstart", function ( e ) {//touchstart://手指放到屏幕上时触发
+			    startX = e.originalEvent.changedTouches[ 0 ].pageX;
+			});
+			 
+			$( "body" ).on( "touchend", function ( e ) {//touchend://手指离开屏幕时触发			
+			    moveEndX = e.originalEvent.changedTouches[ 0 ].pageX;
+			    X = moveEndX - startX;
+			  	
+			    if ( X < 0 ) {//向右滑动
+			    	if(flag>=sum){
+			    		flag =1;
+			    		$(".slide-"+sum).hide();//隐藏
+			    		$(".slide-"+flag).show();//显示
+			    	}else{
+			    		$(".slide-"+flag).hide();//隐藏
+			    		flag++;
+			    		$(".slide-"+flag).show();//显示
+			    	}
+			    }else{
+			    	if(flag<=1){
+			    		$(".slide-"+flag).hide();//隐藏
+			    		flag = sum;
+			    		$(".slide-"+sum).show();//显示
+			    	}else{
+			    		$(".slide-"+flag).hide();//隐藏
+			    		flag--;
+			    		$(".slide-"+flag).show();//显示
+			    	}
+			    }
+			    
+			});
+			
+		});
+	</script>
+</body>
+</html>
