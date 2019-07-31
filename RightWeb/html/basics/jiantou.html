@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>专注力训练-箭头消失</title>
+	<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">	
+	<style>
+		.btn1{
+			margin-top: -10px !important;
+			margin-bottom: 10px;
+		}
+		.shuoming{
+			width: 100%;
+			height: 100%;
+			overflow-y: scroll;
+		}		
+		#show{
+			background: #fff;
+		}
+		#show p{
+			text-align: center;
+			font-size: 22px;
+			color: red;
+			margin-top: 10px;
+			padding: 20px 0;
+		}
+		#slider img{
+			width: 100%;
+			height: auto;
+		}
+	</style>
+</head>
+	<body>
+		<div class="container">
+		
+		<!--遮罩层显示-->
+		<div id="mask"> 
+			<div class="shuoming">			
+				<div class="wenzi">
+					<h1>使用说明：</h1>
+					<p>1. 将图片放在距离眼睛 30-40 厘米的地方，专注盯着黑点看。</p>
+					<p>2. 当只看得见黑点，看不见箭头，就大功告成了。</p>
+					<p>3. 每天任务：每天练习1到5次。</p>
+				</div>
+				<button class="btn1">确定 </button>
+			</div>
+		</div>
+		
+		<div class="header"> 
+			<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+			<p class="title">专注力训练</p>
+		</div>
+		<div id="show">
+			<p>盯着黑点看 </p>
+			<!--图片显示    -->
+			<div id="slider">
+		        <div class="slide slide-1">
+                	<img src="../../img/jiantou/jiantou.png" alt="消失箭头" />
+                </div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="../../js/jquery-1.7.2.js"></script>
+	<script type="text/javascript">
+		//页面加载执行
+		$(".btn1").on("click",function(){
+			$("#mask").hide();
+		})
+		
+	</script>
+	</body>
+</html>

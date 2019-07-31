@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>专注力训练-方框</title>
+	<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">
+	<style>
+		#show{
+			background: #fff;
+		}
+		#show p{
+			text-align: center;
+			font-size: 22px;
+			color: red;
+			margin-top: 10px;
+			padding: 20px 0;
+		}
+		#can{
+			width: 300px;
+			height: 300px;
+			border: 2px dashed #666;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">		
+		
+		<!--遮罩层显示-->
+		<div id="mask"> 		
+			<div class="wenzi">
+				<h1>使用说明</h1>
+				<p>1. 将图片放在距离眼睛 30-40 厘米的地方，看变色方框；</p>			
+				<p>2. 每天任务：每天练习1到5次。</p>			
+			</div>
+			<button class="btn1">确定 </button>
+		</div>
+		
+		<div class="header"> 
+			<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+			<p class="title">渐变方格</p>
+		</div>
+		<!-- 画布-->
+		<div id="show">
+			<p>盯着中心方格看 </p>
+			<div id="centerPoint" align="center">
+		 		<canvas id="can" width="300px" height="300px"  style="border:2px dashed #666"></canvas>
+			</div>
+		</div>
+	</div>
+		
+	<script src="../../js/jquery-1.7.2.js"></script>
+	<script type="text/javascript"> 
+	$(".btn1").on("click",function(){
+		$("#mask").hide();
+	})
+	
+	var base=20;//基数
+	var multiple = 7;//倍数
+	var jishu=1;//
+	
+	//擦除canvas画布
+	function clearCanvas(){
+		$('#can').remove();//移除画布
+		$('#centerPoint').append('<canvas id="can" width="300px" height="300px" style="border:2px dashed #666"></canvas>');
+				
+		//画出中心方格
+	    var can = document.getElementById("can");
+	    var cans = can.getContext('2d'); //得到画笔
+	    cans.beginPath();//开始绘制新路径
+	    cans.strokeRect(140, 140, 20, 20);
+	   /* cans.strokeRect(20, 20, 260, 260);
+	    cans.strokeRect(40, 40, 220, 220);
+	    cans.strokeRect(60, 60, 180, 180);
+	    cans.strokeRect(80, 80, 140, 140);
+	    cans.strokeRect(100, 100, 100, 100);//参数1：左右移动；参数2：上下移动；参数3：大小；参数4：图形显示百分比
+	    cans.strokeRect(120, 120, 60, 60);//左右 大小
+	    cans.strokeRect(140, 140, 20, 20);*/
+	    cans.closePath();
+	    cans.fillStyle = "#FF0000";
+	    cans.fill();
+	}
+	//定时任务
+	var intr =setInterval(function(){
+		var can = document.getElementById("can");
+	    var cans = can.getContext('2d'); //得到画笔
+    	if (multiple>=1 && jishu<=13) {
+    		cans.strokeRect(base * multiple, base * multiple, base * jishu, base * jishu);
+    		cans.fillStyle = 'red';
+    		multiple--;
+    		jishu = jishu+2;
+    	}else{
+    		clearCanvas();//清除画布
+    		multiple=7;
+    		jishu = 1;
+    		cans.strokeRect(base * multiple, base * multiple, base * jishu, base * jishu);
+    		cans.fillStyle = 'red';
+    		multiple--;
+    		jishu=jishu+2;
+    	}
+	},1000);	
+	</script> 
+</body>
+</html>

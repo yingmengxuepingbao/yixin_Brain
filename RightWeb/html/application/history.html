@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBliC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>应用篇-数字编码</title>
+	<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">
+	<script type="text/javascript" src="../../js/jquery-1.7.2.js" ></script>
+	<style>
+		.container{
+			padding-top: 60px;
+		}
+		.header{
+			position: fixed;
+			left: 0;
+			top: 0;
+		}
+		#show{
+			background: #fff;
+		}
+		#show p{
+			text-align: center;
+			font-size: 22px;
+			color: red;
+			margin-top: 10px;
+			padding-top: 20px;
+		}
+		.numList{
+			/*display: flex;*/
+			padding: 0 20px;	
+		}
+		.numList li{
+			float: left;
+			width: 33.3%;
+			height: 30px;
+			margin-top: 20px;
+			font-size: 18px;
+			color: #666;
+		}
+		.numList li:last-child{
+			margin-bottom: 30px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<!--遮罩层显示-->
+		<div id="mask1"> 
+			<div class="wenzi">
+				<h1>使用说明</h1>
+				<p>图像记忆法：看图像，对应文字，快速记忆朝代更替顺序。</p>
+			</div>
+			<button class="btn1">确定</button>
+		</div>
+		<!--标题-->
+		<div class="header"> 
+			<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+			<p class="title">朝代更替顺序</p>
+		</div>
+		
+		<div id="show">	
+			<p>历史朝代快速记忆</p>	
+			<ul class="numList">
+				<li>炎黄尧舜禹</li>
+				<li>夏商与西周</li>
+				<li>东周分两段</li>
+				<li>春秋和战国</li>
+				<li>一统秦两汉</li>
+				<li>三分魏蜀吴</li>
+				<li>两晋前后延</li>
+				<li>南北朝并立</li>
+				<li>隋唐五代传</li>
+				<li>宋元明清后</li>
+				<li>皇朝至此完</li>
+			</ul>
+			<img src="../../img/history-img/1.png" width="100%" height="outo"/>
+			<p>图片解读：<br />
+				<p>
+					原始社会人物颜色是黄色的（炎黄），咬着鳞片是顺着的鱼（尧舜禹）。 <br />
+					下面中箭受伤了（夏商），手里拿着一碗稀粥（西周），倒粥（东周）倒了两次（春秋、战国）。<br />
+					秦始皇（秦）流了两滴汉（两汉：西汉、东汉）。<br />
+					三国使臣（魏蜀吴）给皇帝两次进贡（两晋：西晋、东晋）。<br />
+					南北朝的使臣（南朝、北朝）给秦始皇的是随汤五个袋子的石锅（隋唐五代十国）。<br />
+					秦始皇送给他们的元宝明亮清楚（宋元明清）<br />
+					故事就此讲完了。
+				</p>
+			</p>
+		</div>
+		
+	<script type="text/javascript">
+		$(".btn1").on("click",function(){
+			$("#mask1").hide();
+		})
+	</script>
+	</body>
+</html>

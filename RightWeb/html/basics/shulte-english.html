@@ -1,0 +1,354 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>舒尔特-字母表</title>
+	<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">	
+	<style>
+		#show{
+			background: #fff;
+		}
+		#show p{
+			text-align: center;
+			font-size: 22px;
+			color: red;
+			margin-top: 10px;
+			padding: 20px 0;
+		}
+		#firstDiv{
+			margin-top: 20px;
+		}
+		.span1{
+			font-size: 20px;
+		}
+		.span1 span{
+			font-size: 28px;
+		}
+		#start{
+			margin-top: 5px;
+			width: 80%;
+			line-height: 50px;
+			font-size: 20px;
+			color: #fff;
+			background: orange;
+			border: none;
+			border-radius: 10px;
+			box-shadow: 5px 5px 6px #888;
+		}
+		table,th,td {
+			color: #fff;
+			border: 1px solid #fff;
+			font-size: 18px;
+		}
+		
+		#myNum,#myEnd{
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom:0;
+			margin: auto;
+			width: 65%;
+			height: 180px;
+			background: #fff;
+			border-radius: 5px;
+			overflow: hidden;
+		}
+		#myNum .title,#myNum p,#myEnd .title,#myEnd p{			
+			text-align: center;
+			margin: 0;
+		}
+		#myNum .title{
+			height: 50px;
+			line-height: 50px;
+			border-bottom: 1px solid #ccc;
+		}
+		#myNum p,#myEnd p{
+			font-size: 16px;	
+		}
+		#myNum .myMess{
+			height: 80px;
+			line-height: 80px;
+			padding: 0 10px;
+		}
+		#myEnd .title{
+			height: 50px;
+			line-height: 50px;
+		}
+		#myEnd .myMess{
+			height: 80px;
+			padding: 0 10px;
+		}
+		#myNum .ok,#myEnd .ok{
+			height: 50px;
+			line-height: 50px;
+			background: aqua;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+			
+		<!--遮罩层显示-->
+		<div id="mask"> 
+			<div class="wenzi">
+				<h1>使用说明</h1>
+				<p>1. 舒尔特-字母表格：此表格是一个5*5的表格。</p>
+				<p>2.舒尔特训练的目的是拓宽你的视野能力，以及关键字抓取能力，</p>
+				<p>3.请盯着中间的数字，用余光扫视周围数字，尽量在25秒钟内，按顺序找完。</p>
+				<p>4.依次点击字母，将A-Y个字母按顺序找出。16秒为优秀；24秒为普通；28秒为合格；</p>
+				<p>5. 每天任务：每天练习1到5次。</p>
+			</div>
+			<div hidden="hidden">
+				第一等级5*5的，16秒为优秀；24秒为普通；28秒为合格；
+				第二等级6*6的，22秒为优秀，28秒为普通；32秒为合格；
+				第三等级7*7的，28秒为优秀，34秒为普通；40秒为合格。
+			</div>
+			<button class="btn1">确定 </button>
+		</div>
+		<!--弹出提示-->
+		<div id="myNum">
+			<h2 class="title">提示</h2>
+			<p class="myMess">请点击字母：【<span class="mynum"></span>】</p>
+			<p class="ok" id="ok_id">确定</p>
+		</div>
+		<div id="myEnd">
+			<h2 class="title">完成</h2>
+			<p class="myMess">
+				您用时：
+				<span class="shi">1323</span>时
+				<span class="fen">23213</span>分
+				<span class="miao">23213</span>秒
+				<span class="ms">23213</span>毫秒
+			</p>
+			<p class="ok" id="ok_all">确定</p>
+		</div>
+		
+		<div class="header"> 
+			<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+			<p class="title">舒尔特表-字母</p>
+		</div>
+		<div id="show">
+			<p>点击计时按钮后依次点击A-Y</p>
+			<!--表格显示    -->
+			<div id="myTable">
+				<input id="shulte_text" type="hidden" value="65" />
+				<div class="slide" id="shulte" align="center">
+				</div>
+			</div>	
+			<!--时间显示    -->
+			<div id="firstDiv">
+				<div id="twoDiv" align="center" >
+					<span class="span1"><span id="hour">00 </span>时</span>
+					<span class="span1"><span id="minute">00 </span>分</span>
+					<span class="span1"><span id="second">00 </span>秒</span>
+					<span class="span1"><span id="ms">00 </span>毫秒</span><br />
+					<button id="start" onclick="startTime()">开始计时</button>
+					<input id="button_count" type="hidden" value="-1" />
+				</div>
+			</div>
+		</div>
+	</div>
+		
+		
+		
+	<script src="../../js/jquery-1.7.2.js"></script>
+	<script type="text/javascript">
+		//页面加载执行		
+		$(document).ready(function (){
+			$(".btn1").on("click",function(){
+				$("#mask").hide();
+			})
+			$("#myNum").hide();
+			$("#myEnd").hide();
+			showDiffGroup(5, 1, number);//加载舒尔特表格
+			$("#ok_id").on("click",function(){
+				$("#myNum").hide();
+				$("#myEnd").hide();
+				startTime();//开始计时
+			})
+			$("#ok_all").on("click",function(){
+				$("#myNum").hide();
+				$("#myEnd").hide();
+			})
+		});
+		//定义数组的截至数字
+	 	var number = 25;//数组25个数字
+		var array=new Array(number);//数组定义
+		var count = 0;//时间秒数记录
+		//二维数组
+		function getDiffGroup(num, min, max) {
+		    var res = [];
+		    for (var i = min; i <= max; i++){ //从最小数开始 加一 到最大数
+		    	//大写字母A:65 由65开始计算
+		    	res.push(String.fromCharCode((64 + i)));//将所有的数 push到数组中
+		    }
+			res.sort(function () { 
+				return 0.5 - Math.random(); //随机数排序
+			});
+		    var rst = [];
+		    for (var i = 0; i < res.length; i += num){
+		    	rst.push(res.slice(i, i + num));//数组中放入截取后的数组
+		    }
+		    return rst;
+		}
+		
+		//调用二维数组，拼接到页面
+	 	function showDiffGroup(num, min, max){
+		    var rsts = getDiffGroup(5, 1, max);//5*5二维数组
+		    array = rsts;
+		    //console.log(rsts.join('\n'));
+		    //将二维数组放入页面
+		    //var div = document.getElementById('div1');
+		    //拼接table
+		    var str ="<table border='1' width='350' height='350' cellspacing='0' cellpadding='0' bgcolor='#FFA500'>";
+		    // 循环遍历二维数组
+		    for(var i = 0;i<rsts.length;i++){//循环最外面的数组
+		    	str+="<tr>";
+		        for(var j = 0;j<rsts[i].length;j++){//循环里面的数组
+		           	str+= "<td align='center' id='td"+i+j+"' name='"+(i+''+j)+"' onClick = 'td_click("+(i+''+j)+")' value='"+rsts[i][j]+"'>"+rsts[i][j]+"</td>";//拼接<td>
+		        }
+		        str+="</tr>";
+		    }
+		    str+="</table>";
+		    //将table添加到div中
+		    //div.innerHTML = str;
+		    $("#shulte").append(str);
+	   	}
+	 	
+	 	//在二维数组中查找数字 - 二维数组的下标
+	    function findNumber(target, array){
+		    //循环遍历查找下标 
+		    for(var i=0;i<array.length;i++){
+		    	for(var j=0;j<array[0].length;j++){
+		    		if(array[i][j] == target){
+		    			 return i+""+j;//查找到后返回下标
+		    		}
+		    	}
+		    }
+		    return -1;//没查找到返回-1
+		}
+	    
+		//表格点击事件
+		function td_click(td_flag){
+		 	//点击表格时，判断是否已经点击计时按钮，若未点击，自动计时
+		 	var i = $("#button_count").val();
+		 	if(i<0 ||i % 2 == 0){//未点击
+				startTime();//自动计时
+			}
+		 	var flag = "00";//数组下标
+		 	//循环遍历，查找数组的下标
+		    for(var i=1;i<=number;i++){
+		    	flag =findNumber(String.fromCharCode((64 + i)),array);//数字从A-Y开始查找。
+		    	if(td_flag == flag){
+		    		break;
+		    	}
+		    }
+		    //获取点击的字母值。
+		    var td_val =$("#td"+flag).text();
+		    //将字母转化成数字
+		    var num_val = td_val.charCodeAt(0);
+		    //获取点击次数 从65开始
+			var num=$("#shulte_text").val();
+			//判断点击次数是否比显示的个数少。
+			if((num-64)<=number){
+				//判断点击的数字为点击的次数，则正常排序，否则，排序错误，提示。
+				if(num== num_val){
+					num++;
+					if((num-64)>number){//点击数字完毕,触发暂停事件
+						$("#button_count").attr("value",1);//页面数字是基数
+						startTime();//暂停时间
+						//显示使用的时间
+						var hour = $("#hour").text();
+						var minute = $("#minute").text();
+						var second = $("#second").text();
+						var ms = $("#ms").text();
+						$(".mynum").text(String.fromCharCode(num));
+						$(".shi").text(hour);
+						$(".fen").text(minute);
+						$(".miao").text(second);
+						$(".ms").text(ms);
+						$("#myEnd").show();
+						//alert("您用时："+hour+"时"+minute+"分"+second+"秒"+ms+"毫秒");
+						
+//						$("#hour").html("00");
+//						$("#minute").html("00");
+//						$("#second").html("00");
+//						$("#ms").html("00");
+						$(".span1 span").html("00");
+						$("#start").html("开始计时");
+						count=0;//将时间秒数重新设置为0
+						$("#shulte_text").attr("value",65);//点击次数设置为65
+						$("#button_count").attr("value",-1);//计时时间设置为偶数
+						$("#shulte").empty(); //将舒尔特表的div清空
+						showDiffGroup(5, 1, number);//重新生成5*5舒尔特表
+					}else{//1-25 点击次数赋值
+						$("#shulte_text").attr("value",num);//推荐这种写法,可正常赋值
+					}
+					
+				}else{
+					//alert("请点击："+num);
+					$(".mynum").text(String.fromCharCode(num));
+					$("#myNum").show();
+					startTime();
+				}
+			}
+		}
+		
+		//拼接时间
+		var intervalId;
+		function startTime() {
+			var i = $("#button_count").val();
+			if(i<0){
+				i = 0;
+			}
+			var hour = document.getElementById("hour");
+			var minute = document.getElementById("minute");
+			var second = document.getElementById("second");
+			var ms = document.getElementById("ms");
+			var buttonEle = document.getElementById("start");
+		//console.log(count);
+			
+			if(i % 2 == 0) {
+				buttonEle.innerHTML = "暂停计时";
+				intervalId = setInterval(function() {
+					count += 1;
+					var thehour = parseInt(count / 360000);
+					var theminute = parseInt(count / 6000 % 60);
+					var thesecond = parseInt(count / 100 % 60);
+					var thems = parseInt(count % 100);
+		
+					if(thehour >= 10) {
+						hour.innerHTML = thehour + " ";
+					} else {
+						hour.innerHTML = "0" + thehour + " ";
+					}
+		
+					if(theminute >= 10) {
+						minute.innerHTML = theminute + " ";
+					} else {
+						minute.innerHTML = "0" + theminute + " ";
+					}
+		
+					if(thesecond >= 10) {
+						second.innerHTML = thesecond + " ";
+					} else {
+						second.innerHTML = "0" + thesecond + "  ";
+					}
+					if(thems >= 10) {
+						ms.innerHTML = thems + "&nbsp;";
+					} else {
+						ms.innerHTML = "0" + thems + "&nbsp;";
+					}
+				}, 10)
+			} else {
+				buttonEle.innerHTML = "计时继续";
+				clearInterval(intervalId);
+			}
+			$("#button_count").attr("value",++i);//页面数字自加1
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>人名作品记忆-老舍</title>
+	<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">
+	<style>
+		.container{
+			padding-top: 60px;
+		}
+		.header{
+			position: fixed;
+			left: 0;
+			top: 0;
+		}
+		#show{
+			background: #fff;			
+		}
+		#show .showT{
+			text-align: center;
+			font-size: 22px;
+			color: red;
+			margin-top: 10px;
+			padding-top: 20px;
+		}
+		.works,.memory{
+			padding: 0 10px;
+			margin: 10px 0;
+		}
+		.works .worksT, .memory .memoryT{
+			line-height: 50px;
+			font-size: 18px;
+		} 
+		.works .worksM, .memory .memoryM{
+			line-height: 28px;
+			font-size: 16px;
+			text-indent: 2em;
+		}
+		.memory .memoryM span{
+			font-size: 18px;
+			/*background: yellow;
+			color: red;*/
+			background: #666;
+			color: #fff;
+		} 
+	</style>
+</head>
+<body>
+	<div class="container">
+		<!--遮罩层显示-->
+		<div id="mask1"> 
+			<div class="wenzi">
+				<h1>使用说明</h1>
+				<p>1. 快速记忆；</p>
+				<p>2. 通过编故事，快速记忆人名及作品。</p>
+			</div>
+			<button class="btn1">确定</button>
+		</div>
+		
+		<div class="header"> 
+			<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+			<p class="title">老舍-作品</p>
+		</div>
+		<div id="show">
+			<p class="showT"> 老舍作品集</p>
+			<div class="works">				
+				<p class="worksT">老舍的主要作品有：</p>
+				<p class="worksM">
+					<span>《骆驼祥子》</span>
+					<span>《小坡的生日》</span>
+					<span>《二马》</span>
+					<span>《赶集》</span>
+					<span>《茶馆》</span>
+					<span>《女店员》</span>
+					<span>《戏剧集》</span>
+					<span>《我这一辈子》</span>
+					<span>《青年突击队》</span>
+					<span>《猫城记》</span>
+					<span>《方珍珠》</span>
+					<span>《龙须沟》</span>
+				</p>
+			</div>
+			<div class="memory">				
+				<p class="memoryT">联想记忆法：</p>
+				<p class="memoryM">
+					<span>骆驼祥子</span>在
+					<span>小坡的生日</span>的时候，骑着
+					<span>二</span>匹
+					<span>马</span>去
+					<span>赶集</span>，到了街上之后先去
+					<span>茶馆</span>喝了一杯茶，遇见一个
+					<span>女店员</span>和他聊天，说到有两部
+					<span>戏剧集</span>非常好看，
+					<span>我这一辈子</span>都没看过。一部是
+					<span>青年突击</span>，一部是
+					<span>猫城记</span>，看了电影去给小坡买生日礼物，买了一颗
+					<span>方珍珠</span>，在回去的路上，珍珠掉在了
+					<span>龙须沟</span>里面，掉下去砸到了
+					<span>老舍</span>。
+				</p>
+			</div>
+		</div>
+	</div>	
+		
+	<script src="../../js/jquery-1.7.2.js"></script>
+	<script type="text/javascript">
+		$(".btn1").on("click",function(){
+			$("#mask1").hide();
+		})
+	</script>
+</body>
+</html>

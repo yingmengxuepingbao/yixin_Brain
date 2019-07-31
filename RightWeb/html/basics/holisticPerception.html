@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>整体感知训练</title>
+	<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">
+	<style>
+		#show{
+			background: #fff;
+		}
+		#show p{
+			text-align: center;
+			font-size: 22px;
+			color: red;
+			margin-top: 10px;
+			padding: 20px 0;
+		}
+		#can{
+			width: 300px;
+			height: 300px;
+			border: 2px dashed #666;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">		
+		
+		<!--遮罩层显示-->
+		<div id="mask"> 		
+			<div class="wenzi">
+				<h1>使用说明</h1>
+				<p>1. 将动态感知图片放在距离眼睛 30-40 厘米的地方，凝神 30 - 60秒；</p>			
+				<p>2. 不断进行训练，可让眼睛看到的图象范围更加宽阔；</p>			
+				<p>3. 速度快时可实现一目十行。</p>			
+			</div>
+			<button class="btn1">确定 </button>
+		</div>
+		
+		<div class="header"> 
+			<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+			<p class="title">动态感知</p>
+		</div>
+		<!-- 画布-->
+		<div id="show">
+			<p>盯着中心红点看 </p>
+			<div id="centerPoint" align="center">
+		 		<canvas id="can"></canvas>
+			</div>
+		</div>
+	</div>
+		
+	<script src="../../js/jquery-1.7.2.js"></script>
+	<script type="text/javascript"> 
+			$(".btn1").on("click",function(){
+				$("#mask").hide();
+			})
+			
+			//擦除canvas画布
+			function clearCanvas(){
+				$('#can').remove();//移除画布
+		    	$('#centerPoint').append('<canvas id="can" width="300px" height="300px" style="border:2px dashed #666"></canvas>');
+				//画出中心红点
+			    var can = document.getElementById("can");
+			    var cans = can.getContext('2d'); //得到画笔
+			    cans.beginPath();//开始绘制新路径
+			    //arc(x, y, radius, startAngle, endAngle, counterclockwise)：
+			    //以(x,y)为圆心绘制一条弧线，弧线半径为radius，起始和结束角度（用弧度表示）分别为startAngle 和endAngle。最后一个参数表示startAngle 和endAngle 是否按逆时针方向计算，值为false表示按顺时针方向计算。
+			    cans.arc(150,150,5,0,2*Math.PI);//参数1：左右移动；参数2：上下移动；参数3：大小；参数4：图形显示百分比
+			    cans.closePath();
+			    cans.fillStyle = '#FF0000';
+			    cans.fill();
+		   	}
+	    
+	    	var base=20;//基数
+	    	var multiple = 1;//倍数
+		    //画线
+		    function showLogin(){
+				arrow_line("can",150,150,0,0,base*multiple,0);   //横  （向右）
+			    arrow_line("can",0,0,0,0,-(base*multiple/1.5),base*multiple/1.5);    //左斜下 
+			    arrow_line("can",-(base*multiple),0,base*multiple,0,0,0);   //横  （向左）
+			    arrow_line("can",base*multiple,-(base*multiple),0,base*multiple,0,0);   //竖 (向上) 
+			    arrow_line("can",0,0,0,base*multiple,(base*multiple)/1.5,((base*multiple)/5));   //右斜上
+			    arrow_line("can",0,0,0,base*multiple,(base*multiple)-((base*multiple)/5),((base*multiple)+((base*multiple)/1.5)));   //右斜下
+		     	arrow_line("can",-(base*multiple),0,base*multiple,base*multiple,(base*multiple/3),(base*multiple/4));   //左斜上
+		    	arrow_line("can",0,-(base*multiple),(base*multiple),(base*multiple*2),(base*multiple),(base*multiple*3));  //竖 (向下) 
+		    }
+	     
+			//setInterval("","1000");//每隔一秒自动执行函数
+		    var intr =setInterval(function(){
+		    	if (multiple<=7) {
+		    		clearCanvas();//清除画布
+		    		showLogin();//画线
+		    		multiple++;
+		    	}else{
+		    		multiple=1;
+		    		clearCanvas();//清除画布
+		    		showLogin();//画线
+		    		multiple++;
+		    	}
+			},1000);
+	   
+	  		//画带箭头的线
+			function arrow_line(canId,ox,oy,x1,y1,x2,y2){
+				//参数说明 canvas的 id ，原点坐标  第一个端点的坐标，第二个端点的坐标
+				var sta = new Array(x1,y1);
+				var end = new Array(x2,y2);
+				var canvas = document.getElementById(canId);
+				if(canvas == null)return false;
+				var ctx = canvas.getContext('2d');
+				//画线 
+				ctx.beginPath(); 
+				ctx.translate(ox,oy,0); //坐标源点 
+				ctx.moveTo(sta[0],sta[1]); 
+				ctx.lineTo(end[0],end[1]); 
+				ctx.fill();
+				ctx.stroke(); 
+				ctx.save();
+				//画箭头 
+				ctx.translate(end[0],end[1]);
+				//我的箭头本垂直向下，算出直线偏离Y的角，然后旋转 ,rotate是顺时针旋转的，所以加个负号
+				var ang=(end[0]-sta[0])/(end[1]-sta[1]);
+				ang=Math.atan(ang);
+				if(end[1]-sta[1] >= 0){
+					ctx.rotate(-ang);
+				}else{
+					ctx.rotate(Math.PI-ang);//加个180度，反过来
+				} 
+				ctx.lineTo(-5,-10); 
+				ctx.lineTo(0,-5); 
+				ctx.lineTo(5,-10); 
+				ctx.lineTo(0,0); 
+				ctx.fill(); //箭头是个封闭图形
+				ctx.restore();   //恢复到堆的上一个状态，其实这里没什么用。
+				ctx.closePath(); 
+			}
+	</script> 
+</body>
+</html>
