@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvasDemo1</title>
+    <style>
+        html,body,canvas{margin:0;padding:0}
+        body{overflow:hidden}
+    </style>
+    <script>
+        window.onload=function(){
+
+            (function canvas1(){
+
+                var oCanvas=document.getElementsByTagName('canvas')[0];
+                var ctx=oCanvas.getContext('2d');
+                var colorArr=["#E08031","#199475","#99CC99","#09C","#096"];
+                var x,y,r,xr,yr,d;
+                var loveArr=[];
+                var w=window.innerWidth;
+                var h=window.innerHeight;
+                oCanvas.width=w;
+                oCanvas.height=h;
+                function random(min,max){
+                    return Math.random()*(max-min)+min;   //数学上的random()是返回一个比例值
+                }
+                function Love(){}
+                Love.prototype={
+                    init:function(){
+                        //这4个是基础定义，设置球初始坐标，初始大小及颜色
+                        this.r=random(10,15);
+                        this.x=random(this.r,w-this.r);
+                        this.y=random(this.r,h-this.r);
+                        this.color=colorArr[Math.floor(random(0,5))];
+                        //设置球移动的速率
+                        this.xr=random(-5,5);
+                        this.yr=random(-5,5);
+                    },
+                    draw:function(){ //画布基本操作，这里是画一个小球
+                        ctx.beginPath();
+                        ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+                        ctx.fillStyle=this.color;
+                        ctx.fill();
+                    },
+                    move:function(){   //小球移动
+                        this.x+=this.xr;
+                        this.y+=this.yr;
+                        (this.x+this.r>=w||this.x-this.r<=0)?this.xr=-this.xr:null; //边缘碰撞判定
+                        (this.y+this.r>=h||this.y-this.r<=0)?this.yr=-this.yr:null;
+                        this.draw();
+                    }
+                };
+                function create(){   //画小球
+                    var bubble=new Love();
+                    bubble.init();
+                    bubble.draw();
+                    loveArr.push(bubble);//把每个小球对象存进数组里面
+                }
+
+                for(var i=0;i<50;i++){  //一次性画50个，修改画布上的小球数目也从这里效果修改
+                        create();
+                    }
+
+                var time=setInterval(function(){
+                    ctx.clearRect(0,0,w,h); //清空画布
+                    for(var i=0;i<loveArr.length;i++){
+                        loveArr[i].move();
+                        //把之前存进数组的小球对象数据一个个拿出了（遍历），并做了一个预先设计好的位移
+                    }
+                },1000/60);
+                oCanvas.onclick=function(){
+                    clearInterval(time);
+                }
+
+            })();
+
+        }
+    </script>
+</head>
+<body>
+<canvas></canvas>
+</body>
+</html>
