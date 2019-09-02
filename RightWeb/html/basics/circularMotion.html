@@ -18,8 +18,8 @@
 	window.onload=function(){
 		//匀速圆周运动
 	    var canvas_one=document.getElementById('canvas_one');
-	    canvas_one.height=400;
-	    canvas_one.width=400;
+	    canvas_one.height=360;
+	    canvas_one.width=360;
 	    var context=canvas_one.getContext('2d');
 	    drawNotChange(context);
 	    context.fillStyle='blue';
@@ -32,8 +32,8 @@
 	    }, 50);
 	    //匀速椭圆运动
 	    var canvas_two=document.getElementById('canvas_two');
-	    canvas_two.height=400;
-	    canvas_two.width=400;
+	    canvas_two.height=350;
+	    canvas_two.width=350;
 	    var cxt=canvas_two.getContext('2d');
 	    centerPoint(cxt);
 	    arcRoute(cxt,180,180,a,b,radius);
@@ -103,12 +103,12 @@ function arcRoute(context,x,y,a,b,r){
     context.fillStyle="red";
     if(time_two==0){
         context.beginPath();
-        context.arc(x,y,r,0,2*Math.PI,true);
+        context.arc(x,y,r,0,8*Math.PI,true);
         context.closePath();
         context.fill();
     }else{
     context.beginPath();
-    context.arc(x+a*Math.cos(time_two),y+b*Math.sin(time_two),r,0,2*Math.PI,true);
+    context.arc(x+a*Math.cos(time_two),y+b*Math.sin(time_two),r,0,8*Math.PI,true);
     context.closePath();
     context.fill();
     }

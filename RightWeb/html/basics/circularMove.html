@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>小球移动-专注力练习</title>
+</head>
+	<body>
+		 <canvas id="canvas_one"></canvas>
+		 
+		<script type="text/javascript" > 
+		
+		window.onload=function(){
+			var a=150,b=80,radius=30;
+			var canvas_one=document.getElementById('canvas_one');
+		    canvas_one.height=350;
+		    canvas_one.width=350;
+		    var context=canvas_one.getContext('2d'); 
+		    path(context);//绘制路径
+		    drawNotChange(context);//绘制小球
+		   setInterval(function(){
+		        arcRoute(context);
+		    }, 50);
+		}
+var x = 30; // 圆角矩形左上角横坐标
+var y = 30; // 圆角矩形左上角纵坐标
+var width = 300; // 圆角矩形的宽度
+var height = 300; // 圆角矩形的高度
+var radius = 20; // 圆角的半径
+//绘制路径
+function path(context){
+	//----路径开始
+	// 开始创建新路径
+	context.beginPath();
+	// 绘制左上角圆角
+	context.arc(x + radius, y + radius, radius, Math.PI, Math.PI * 3 / 2);
+	// 绘制顶边路径
+	context.lineTo(width - radius + x, y);
+	// 绘制右上角圆角
+	context.arc(width - radius + x, radius + y, radius, Math.PI * 3 / 2, Math.PI * 2);
+	// 绘制右边路径
+	context.lineTo(width + x, height + y - radius);
+	// 绘制右下角圆角
+	context.arc(width - radius + x, height - radius + y, radius, 0, Math.PI * 1 / 2);
+	// 绘制底边路径
+	context.lineTo(radius + x, height +y);
+	// 绘制左下角圆角
+	context.arc(radius + x, height - radius + y, radius, Math.PI * 1 / 2, Math.PI);
+	// 闭合路径 也可使用 context.lineTo(x, y + radius);
+	context.closePath();
+	// 设置绘制的颜色
+	context.strokeStyle = '#188eee';
+	context.stroke();
+	//----路径结束
+}
+
+//绘制运动小球
+function drawNotChange(context){
+	//蓝色运动小球
+	context.fillStyle='blue';
+    context.beginPath();
+    context.arc(320,320,20,0,2*Math.PI,true);
+    context.closePath();
+    context.fill();
+    //红色中心点
+    context.fillStyle='red';
+    context.beginPath();
+    context.arc(180,180,10,0,2*Math.PI,true);
+    context.closePath();
+    context.fill();
+}
+
+var time_one=0;//定义运动的执行次数
+function arcRoute(cxt){
+    cxt.clearRect(0,0,320,320);  
+    path(cxt);
+    drawNotChange(cxt);
+    cxt.save();//将当前以左上角坐标为(0,0)的上下文环境进行保存，这样是为了在接下来中要进行画布偏移后，可以进行还原当前的环境
+    cxt.translate(150,150);//元素在水平方向和垂直方向同时移动（X轴和Y轴同时移动）；
+    //cxt.translate(150,150);
+    //cxt.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+    /*cxt.rotate(time_one*8*Math.PI/180);//设定每次旋转的度数*/
+    cxt.fillStyle='blue';
+    cxt.beginPath();
+    cxt.arc(0,180,20,0,2*Math.PI,false);
+    cxt.closePath();
+    cxt.fill();
+    cxt.restore();//将当前为(180,180)的点还原为（0,0）,其实在save中就是将上下文环境保存到栈中，在restore下面对其进行还原
+    time_one+=1;
+}
+		</script>
+	</body>
+</html>

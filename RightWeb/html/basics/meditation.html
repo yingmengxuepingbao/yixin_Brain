@@ -56,57 +56,21 @@
 				<audio src="../../music/1.mp3" id="audioDom" controls="controls" ></audio>
 			</div>
 			<!--选择文件-->
-			<div class="myFile">
-				<span >选择播放音频:</span>
-				<input type="file" id="selectFiles" onchange="dealSelectFiles(this)" accept=".mp3" >
-				<canvas id="myCanvas" width=500 height=500></canvas>
-			</div>
+			<!--<div class="myFile">
+				<span>选择播放音频:
+					<!--上传文件夹：webkitdirectory --
+					<input type="file" id="fileUrl" accept=".mp3" multiple="multiple" >
+					
+			    </span>
+			    
+			</div>-->
 		</div>
 		
 	</div>
-	<script type="text/javascript">
+	<script type="text/javascript" charset="UTF-8">
 		$(".btn1").on("click",function(){
 			$("#mask").hide();
 		})
-		
-		function dealSelectFiles(obj){
-			var filePath =$("#selectFiles").files;
-			alert(filePath);
-			var fullPath = window.URL.createObjectURL(file);
-			alert(fullPath);
- 			if (fullPath) {
-		        document.getElementById("audioDom").src = fullPath + "";
-		    }
-		}
-		/*//获取绝对路径
-		function getFullPath(obj) {
-		    if (obj) {
-		        //Internet Explorer 
-		        if (window.navigator.userAgent.indexOf("MSIE") >= 1) {
-		            obj.select();
-		            return document.selection.createRange().text;
-		        } 
-		        //Firefox
-		        if (window.navigator.userAgent.indexOf("Firefox") >= 1) {
-		            if (obj.files) {
-		                return obj.files.item(0).getAsDataURL();
-		            }
-		            return obj.value;
-		        } 
-		 
-		        //兼容chrome、火狐等，HTML5获取路径       
-		        if (typeof FileReader != "undefined") {
-		            var reader = new FileReader();
-		            reader.onload = function(e) {
-		                document.getElementById("audioDom").src = e.target.result + ""; 
-		            }
-		            reader.readAsDataURL(obj.files[0]);
-		        } else if (browserVersion.indexOf("SAFARI") > -1) {
-		            alert("暂时不支持Safari浏览器!");
-		        }
-		 
-		    } 
-		}*/
 	</script>
 	
 	
