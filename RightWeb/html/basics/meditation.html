@@ -55,12 +55,11 @@
 			<div class="myAudio">
 				<audio src="../../music/1.mp3" id="audioDom" controls="controls" ></audio>
 			</div>
-			<!--选择文件-->
+			<!--选择文件   webkitdirectory-->
 			<!--<div class="myFile">
 				<span>选择播放音频:
-					<!--上传文件夹：webkitdirectory --
-					<input type="file" id="fileUrl" accept=".mp3" multiple="multiple" >
-					
+					上传文件：
+					<input type="file" id="files" accept=".mp3" multiple="multiple" >
 			    </span>
 			    
 			</div>-->
@@ -71,6 +70,22 @@
 		$(".btn1").on("click",function(){
 			$("#mask").hide();
 		})
+		
+		
+		/*window.onload=function(){ 
+		 var fs = document.getElementById("files"); 
+		 
+		 fs.onchange = function(){ //获取文件对象 
+                var file = this.files[0]; 
+                //使用fileReader对文件对象进行操作 
+                var reader = new FileReader(); 
+                reader.readAsDataURL(file); 
+                reader.onload = function(){ 
+                	alert(reader.result);
+                  //  console.log(reader.result); 
+                } 
+		 }
+		}*/
 	</script>
 	
 	

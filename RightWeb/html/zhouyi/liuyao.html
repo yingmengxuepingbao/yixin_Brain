@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>六爻排盘</title>
+		<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">	
+		<script type="text/javascript" src="../../js/jquery-1.7.2.js" ></script>
+		<script type="text/javascript" src="../../js/data_time.js" ></script>
+		<style>
+			#show{
+				background: #DEB887;
+			}
+			#show p{
+				text-align: center;
+				font-size: 18px;
+				color: black;
+				margin-top: 10px;
+				padding: 20px 0;
+			}
+			.buzhou{
+				color: #000000;
+				border: 1px solid #000000;
+				font-size: 16px;
+			}
+			.time{
+				border:0px;
+				width: 45px;
+				font-size:22px;
+				disabled:true;
+				color: red;
+			}
+			.div_bingpai{
+				background: #DEB887;
+				width:25%; 
+				height:auto; 
+				float:left; 
+				display:inline
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<!--遮罩层显示-->
+			<div id="mask" style="background: #DEB887;"> 
+				<div class="wenzi">
+					<h1>摇卦步骤</h1>
+					<p>所问之事：<input class="buzhou" type="text" id="question"/></p>
+					<p>性别：<input type="radio"  name="sex" checked="checked" value="1">男</input><input type="radio" name="sex" value="0">女</input></p>
+					<p>记录三枚硬币或铜钱摇出来的结果：如：正正反 或 阴（阴变）/阳（阳变）</p>
+					<p>第一次正反：<input class="buzhou" type="text" id="one"/> </p>
+					<p>第二次正反：<input class="buzhou" type="text" id="two"/> </p>
+					<p>第三次正反：<input class="buzhou" type="text" id="three"/> </p>
+					<p>第四次正反：<input class="buzhou" type="text" id="four"/> </p>
+					<p>第五次正反：<input class="buzhou" type="text" id="five"/> </p>
+					<p>第六次正反：<input class="buzhou" type="text" id="six"/> </p>
+				</div>
+				<button class="btn1" style="background: #FFA042;">确定</button>
+			</div>
+			<!-- 标头-->
+			<div class="header"> 
+				<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+				<p class="title">六爻排盘</p>
+			</div>
+			<div id="show">
+				<p>起卦时间：
+					<input type="text" class="time"  id="year" /> 年</input> 
+					<input type="text" class="time"  id="month" /> 月</input>
+					<input type="text" class="time"  id="day" /> 日</input>
+					&nbsp;&nbsp;(<input type="text" class="time"  id="kongwang">)
+				</p>
+				<p>性别：<input type="text" class="time" id="sex2" /></p>
+				<p>所问之事：<input type="text" class="time" id="question2"/> </p>
+				<div id="liuyao">
+					<div id="zhenggua" class="div_bingpai">
+						
+					</div>
+					<div id="zhigua" class="div_bingpai">
+						
+					</div>
+				</div>
+			</div>
+	</div>
+	
+	<script type="text/javascript" charset="UTF-8">
+		$(".btn1").on("click",function(){
+			//使用说明：将输入的值做相应的处理
+			//所问之事
+			var question =$("#question").val();
+			if(question==null ||question==""||question=="undefined"){
+				alert("请输入所问之事！");
+				return;
+			}
+			//性别
+			var sex = $("input:radio:checked").val();
+			if(sex==1){
+				sex = "男";
+			}else{
+				sex = "女";
+			}
+			//硬币结果
+			var fanzheng_one = $("#one").val();
+			var fanzheng_two = $("#two").val();
+			var fanzheng_three = $("#three").val();
+			var fanzheng_four = $("#four").val();
+			var fanzheng_five = $("#five").val();
+			var fanzheng_six = $("#six").val();
+			
+			var  myLiuYao= new Array();
+			
+			//统一转换成阴/阳/阴变/阳变
+			if(fanzheng_one!=""&&fanzheng_one!=null&&fanzheng_one!='undefined'){
+				fanzheng_one = jiaoyan(fanzheng_one,"一");
+			}else{
+				alert("请输入第一次正反结果");
+				return;
+			}
+			if(fanzheng_two!=""&&fanzheng_two!=null&&fanzheng_two!='undefined'){
+				fanzheng_two = jiaoyan(fanzheng_two,"二");
+			}else{
+				alert("请输入第二次正反结果");
+				return;
+			}
+			if(fanzheng_three!=""&&fanzheng_three!=null&&fanzheng_three!='undefined'){
+				fanzheng_three = jiaoyan(fanzheng_three,"三");
+			}else{
+				alert("请输入第三次正反结果");
+				return;
+			}
+			if(fanzheng_four!=""&&fanzheng_four!=null&&fanzheng_four!='undefined'){
+				fanzheng_four = jiaoyan(fanzheng_four,"四");
+			}else{
+				alert("请输入第四次正反结果");
+				return;
+			}
+			if(fanzheng_five!=""&&fanzheng_five!=null&&fanzheng_five!='undefined'){
+				fanzheng_five = jiaoyan(fanzheng_five,"五");
+			}else{
+				alert("请输入第五次正反结果");
+				return;
+			}
+			if(fanzheng_six!=""&&fanzheng_six!=null&&fanzheng_six!='undefined'){
+				fanzheng_six = jiaoyan(fanzheng_six,"六");
+			}else{
+				alert("请输入第六次正反结果");
+				return;
+			}
+			if(fanzheng_one==false||fanzheng_two==false||fanzheng_three==false||fanzheng_four==false||fanzheng_five==false||fanzheng_six==false){
+				return;
+			}else{
+				//倒序排列
+				myLiuYao.push(fanzheng_six);
+				myLiuYao.push(fanzheng_five);
+				myLiuYao.push(fanzheng_four);
+				myLiuYao.push(fanzheng_three);
+				myLiuYao.push(fanzheng_two);
+				myLiuYao.push(fanzheng_one);
+			}
+			
+			var zhi_year="";
+			var kongwang="";
+			var date = new Date();
+			//date .getYear(); //获取当前年份(2位)
+			var year = date.getFullYear(); //获取完整的年份(4位)
+			var month = date.getMonth(); //获取当前月份(0-11,0代表1月)
+			var day = date.getDate(); //获取当前日(1-31)
+			var data =  calendar.solar2lunar(year,month+1,day);
+			//console.log(JSON.stringify(data));
+			 for (var key in data) {
+			 	year = data["gzYear"];
+			 	zhi_year=data["Animal"];
+			 	month = data["gzMonth"];
+			 	day = data["gzDay"];
+			 	kongwang = data["kongwang"];
+			 }
+			
+			//年
+			$("#year").val(year);
+			//月
+			$("#month").val(month);
+			//日
+			$("#day").val(day);
+			//旬空
+			$("#kongwang").val(kongwang);
+			//性别
+			$("#sex2").val(sex);
+			//所问之事
+			$("#question2").val(question);
+			
+			//var flagName = ["阴变","阴变","阳","阳","阳","阳"]; bagua(flagName);
+			var myLiuYaoArr = bagua(myLiuYao);
+			if(myLiuYaoArr.length>0){
+				for(var q = 0;q < myLiuYaoArr[0].length; q++){
+					//正卦
+					$("#zhenggua").append(myLiuYaoArr[0][q]+"</br>");
+					
+				}
+				for(var k = 0;k < myLiuYaoArr[1].length; k++){
+					//之卦
+					$("#zhigua").append(myLiuYaoArr[1][k]+"</br>");
+				}
+				
+			}
+				
+			
+			
+			//遮罩层隐藏
+			$("#mask").hide();
+		});
+		
+	//八卦
+	function bagua(flagName){
+		var  myLiuYaoNew= new Array();
+		var  myLiuYao= new Array();
+		var  myLiuYaoTwo= new Array();
+		//如果是阴，拼接“ - - ” 如果是阳拼接“——” 如果是阴变“- - ×” 如果是阳变“—— ·”
+		if(flagName.length>0){
+			var shi="";
+			var ying="";
+			//添加世应 ⚪⚪⚪ 上爻世 三爻应
+			//⚪⚪⚪ 上爻世 三爻应
+			if(flagName[0].substring(0,1)==flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)==flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)==flagName[flagName.length-1].substring(0,1)){
+				shi = flagName.length-6;
+				ying = flagName.length-3;
+			}
+			//下一持世
+			if(flagName[0].substring(0,1)==flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)==flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)!=flagName[flagName.length-1].substring(0,1)){
+				shi = flagName.length-1;
+				ying =flagName.length-4;
+				
+			}
+			//下二持世
+			if(flagName[0].substring(0,1)==flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)!=flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)!=flagName[flagName.length-1].substring(0,1)){
+				shi = flagName.length-2;
+				ying =flagName.length-5;
+			}
+			//下三持世
+			if(flagName[0].substring(0,1)!=flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)!=flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)!=flagName[flagName.length-1].substring(0,1)){
+				shi = flagName.length-3;
+				ying =flagName.length-6;
+			}
+			//上四持世
+			if(flagName[0].substring(0,1)!=flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)!=flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)==flagName[flagName.length-1].substring(0,1)){
+				shi = flagName.length-4;
+				ying =flagName.length-1;
+			}
+			//上五持世
+			if(flagName[0].substring(0,1)!=flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)==flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)==flagName[flagName.length-1].substring(0,1)){
+				shi = flagName.length-5;
+				ying =flagName.length-2;
+			}
+			//上四持世
+			if(flagName[0].substring(0,1)!=flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)==flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)!=flagName[flagName.length-1].substring(0,1)){
+				shi = flagName.length-4;
+				ying =flagName.length-1;
+			}
+			//下三持世
+			if(flagName[0].substring(0,1)==flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)!=flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)==flagName[flagName.length-1].substring(0,1)){
+				shi = flagName.length-3;
+				ying =flagName.length-6;
+			}
+			for(var i=0;i<flagName.length;i++){
+				
+				if(flagName[i]=="阴"){
+					if(i==shi){
+						myLiuYao.push("- - 世");
+						myLiuYaoTwo.push("- - ");
+					}else if(i==ying){
+						myLiuYao.push("- - 应");
+						myLiuYaoTwo.push("- - ");
+					}else{
+						myLiuYao.push("- - ");
+						myLiuYaoTwo.push("- - ");
+					}
+				}
+				if(flagName[i]=="阳"){
+					if(i==shi){
+						myLiuYao.push(" ——  世");
+						myLiuYaoTwo.push(" —— ");
+					}else if(i==ying){
+						myLiuYao.push(" ——  应");
+						myLiuYaoTwo.push(" —— ");
+					}else{
+						myLiuYao.push(" —— ");
+						myLiuYaoTwo.push(" —— ");
+					}
+				}
+				if(flagName[i]=="阴变"){
+					if(i==shi){
+						myLiuYao.push(" - - × 世");
+						myLiuYaoTwo.push(" —— ");
+					}else if(i==ying){
+						myLiuYao.push(" - - × 应");
+						myLiuYaoTwo.push(" —— ");
+					}else{
+						myLiuYao.push("- - ×");
+						myLiuYaoTwo.push(" —— ");
+					}
+				}
+				if(flagName[i]=="阳变"){
+					if(i==shi){
+						myLiuYao.push(" —— · 世");
+						myLiuYaoTwo.push("- - ");
+					}else if(i==ying){
+						myLiuYao.push(" —— · 应");
+						myLiuYaoTwo.push("- - ");
+					}else{
+						myLiuYao.push(" —— ·");
+						myLiuYaoTwo.push("- - ");
+					}
+					
+				}
+			}
+		}
+		myLiuYaoNew.push(myLiuYao);
+		myLiuYaoNew.push(myLiuYaoTwo);
+		return myLiuYaoNew;
+	}
+	
+	//校验输入的硬币结果	
+	function  jiaoyan(flagName,number){
+		//阴
+			var yin =["正正反","正反正","反正正"];
+			//阳
+			var yang = ["反反正","反正反","正反反"];
+			//阴变
+			var yinbian = "反反反";
+			//阳变
+			var yangbian = "正正正";
+			//判断输入结果
+			if(flagName.length<=3){
+				//如果是一个字
+				if(flagName.length==1){
+					if(flagName!="阳" && flagName!="阴"){
+						alert("第"+number+"次正反:输入有误！");
+						return false;
+					}else{
+						return flagName;
+					}
+				}
+				//如果是两个字
+				if(flagName.length==2){
+					
+					if(flagName!="阳变" && flagName!="阴变"){
+						alert("第"+number+"次正反:输入有误！");
+						return false;
+					}else{
+						return flagName;
+					}
+				}
+				//如果是三个字
+				if(flagName.length==3){
+					if(yinbian==flagName){
+						flagName="阴变";
+						return flagName;
+					}
+					if(yangbian==flagName){
+						flagName="阳变";
+						return flagName;
+					}
+					for(j = 0; j < yin.length; j++) {
+   						if(flagName==yin[j]){
+   							flagName="阴";
+   							return flagName; 
+   						}
+					} 
+					for(k = 0; k < yang.length; k++) {
+   						if(flagName==yang[k]){
+   							flagName="阳";
+   							return flagName;
+   						}
+					} 
+				alert("第"+number+"次正反:输入有误！");
+				return false;
+				}
+			}else{
+				alert("第"+number+"次正反:输入有误！");
+				return false;
+			}
+	};
+	</script>
+	</body>
+</html>
