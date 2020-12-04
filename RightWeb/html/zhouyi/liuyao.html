@@ -29,13 +29,22 @@
 				disabled:true;
 				color: red;
 			}
+			.time1{
+				border:0px;
+				width: 68px;
+				font-size:18px;
+				disabled:true;
+				color: red;
+			}
 			.div_bingpai{
 				background: #DEB887;
 				width:25%; 
 				height:auto; 
 				float:left; 
-				display:inline
+				display:inline;
+				margin:0 auto;
 			}
+			
 		</style>
 	</head>
 	<body>
@@ -62,15 +71,29 @@
 				<p class="title">六爻排盘</p>
 			</div>
 			<div id="show">
-				<p>起卦时间：
-					<input type="text" class="time"  id="year" /> 年</input> 
-					<input type="text" class="time"  id="month" /> 月</input>
-					<input type="text" class="time"  id="day" /> 日</input>
-					&nbsp;&nbsp;(<input type="text" class="time"  id="kongwang">)
+				<p>
+					时间：
+					<input type="text" class="time1"  id="year1" style="width: 48px;" disabled> 年</input> 
+					<input type="text" class="time1"  id="month1" style="width: 30px;" disabled> 月</input>
+					<input type="text" class="time1"  id="day1" style="width: 30px;" disabled> 日</input>
+					&nbsp;&nbsp;<input type="text" class="time1"  id="shi1" disabled/>
+				   <br />  
+				      干支：
+					<input type="text" class="time"  id="year" disabled> 年</input> 
+					<input type="text" class="time"  id="month" disabled> 月</input>
+					<input type="text" class="time"  id="day" disabled> 日</input>
+					&nbsp;&nbsp;(<input type="text" class="time"  id="kongwang" disabled/>)
+					<br />
+					性别：
+					<input type="text" class="time" style="width: 30px;" id="sex2" disabled/>
+					<br />
+				       所问之事：
+				    <input type="text" class="time" id="question2" disabled/> 
 				</p>
-				<p>性别：<input type="text" class="time" id="sex2" /></p>
-				<p>所问之事：<input type="text" class="time" id="question2"/> </p>
 				<div id="liuyao">
+					<div id="liushen" class="div_bingpai">
+						
+					</div>
 					<div id="zhenggua" class="div_bingpai">
 						
 					</div>
@@ -164,6 +187,8 @@
 			var month = date.getMonth(); //获取当前月份(0-11,0代表1月)
 			var day = date.getDate(); //获取当前日(1-31)
 			var data =  calendar.solar2lunar(year,month+1,day);
+			
+			var year1="",month1="",day1="",shi1="";
 			//console.log(JSON.stringify(data));
 			 for (var key in data) {
 			 	year = data["gzYear"];
@@ -171,6 +196,9 @@
 			 	month = data["gzMonth"];
 			 	day = data["gzDay"];
 			 	kongwang = data["kongwang"];
+			 	year1=data["cYear"];
+			 	month1=data["cMonth"];
+			 	day1=data["cDay"];
 			 }
 			
 			//年
@@ -181,6 +209,18 @@
 			$("#day").val(day);
 			//旬空
 			$("#kongwang").val(kongwang);
+			//年
+			$("#year1").val(year1);
+			//月
+			$("#month1").val(month1);
+			//日
+			$("#day1").val(day1);
+			var obj=new Date();
+			var hour=obj.getHours();
+			var minute=obj.getMinutes();
+			var second=obj.getSeconds();
+			//时分
+			$("#shi1").val(hour+":"+minute+":"+second);
 			//性别
 			$("#sex2").val(sex);
 			//所问之事
@@ -189,18 +229,27 @@
 			//var flagName = ["阴变","阴变","阳","阳","阳","阳"]; bagua(flagName);
 			var myLiuYaoArr = bagua(myLiuYao);
 			if(myLiuYaoArr.length>0){
+				$("#zhenggua").append("<p>本卦</p></br>")
 				for(var q = 0;q < myLiuYaoArr[0].length; q++){
 					//正卦
 					$("#zhenggua").append(myLiuYaoArr[0][q]+"</br>");
 					
 				}
-				for(var k = 0;k < myLiuYaoArr[1].length; k++){
-					//之卦
-					$("#zhigua").append(myLiuYaoArr[1][k]+"</br>");
+				if(myLiuYaoArr[1].length>0){
+					$("#zhigua").append("<p>之卦</p></br>");
+					for(var k = 0;k < myLiuYaoArr[1].length; k++){
+						//之卦
+						$("#zhigua").append(myLiuYaoArr[1][k]+"</br>");
+					}
 				}
-				
 			}
-				
+			//六神排盘
+			var liushen = getLiuShen(day);
+			if(liushen.length>0){
+				for(var n=0;n<liushen.length;n++){
+					$("#liushen").append(liushen[n]+"</br>");
+				}
+			}
 			
 			
 			//遮罩层隐藏
@@ -286,29 +335,40 @@
 				}
 				if(flagName[i]=="阴变"){
 					if(i==shi){
-						myLiuYao.push(" - - × 世");
+						myLiuYao.push(" - - × 世 -->");
 						myLiuYaoTwo.push(" —— ");
 					}else if(i==ying){
-						myLiuYao.push(" - - × 应");
+						myLiuYao.push(" - - × 应 -->");
 						myLiuYaoTwo.push(" —— ");
 					}else{
-						myLiuYao.push("- - ×");
+						myLiuYao.push("- - ×  -->");
 						myLiuYaoTwo.push(" —— ");
 					}
 				}
 				if(flagName[i]=="阳变"){
 					if(i==shi){
-						myLiuYao.push(" —— · 世");
+						myLiuYao.push(" —— · 世 -->");
 						myLiuYaoTwo.push("- - ");
 					}else if(i==ying){
-						myLiuYao.push(" —— · 应");
+						myLiuYao.push(" —— · 应 -->");
 						myLiuYaoTwo.push("- - ");
 					}else{
-						myLiuYao.push(" —— ·");
+						myLiuYao.push(" —— ·  -->");
 						myLiuYaoTwo.push("- - ");
 					}
 					
 				}
+			}
+			var flag=false;
+			//判断本卦中是否有变爻
+			for(var len=0;len<flagName.length;len++){
+				if(flagName[len]=="阳变"||flagName[len]=="阴变"){
+					flag=true;
+				}
+			}
+			//如果没有变爻，将之卦清空
+			if(!flag){
+				myLiuYaoTwo.splice(0,myLiuYaoTwo.length);
 			}
 		}
 		myLiuYaoNew.push(myLiuYao);
@@ -316,6 +376,62 @@
 		return myLiuYaoNew;
 	}
 	
+	//六神排盘
+	function getLiuShen(day){
+		var rLiushen="";
+		
+		//根据日辰查找六神
+		var tiangan=["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
+		var liushen=["青龙","朱雀","勾陈","腾蛇","白虎","玄武"];
+		for(var i=0;i<tiangan.length;i++){
+			if(tiangan[i]==day.substring(0,1)){
+				if(tiangan[i]=="甲" || tiangan[i]=="乙"){
+					rLiushen=liushen[0];
+					break  ;
+				}
+				if(tiangan[i]=="丙" || tiangan[i]=="丁"){
+					rLiushen=liushen[1];
+					break  ;
+				}
+				if(tiangan[i]=="戊"){
+					rLiushen=liushen[2];
+					break  ;
+				}
+				if(tiangan[i]=="己"){
+					rLiushen=liushen[3];
+					break  ;
+				}
+				if(tiangan[i]=="庚" || tiangan[i]=="辛"){
+					rLiushen=liushen[4];
+					break  ;
+				}
+				if(tiangan[i]=="壬" || tiangan[i]=="癸"){
+					rLiushen=liushen[5];
+					break  ;
+				}
+			}
+		}
+		var  myLiuShen= new Array();
+		if(rLiushen!="" &&rLiushen!=null &&rLiushen!=undefined){
+			for(var n=0;n<liushen.length;n++){
+				if(rLiushen==liushen[n]){
+					//将六神重新排列
+					var hou = liushen.splice(n,liushen.length);
+					var qian = liushen.splice(0,n);
+					liushen.splice(0,liushen.length);
+					liushen=hou.concat(qian);
+					break;
+				}
+			}
+			//重新赋值
+			for(var m=liushen.length-1,o=0;m>=0;m--,o++){
+				myLiuShen[o]=liushen[m];
+			}
+			
+		}
+		console.log(myLiuShen);
+		return myLiuShen;
+	}
 	//校验输入的硬币结果	
 	function  jiaoyan(flagName,number){
 		//阴
