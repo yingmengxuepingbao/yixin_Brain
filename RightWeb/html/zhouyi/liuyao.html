@@ -94,6 +94,12 @@
 					<div id="liushen" class="div_bingpai">
 						
 					</div>
+					<div id="liuqin" class="div_bingpai">
+						
+					</div>
+					<div id="dizhi" class="div_bingpai">
+						
+					</div>
 					<div id="zhenggua" class="div_bingpai">
 						
 					</div>
@@ -250,13 +256,359 @@
 					$("#liushen").append(liushen[n]+"</br>");
 				}
 			}
-			
-			
+			//地支排盘-本卦
+			var dizhi =dizhipaipan(myLiuYao);
+			if(dizhi.length>0){
+				for(var n=0;n<dizhi.length;n++){
+					$("#liushen").append(dizhi[n]+"</br>");
+				}
+			}
+			//获取母宫卦-本卦
+			var wuxing= getWuXing(myLiuYao);
+			//六亲排盘-本卦
+			var liuqin =getLiuQin(wuxing,dizhi);
+			if(liuqin.length>0){
+				for(var n=0;n<liuqin.length;n++){
+					$("#liushen").append(liuqin[n]+"</br>");
+				}
+			}
 			//遮罩层隐藏
 			$("#mask").hide();
 		});
+	
+	//获取母宫卦五行
+	function getWuXing(flagName){
+		var bagua ={"乾":"阳阳阳","兑":"阴阳阳","离":"阳阴阳","震":"阴阴阳","巽":"阳阳阴","坎":"阴阳阴","艮":"阳阴阴","坤":"阴阴阴"};
+		var wuxing ="";
+		var mugong="";
 		
-	//八卦
+		//外现
+		//⚪⚪⚪ (第一个卦)
+		if(flagName[0].substring(0,1)==flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)==flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)==flagName[flagName.length-1].substring(0,1)){
+				mugong=flagName[0].substring(0,1)+flagName[1].substring(0,1)+flagName[2].substring(0,1);
+		}
+		//⚪⚪×（第二个卦）
+		if(flagName[0].substring(0,1)==flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)==flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)!=flagName[flagName.length-1].substring(0,1)){
+				mugong=flagName[0].substring(0,1)+flagName[1].substring(0,1)+flagName[2].substring(0,1);
+		}
+			//⚪××（第三个卦）
+		if(flagName[0].substring(0,1)==flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)!=flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)!=flagName[flagName.length-1].substring(0,1)){
+				mugong=flagName[0].substring(0,1)+flagName[1].substring(0,1)+flagName[2].substring(0,1);
+		}
+			//××× （第四个挂）
+		if(flagName[0].substring(0,1)!=flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)!=flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)!=flagName[flagName.length-1].substring(0,1)){
+				mugong=flagName[0].substring(0,1)+flagName[1].substring(0,1)+flagName[2].substring(0,1);
+		}
+		//内返
+		//上四持世
+		if(flagName[0].substring(0,1)!=flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)!=flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)==flagName[flagName.length-1].substring(0,1)){
+				if(flagName[3].substring(0,1)=="阴"){
+					flagName[3]="阳";
+				}
+				if(flagName[3].substring(0,1)=="阳"){
+					flagName[3]="阴";
+				}
+				if(flagName[4].substring(0,1)=="阴"){
+					flagName[4]="阳";
+				}
+				if(flagName[4].substring(0,1)=="阳"){
+					flagName[4]="阴";
+				}
+				if(flagName[5].substring(0,1)=="阴"){
+					flagName[5]="阳";
+				}
+				if(flagName[5].substring(0,1)=="阳"){
+					flagName[5]="阴";
+				}
+				mugong=flagName[3]+flagName[4]+flagName[5];
+		}
+			//上五持世
+		if(flagName[0].substring(0,1)!=flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)==flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)==flagName[flagName.length-1].substring(0,1)){
+				if(flagName[3].substring(0,1)=="阴"){
+					flagName[3]="阳";
+				}
+				if(flagName[3].substring(0,1)=="阳"){
+					flagName[3]="阴";
+				}
+				if(flagName[4].substring(0,1)=="阴"){
+					flagName[4]="阳";
+				}
+				if(flagName[4].substring(0,1)=="阳"){
+					flagName[4]="阴";
+				}
+				if(flagName[5].substring(0,1)=="阴"){
+					flagName[5]="阳";
+				}
+				if(flagName[5].substring(0,1)=="阳"){
+					flagName[5]="阴";
+				}
+				mugong=flagName[3]+flagName[4]+flagName[5];
+		}
+			//上四持世
+		if(flagName[0].substring(0,1)!=flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)==flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)!=flagName[flagName.length-1].substring(0,1)){
+				if(flagName[3].substring(0,1)=="阴"){
+					flagName[3]="阳";
+				}
+				if(flagName[3].substring(0,1)=="阳"){
+					flagName[3]="阴";
+				}
+				if(flagName[4].substring(0,1)=="阴"){
+					flagName[4]="阳";
+				}
+				if(flagName[4].substring(0,1)=="阳"){
+					flagName[4]="阴";
+				}
+				if(flagName[5].substring(0,1)=="阴"){
+					flagName[5]="阳";
+				}
+				if(flagName[5].substring(0,1)=="阳"){
+					flagName[5]="阴";
+				}
+				mugong=flagName[3]+flagName[4]+flagName[5];
+		}
+		//内现
+		if(flagName[0].substring(0,1)==flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)!=flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)==flagName[flagName.length-1].substring(0,1)){
+				mugong=flagName[3]+flagName[4]+flagName[5];	
+		}
+		console.log("mugong="+mugong);
+		for ( var key in bagua) {   
+			if(mugong == bagua[key]){
+				if(key == "乾" || key == "兑"){
+					wuxing="金";
+				}
+				if(key == "震" || key == "巽"){
+					wuxing="木";
+				}
+				if(key == "坎"){
+					wuxing="水";
+				}
+				if(key == "离"){
+					wuxing="火";
+				}
+				if(key == "艮" || key == "坤"){
+					wuxing="土";
+				}
+			}
+		}
+		return wuxing;
+	}
+	
+	//六亲排盘
+	function getLiuQin(wuxing,dizhi){
+		var liuqin=new Array();
+		var dizhi_wuxing = {"子":"水","丑":"土","寅":"木","卯":"木","辰":"土","巳":"火","午":"火","未":"土","申":"金","酉":"金","戌":"土","亥":"水"};
+	
+		var newDiZhi=new Array();
+		//将地支转换成五行
+		for(var i=0;i< dizhi.length;i++){
+			for(var key in dizhi_wuxing){
+				if(dizhi[i]==key){
+					newDiZhi.push(dizhi_wuxing[key]) ;
+					break;
+				}
+			}
+		}
+		console.log("newDiZhi =="+newDiZhi);
+		
+			if(wuxing=="金"){
+				for(var j=0;j<newDiZhi.length;j++){
+					if(newDiZhi[j]=="金"){
+						liuqin.push("兄弟");
+					}
+					if(newDiZhi[j]=="木"){
+						liuqin.push("妻财");
+					}
+					if(newDiZhi[j]=="水"){
+						liuqin.push("子孙");
+					}
+					if(newDiZhi[j]=="火"){
+						liuqin.push("官鬼");
+					}
+					if(newDiZhi[j]=="土"){
+						liuqin.push("父母");
+					}
+				}
+			}
+			if(wuxing=="木"){
+				for(var j=0;j<newDiZhi.length;j++){
+					if(newDiZhi[j]=="金"){
+						liuqin.push("官鬼");
+					}
+					if(newDiZhi[j]=="木"){
+						liuqin.push("兄弟");
+					}
+					if(newDiZhi[j]=="水"){
+						liuqin.push("父母");
+					}
+					if(newDiZhi[j]=="火"){
+						liuqin.push("子孙");
+					}
+					if(newDiZhi[j]=="土"){
+						liuqin.push("妻财");
+					}
+				}
+			}
+			if(wuxing=="水"){
+				for(var j=0;j<newDiZhi.length;j++){
+					if(newDiZhi[j]=="金"){
+						liuqin.push("父母");
+					}
+					if(newDiZhi[j]=="木"){
+						liuqin.push("子孙");
+					}
+					if(newDiZhi[j]=="水"){
+						liuqin.push("兄弟");
+					}
+					if(newDiZhi[j]=="火"){
+						liuqin.push("妻财");
+					}
+					if(newDiZhi[j]=="土"){
+						liuqin.push("官鬼");
+					}
+				}
+			}
+			if(wuxing=="火"){
+				for(var j=0;j<newDiZhi.length;j++){
+					if(newDiZhi[j]=="金"){
+						liuqin.push("妻财");
+					}
+					if(newDiZhi[j]=="木"){
+						liuqin.push("父母");
+					}
+					if(newDiZhi[j]=="水"){
+						liuqin.push("官鬼");
+					}
+					if(newDiZhi[j]=="火"){
+						liuqin.push("兄弟");
+					}
+					if(newDiZhi[j]=="土"){
+						liuqin.push("子孙");
+					}
+				}
+			}
+			if(wuxing=="土"){
+				for(var j=0;j<newDiZhi.length;j++){
+					if(newDiZhi[j]=="金"){
+						liuqin.push("子孙");
+					}
+					if(newDiZhi[j]=="木"){
+						liuqin.push("官鬼");
+					}
+					if(newDiZhi[j]=="水"){
+						liuqin.push("妻财");
+					}
+					if(newDiZhi[j]=="火"){
+						liuqin.push("父母");
+					}
+					if(newDiZhi[j]=="土"){
+						liuqin.push("兄弟");
+					}
+				}
+			}
+		console.log("liuqin:"+liuqin);
+		return liuqin;
+	}
+	
+	
+	//地支排盘    例如： ["阴变","阴变","阳","阳","阳","阳"]
+	function dizhipaipan(myLiuYao){
+		var bagua ={"乾":"阳阳阳","兑":"阴阳阳","离":"阳阴阳","震":"阴阴阳","巽":"阳阳阴","坎":"阴阳阴","艮":"阳阴阴","坤":"阴阴阴"};
+		
+		var  myDiZhi= new Array();
+		if(myLiuYao.length>0 &&myLiuYao.length==6){
+			var  shangyao = myLiuYao[0].substring(0,1)+myLiuYao[1].substring(0,1)+myLiuYao[2].substring(0,1);
+			var  xiayao = myLiuYao[3].substring(0,1)+myLiuYao[4].substring(0,1)+myLiuYao[5].substring(0,1);
+			console.log("shangyao="+shangyao);
+			console.log("xiayao="+xiayao);
+			for ( var key in bagua) {   
+				if(shangyao == bagua[key]){
+					if(key == "乾" || key == "震"){
+						myDiZhi.push("戌");
+						myDiZhi.push("申");
+						myDiZhi.push("午");
+					}
+					if(key == "坎"){
+						myDiZhi.push("子");
+						myDiZhi.push("戌");
+						myDiZhi.push("申");
+					}
+					if(key == "艮"){
+						myDiZhi.push("寅");
+						myDiZhi.push("子");
+						myDiZhi.push("戌");
+					}
+					if(key == "巽"){
+						myDiZhi.push("卯");
+						myDiZhi.push("巳");
+						myDiZhi.push("未");
+					}
+					if(key == "离"){
+						myDiZhi.push("巳");
+						myDiZhi.push("未");
+						myDiZhi.push("酉");
+					}
+					if(key == "兑"){
+						myDiZhi.push("未");
+						myDiZhi.push("酉");
+						myDiZhi.push("亥");
+					}
+					if(key == "坤"){
+						myDiZhi.push("酉");
+						myDiZhi.push("亥");
+						myDiZhi.push("丑");
+					}
+				}
+				
+			}
+			for ( var key in bagua) {   
+				if(xiayao == bagua[key]){
+					if(key == "乾" || key == "震"){
+						myDiZhi.push("辰");
+						myDiZhi.push("寅");
+						myDiZhi.push("子");
+					}
+					if(key == "坎"){
+						myDiZhi.push("午");
+						myDiZhi.push("辰");
+						myDiZhi.push("寅");
+					}
+					if(key == "艮"){
+						myDiZhi.push("申");
+						myDiZhi.push("午");
+						myDiZhi.push("辰");
+					}
+					if(key == "巽"){
+						myDiZhi.push("酉");
+						myDiZhi.push("亥");
+						myDiZhi.push("丑");
+					}
+					if(key == "离"){
+						myDiZhi.push("亥");
+						myDiZhi.push("丑");
+						myDiZhi.push("卯");
+					}
+					if(key == "兑"){
+						myDiZhi.push("丑");
+						myDiZhi.push("卯");
+						myDiZhi.push("巳");
+					}
+					if(key == "坤"){
+						myDiZhi.push("卯");
+						myDiZhi.push("巳");
+						myDiZhi.push("未");
+					}
+					
+				}
+			}
+		}
+		
+		console.log("myDiZhi = "+myDiZhi)
+		return myDiZhi;
+		
+		
+	}
+	
+	//八卦-画法
 	function bagua(flagName){
 		var  myLiuYaoNew= new Array();
 		var  myLiuYao= new Array();
@@ -271,18 +623,18 @@
 				shi = flagName.length-6;
 				ying = flagName.length-3;
 			}
-			//下一持世
+			//下一持世  ⚪⚪×
 			if(flagName[0].substring(0,1)==flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)==flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)!=flagName[flagName.length-1].substring(0,1)){
 				shi = flagName.length-1;
 				ying =flagName.length-4;
 				
 			}
-			//下二持世
+			//下二持世 ⚪××
 			if(flagName[0].substring(0,1)==flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)!=flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)!=flagName[flagName.length-1].substring(0,1)){
 				shi = flagName.length-2;
 				ying =flagName.length-5;
 			}
-			//下三持世
+			//下三持世 ×××
 			if(flagName[0].substring(0,1)!=flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)!=flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)!=flagName[flagName.length-1].substring(0,1)){
 				shi = flagName.length-3;
 				ying =flagName.length-6;
@@ -429,7 +781,6 @@
 			}
 			
 		}
-		console.log(myLiuShen);
 		return myLiuShen;
 	}
 	//校验输入的硬币结果	
