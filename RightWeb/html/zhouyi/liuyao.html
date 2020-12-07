@@ -92,19 +92,25 @@
 				</p>
 				<div id="liuyao">
 					<div id="liushen" class="div_bingpai">
-						
+						<!--六神-->
 					</div>
 					<div id="liuqin" class="div_bingpai">
-						
+						<!--六亲-->
 					</div>
 					<div id="dizhi" class="div_bingpai">
-						
+						<!--地支-->
 					</div>
 					<div id="zhenggua" class="div_bingpai">
-						
+						<!--正卦-->
+					</div>
+					<div id="liuqin_zhi" class="div_bingpai">
+						<!--六亲-之卦-->
+					</div>
+					<div id="dizhi_zhi" class="div_bingpai">
+						<!--地支-之卦-->
 					</div>
 					<div id="zhigua" class="div_bingpai">
-						
+						<!--之卦-->
 					</div>
 				</div>
 			</div>
@@ -233,7 +239,7 @@
 			$("#question2").val(question);
 			
 			//var flagName = ["阴变","阴变","阳","阳","阳","阳"]; bagua(flagName);
-			var myLiuYaoArr = bagua(myLiuYao);
+			var myLiuYaoArr = getBagua(myLiuYao);
 			if(myLiuYaoArr.length>0){
 				$("#zhenggua").append("<p>本卦</p></br>")
 				for(var q = 0;q < myLiuYaoArr[0].length; q++){
@@ -260,7 +266,7 @@
 			var dizhi =dizhipaipan(myLiuYao);
 			if(dizhi.length>0){
 				for(var n=0;n<dizhi.length;n++){
-					$("#liushen").append(dizhi[n]+"</br>");
+					$("#dizhi").append(dizhi[n]+"</br>");
 				}
 			}
 			//获取母宫卦-本卦
@@ -269,7 +275,23 @@
 			var liuqin =getLiuQin(wuxing,dizhi);
 			if(liuqin.length>0){
 				for(var n=0;n<liuqin.length;n++){
-					$("#liushen").append(liuqin[n]+"</br>");
+					$("#liuqin").append(liuqin[n]+"</br>");
+				}
+			}
+			//得到之卦
+			var zhigua = getzhigua(myLiuYao);
+			//地支排盘-之卦
+			var dizhi_zhi =dizhipaipan(zhigua);
+			if(dizhi_zhi.length>0){
+				for(var n=0;n<dizhi_zhi.length;n++){
+					$("#dizhi_zhi").append(dizhi_zhi[n]+"</br>");
+				}
+			}
+			//六亲排盘-之卦
+			var liuqin_zhi =getLiuQin(wuxing,dizhi_zhi);
+			if(liuqin_zhi.length>0){
+				for(var n=0;n<liuqin_zhi.length;n++){
+					$("#liuqin_zhi").append(liuqin_zhi[n]+"</br>");
 				}
 			}
 			//遮罩层隐藏
@@ -370,7 +392,6 @@
 		if(flagName[0].substring(0,1)==flagName[flagName.length-3].substring(0,1) &&flagName[1].substring(0,1)!=flagName[flagName.length-2].substring(0,1) &&flagName[2].substring(0,1)==flagName[flagName.length-1].substring(0,1)){
 				mugong=flagName[3]+flagName[4]+flagName[5];	
 		}
-		console.log("mugong="+mugong);
 		for ( var key in bagua) {   
 			if(mugong == bagua[key]){
 				if(key == "乾" || key == "兑"){
@@ -518,8 +539,6 @@
 		if(myLiuYao.length>0 &&myLiuYao.length==6){
 			var  shangyao = myLiuYao[0].substring(0,1)+myLiuYao[1].substring(0,1)+myLiuYao[2].substring(0,1);
 			var  xiayao = myLiuYao[3].substring(0,1)+myLiuYao[4].substring(0,1)+myLiuYao[5].substring(0,1);
-			console.log("shangyao="+shangyao);
-			console.log("xiayao="+xiayao);
 			for ( var key in bagua) {   
 				if(shangyao == bagua[key]){
 					if(key == "乾" || key == "震"){
@@ -602,14 +621,13 @@
 			}
 		}
 		
-		console.log("myDiZhi = "+myDiZhi)
 		return myDiZhi;
 		
 		
 	}
 	
 	//八卦-画法
-	function bagua(flagName){
+	function getBagua(flagName){
 		var  myLiuYaoNew= new Array();
 		var  myLiuYao= new Array();
 		var  myLiuYaoTwo= new Array();
@@ -783,6 +801,22 @@
 		}
 		return myLiuShen;
 	}
+	
+	//得到之卦的数组
+	function getzhigua(bengua){
+		var zhigua=new Array();
+		for(var i=0;i<bengua.length;i++){
+			if(bengua[i]=="阳变"){
+				zhigua.push("阴");
+			}else if(bengua[i]=="阴变"){
+				zhigua.push("阳");
+			}else{
+				zhigua.push(bengua[i]);
+			}
+		}
+		return zhigua;
+	}
+	
 	//校验输入的硬币结果	
 	function  jiaoyan(flagName,number){
 		//阴
