@@ -7,6 +7,14 @@
 		<script type="text/javascript" src="../../js/jquery-1.7.2.js" ></script>
 		<script type="text/javascript" src="../../js/data_time.js" ></script>
 		<style>
+			.container{
+				padding-top: 60px;
+			}
+			.header{
+				position: fixed;
+				left: 0;
+				top: 0;
+			}
 			#show{
 				background: #DEB887;
 			}
@@ -36,13 +44,24 @@
 				disabled:true;
 				color: red;
 			}
+			#liuyao{
+				width: 40%;
+				height: auto;
+				position:absolute;
+			    left: 0;
+                right: 0;
+                margin: auto;
+                display: flex;    
+            	flex-direction：row;     
+            	flex-wrap：nowrap;
+	            align-items:flex-end;
+			}
 			.div_bingpai{
-				background: #DEB887;
-				width:25%; 
+				width:10%; 
 				height:auto; 
 				float:left; 
 				display:inline;
-				margin:0 auto;
+				margin:0px;
 			}
 			
 		</style>
@@ -88,30 +107,30 @@
 					<input type="text" class="time" style="width: 30px;" id="sex2" disabled/>
 					<br />
 				       所问之事：
-				    <input type="text" class="time" id="question2" disabled/> 
+				    <input type="text" class="time" id="question2" style="width: 25%;"disabled/> 
 				</p>
 				<div id="liuyao">
-					<div id="liushen" class="div_bingpai">
-						<!--六神-->
-					</div>
-					<div id="liuqin" class="div_bingpai">
-						<!--六亲-->
-					</div>
-					<div id="dizhi" class="div_bingpai">
-						<!--地支-->
-					</div>
-					<div id="zhenggua" class="div_bingpai">
-						<!--正卦-->
-					</div>
-					<div id="liuqin_zhi" class="div_bingpai">
-						<!--六亲-之卦-->
-					</div>
-					<div id="dizhi_zhi" class="div_bingpai">
-						<!--地支-之卦-->
-					</div>
-					<div id="zhigua" class="div_bingpai">
-						<!--之卦-->
-					</div>
+						<div id="liushen" class="div_bingpai">
+							<!--六神-->
+						</div>
+						<div id="liuqin" class="div_bingpai">
+							<!--六亲-->
+						</div>
+						<div id="dizhi" class="div_bingpai">
+							<!--地支-->
+						</div>
+						<div id="zhenggua" class="div_bingpai" style="width:25%; font-weight:bold;">
+							<!--正卦-->
+						</div>
+						<div id="liuqin_zhi" class="div_bingpai">
+							<!--六亲-之卦-->
+						</div>
+						<div id="dizhi_zhi" class="div_bingpai">
+							<!--地支-之卦-->
+						</div>
+						<div id="zhigua" class="div_bingpai" style="width:18%; font-weight:bold;">
+							<!--之卦-->
+						</div>
 				</div>
 			</div>
 	</div>
@@ -429,7 +448,6 @@
 				}
 			}
 		}
-		console.log("newDiZhi =="+newDiZhi);
 		
 			if(wuxing=="金"){
 				for(var j=0;j<newDiZhi.length;j++){
@@ -526,7 +544,6 @@
 					}
 				}
 			}
-		console.log("liuqin:"+liuqin);
 		return liuqin;
 	}
 	
@@ -622,8 +639,6 @@
 		}
 		
 		return myDiZhi;
-		
-		
 	}
 	
 	//八卦-画法
@@ -682,13 +697,13 @@
 				if(flagName[i]=="阴"){
 					if(i==shi){
 						myLiuYao.push("- - 世");
-						myLiuYaoTwo.push("- - ");
+						myLiuYaoTwo.push("-  - ");
 					}else if(i==ying){
 						myLiuYao.push("- - 应");
-						myLiuYaoTwo.push("- - ");
+						myLiuYaoTwo.push("-  -");
 					}else{
-						myLiuYao.push("- - ");
-						myLiuYaoTwo.push("- - ");
+						myLiuYao.push("-  -");
+						myLiuYaoTwo.push("-  -");
 					}
 				}
 				if(flagName[i]=="阳"){
@@ -718,13 +733,13 @@
 				if(flagName[i]=="阳变"){
 					if(i==shi){
 						myLiuYao.push(" —— · 世 -->");
-						myLiuYaoTwo.push("- - ");
+						myLiuYaoTwo.push("-  -");
 					}else if(i==ying){
 						myLiuYao.push(" —— · 应 -->");
-						myLiuYaoTwo.push("- - ");
+						myLiuYaoTwo.push("-  -");
 					}else{
 						myLiuYao.push(" —— ·  -->");
-						myLiuYaoTwo.push("- - ");
+						myLiuYaoTwo.push("-  -");
 					}
 					
 				}
