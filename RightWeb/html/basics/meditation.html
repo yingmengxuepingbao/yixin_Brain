@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -20,7 +20,9 @@
 			margin-top: 30px;
 		}
 		.myFile{
-			align: center;
+			width: 50%;
+			margin-left: 20%;
+			margin-top: 20px;
 		}
 	</style>
 	
@@ -53,52 +55,36 @@
 			<div class="myAudio">
 				<audio src="../../music/1.mp3" id="audioDom" controls="controls" ></audio>
 			</div>
-			<!--选择文件-->
-			<div class="myFile">
-				<span >选择文件及文件夹:</span>
-				<input type="file" id="selectFiles" onchange="dealSelectFiles()"  webkitdirectory>
-				<canvas id="myCanvas" width=500 height=500></canvas>
-			</div>
+			<!--选择文件   webkitdirectory-->
+			<!--<div class="myFile">
+				<span>选择播放音频:
+					上传文件：
+					<input type="file" id="files" accept=".mp3" multiple="multiple" >
+			    </span>
+			    
+			</div>-->
 		</div>
 		
 	</div>
-	<script type="text/javascript">
-		//页面加载执行
-//		window.onload=function(){ 
-//			$("#m_mask").show();//显示遮罩层
-//			closebt.onclick=function(){ //点击确定，隐藏遮罩层。
-//				$("#m_mask").hide();
-//				$("#i_show").show();
-//			} 
-//		}
+	<script type="text/javascript" charset="UTF-8">
 		$(".btn1").on("click",function(){
 			$("#mask").hide();
 		})
-		/*//文件上传
-		var imgPosX = 100;
-		var imgWidth = 256;
-		function dealSelectFiles(){
-			/// get select files.
-			var selectFiles = document.getElementById("selectFiles").files;
-			for(var file of selectFiles){
- 				//console.log(file.webkitRelativePath);
-				/// read file content.
-				var reader = new FileReader();
-				reader.readAsDataURL(file);
- 
-				reader.onloadend = function(){
-					/// deal data.
-					var img = new Image();
-					/// after loader, result storage the file content result.
-					img.src = this.result;	
-					img.onload = function(){
-						var myCanvas = document.getElementById("myCanvas");
-						var cxt = myCanvas.getContext('2d');
-						cxt.drawImage(img, imgPosX, 0);
-						imgPosX += imgWidth;
-					}
-				}
-			}
+		
+		
+		/*window.onload=function(){ 
+		 var fs = document.getElementById("files"); 
+		 
+		 fs.onchange = function(){ //获取文件对象 
+                var file = this.files[0]; 
+                //使用fileReader对文件对象进行操作 
+                var reader = new FileReader(); 
+                reader.readAsDataURL(file); 
+                reader.onload = function(){ 
+                	alert(reader.result);
+                  //  console.log(reader.result); 
+                } 
+		 }
 		}*/
 	</script>
 	

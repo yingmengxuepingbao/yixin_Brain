@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBliC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>快速阅读</title>
+	<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">
+	<style>
+		.container{
+			padding-top: 60px;
+		}
+		.header{
+			position: fixed;
+			left: 0;
+			top: 0;
+		}
+		#show{
+			background: #fff;
+			
+		}
+		#show p{
+			text-align: center;
+			font-size: 22px;
+			color: red;
+			margin-top: 10px;
+			padding-top: 20px;
+		}
+	</style>
+	</head>
+	<body>
+		
+		<div class="container">
+			<!--遮罩层显示-->
+			<div id="mask1"> 
+				<div class="wenzi">
+					<h1>快速阅读-训练要素</h1>
+					<p>1. 减少眼停次数，缩短每一行的注视时间，扩大视读广度，减少回视次数。</p>
+					<p>2. 眼睛与书本明视距离30-35公分，光线充足，不要长时间的阅读，眼睛要适当休息，消除疲劳。</p>
+					<p>3. 阅读速度：300-500字/分钟。</p>
+					<p>4. 注意事项：</p>
+						<p>1）客服畏难情绪。</p>
+						<p>2）不要急于求成。</p>
+						<p>3）提高兴趣。</p>
+						<p>4）掌握限度，转化焦虑情绪。</p>
+						<p>5）战胜自己，培养自制力。</p>
+				</div>
+				<button class="btn1">确定</button>
+			</div>
+			<!-- 标头-->
+			<div class="header"> 
+				<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+				<p class="title">快速阅读</p>
+			</div>
+			
+			<div id="show">		
+				<p>快速阅读</p>
+			</div>
+			<!-- 快速阅读-->
+			<meta HTTP-EQUIV=REFRESH CONTENT="60">
+		</div>
+		
+		<script src="../../js/jquery-1.7.2.js"></script>
+	<script type="text/javascript">
+		//隐藏/显示
+		$(".btn1").on("click",function(){
+			$("#mask1").hide();
+		})
+	</script>
+	</body>
+</html>

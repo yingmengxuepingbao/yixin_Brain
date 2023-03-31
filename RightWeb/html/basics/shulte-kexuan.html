@@ -95,10 +95,10 @@
 		<div id="mask"> 
 			<div class="wenzi">
 				<h1>使用说明</h1>
-				<p>1. 舒尔特-数字表格：此表格是一个5*5的表格。</p>
+				<p>1. 舒尔特-数字表格：此表格是一个可选的表格。</p>
 				<p>2.舒尔特训练的目的是拓宽你的视野能力，以及关键字抓取能力，</p>
-				<p>3.请盯着中间的数字，用余光扫视周围数字，尽量在25秒钟内，按顺序找完。</p>
-				<p>4.依次点击数字，将1-25个数字按顺序找出。16秒为优秀；24秒为普通；28秒为合格；</p>
+				<p>3.请盯着中间的数字，用余光扫视周围数字，尽量在短时间内，按顺序找完。</p>
+				<p>4.从小到大依次点击数字</p>
 				<p>5. 每天任务：每天练习1到5次。</p>
 			</div>
 			<button class="btn1">确定 </button>
@@ -126,7 +126,14 @@
 			<p class="title">舒尔特表</p>
 		</div>
 		<div id="show">
-			<p>点击计时按钮后依次点击1-25</p>
+			<p>请选择练习的模式：
+			<select id="moshi">
+				<option value="3">3*3</option>
+				<option value="4">4*4</option>
+				<option value="5" selected="selected">5*5</option>
+				<option value="6">6*6</option>
+			</select>
+			</p>
 			<!--表格显示    -->
 			<div id="myTable">
 				<input id="shulte_text" type="hidden" value="1" />
@@ -151,6 +158,7 @@
 		
 	<script src="../../js/jquery-1.7.2.js"></script>
 	<script type="text/javascript">
+		var moshi =$("#moshi").val();
 		//页面加载执行		
 		$(document).ready(function (){
 			$(".btn1").on("click",function(){
@@ -158,7 +166,7 @@
 			})
 			$("#myNum").hide();
 			$("#myEnd").hide();
-			showDiffGroup(5, 1, number);
+			showDiffGroup(moshi, 1, number);
 			$("#ok_id").on("click",function(){
 				$("#myNum").hide();
 				$("#myEnd").hide();
@@ -169,12 +177,24 @@
 				$("#myEnd").hide();
 			})
 		});
+		
 		//定义数组的截至数字
-	 	var number = 25;//数组25个数字
+		var number = moshi * moshi;//数组n*n个数字
 		var array=new Array(number);//数组定义
 		var count = 0;//时间秒数记录
+		//模式切换
+		$("#moshi").change(function(){
+			//获取模式数字
+			moshi = $("#moshi").val();
+			number = moshi * moshi;//数组n*n个数字
+			array = new Array(number);//数组定义
+			//将画布清空
+			$("#shulte").html("");
+			showDiffGroup(moshi, 1, number);
+		})
+		
 		//二维数组
-		function getDiffGroup(num, min, max) {
+		function getDiffGroup(shuzi, min, max) {
 		    var res = [];
 		    for (var i = min; i <= max; i++){ //从最小数开始 加一 到最大数
 		    	res.push(i);//将所有的数 push到数组中
@@ -183,15 +203,16 @@
 				return 0.5 - Math.random(); //随机数排序
 			});
 		    var rst = [];
-		    for (var i = 0; i < res.length; i += num){
-		    	rst.push(res.slice(i, i + num));//数组中放入截取后的数组
+		    for (var i = 0; i < res.length; i=Number(i)+Number(shuzi)){
+				var chunk = res.slice(i, Number(i)+Number(shuzi));
+		    	rst.push(chunk);//数组中放入截取后的数组
 		    }
 		    return rst;
 		}
 		
 		//调用二维数组，拼接到页面
 	 	function showDiffGroup(num, min, max){
-		    var rsts = getDiffGroup(5, 1, max);//5*5二维数组
+		    var rsts = getDiffGroup(moshi, 1, max);//n*n二维数组
 		    array = rsts;
 		    //console.log(rsts.join('\n'));
 		    //将二维数组放入页面
@@ -235,15 +256,17 @@
 		 	var flag = 0;//数组下标
 		 	//循环遍历，查找数组的下标
 		    for(var i=1;i<=number;i++){
-		    	 var flag =findNumber(i,array);//数字从1-25开始查找。
+		    	 var flag =findNumber(i,array);//数字从1-n开始查找。
 		    	if(td_flag == flag){
 		    		break;
 		    	}
 		    }
 		    //获取点击数字的值。
 		    var td_val =$("#td"+flag).text();
+			console.log(td_val);
 		    //获取点击次数
 			var num=$("#shulte_text").val();
+			console.log(num);
 			//判断点击次数是否比显示的个数少。
 			if(num<=number){
 				//判断点击的数字为点击的次数，则正常排序，否则，排序错误，提示。
@@ -275,7 +298,7 @@
 						$("#shulte_text").attr("value",1);//点击次数设置为1
 						$("#button_count").attr("value",-1);//计时时间设置为偶数
 						$("#shulte").empty(); //将舒尔特表的div清空
-						showDiffGroup(5, 1, number);//重新生成5*5舒尔特表
+						showDiffGroup(moshi, 1, number);//重新生成n*n舒尔特表
 					}else{//1-25 点击次数赋值
 						$("#shulte_text").attr("value",num);//推荐这种写法,可正常赋值
 					}
