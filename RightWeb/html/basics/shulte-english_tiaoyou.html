@@ -42,7 +42,7 @@
 			font-size: 18px;
 		}
 		
-		#myNum,#myEnd{
+		#myEnd{
 			position: absolute;
 			left: 0;
 			top: 0;
@@ -55,22 +55,13 @@
 			border-radius: 5px;
 			overflow: hidden;
 		}
-		#myNum .title,#myNum p,#myEnd .title,#myEnd p{			
+		#myEnd .title,#myEnd p{
 			text-align: center;
 			margin: 0;
 		}
-		#myNum .title{
-			height: 50px;
-			line-height: 50px;
-			border-bottom: 1px solid #ccc;
-		}
-		#myNum p,#myEnd p{
+
+		#myEnd p{
 			font-size: 16px;	
-		}
-		#myNum .myMess{
-			height: 80px;
-			line-height: 80px;
-			padding: 0 10px;
 		}
 		#myEnd .title{
 			height: 50px;
@@ -80,9 +71,9 @@
 			height: 80px;
 			padding: 0 10px;
 		}
-		#myNum .ok,#myEnd .ok{
+		#myEnd .ok{
 			height: 50px;
-			line-height: 50px;
+			line-height: 80px;
 			background: aqua;
 		}
 	</style>
@@ -108,12 +99,6 @@
 			</div>
 			<button class="btn1">确定 </button>
 		</div>
-		<!--弹出提示-->
-		<div id="myNum">
-			<h2 class="title">提示</h2>
-			<p class="myMess">请点击字母：【<span class="mynum"></span>】</p>
-			<p class="ok" id="ok_id">确定</p>
-		</div>
 		<div id="myEnd">
 			<h2 class="title">完成</h2>
 			<p class="myMess">
@@ -137,7 +122,8 @@
 				<input id="shulte_text" type="hidden" value="65" />
 				<div class="slide" id="shulte" align="center">
 				</div>
-			</div>	
+			</div>
+			<input type="hidden" value="" id="shangyici">
 			<!--时间显示    -->
 			<div id="firstDiv">
 				<div id="twoDiv" align="center" >
@@ -161,16 +147,13 @@
 			$(".btn1").on("click",function(){
 				$("#mask").hide();
 			})
-			$("#myNum").hide();
 			$("#myEnd").hide();
 			showDiffGroup(5, 1, number);//加载舒尔特表格
 			$("#ok_id").on("click",function(){
-				$("#myNum").hide();
 				$("#myEnd").hide();
 				startTime();//开始计时
 			})
 			$("#ok_all").on("click",function(){
-				$("#myNum").hide();
 				$("#myEnd").hide();
 			})
 		});
@@ -233,6 +216,11 @@
 	    
 		//表格点击事件
 		function td_click(td_flag){
+			//将上一次的格子背景恢复
+			var shangyici = $("#shangyici").val();
+			if(shangyici!=null && shangyici!=undefined){
+				$("#td"+shangyici).css("background-color","#FFA500");
+			}
 		 	//点击表格时，判断是否已经点击计时按钮，若未点击，自动计时
 		 	var i = $("#button_count").val();
 		 	if(i<0 ||i % 2 == 0){//未点击
@@ -256,6 +244,11 @@
 			if((num-64)<=number){
 				//判断点击的数字为点击的次数，则正常排序，否则，排序错误，提示。
 				if(num== num_val){
+					//如果数字一致，将背景颜色设置成绿色
+					$("#td"+flag).css("background-color","green");
+					console.log(flag);
+
+					$("#shangyici").val(flag);
 					num++;
 					if((num-64)>number){//点击数字完毕,触发暂停事件
 						$("#button_count").attr("value",1);//页面数字是基数
@@ -265,7 +258,6 @@
 						var minute = $("#minute").text();
 						var second = $("#second").text();
 						var ms = $("#ms").text();
-						$(".mynum").text(String.fromCharCode(num));
 						$(".shi").text(hour);
 						$(".fen").text(minute);
 						$(".miao").text(second);
@@ -289,10 +281,8 @@
 					}
 					
 				}else{
-					//alert("请点击："+num);
-					$(".mynum").text(String.fromCharCode(num));
-					$("#myNum").show();
-					startTime();
+					$("#td"+flag).css("background-color","red");
+					$("#shangyici").val(flag);
 				}
 			}
 		}
