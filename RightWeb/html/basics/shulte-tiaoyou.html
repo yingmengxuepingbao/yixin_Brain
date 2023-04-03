@@ -146,7 +146,6 @@
 
 <script src="../../js/jquery-1.7.2.js"></script>
 <script type="text/javascript">
-	var moshi =$("#moshi").val();
 	//页面加载执行
 	$(document).ready(function (){
 		$(".btn1").on("click",function(){
@@ -154,6 +153,12 @@
 		})
 
 		$("#myEnd").hide();
+		//切换的模式
+		var moshi =$("#moshi").val();
+		//定义数组的截至数字
+		var number = moshi * moshi;//数组n*n个数字
+		var array=new Array(number);//数组定义
+		
 		showDiffGroup(moshi, 1, number);
 		$("#ok_id").on("click",function(){
 
@@ -165,20 +170,27 @@
 			$("#myEnd").hide();
 		})
 	});
-
-	//定义数组的截至数字
-	var number = moshi * moshi;//数组n*n个数字
-	var array=new Array(number);//数组定义
+	
 	var count = 0;//时间秒数记录
 	//模式切换
 	$("#moshi").change(function(){
 		//获取模式数字
-		moshi = $("#moshi").val();
-		number = moshi * moshi;//数组n*n个数字
+		var moshi = $("#moshi").val();
+		var number = moshi * moshi;//数组n*n个数字
 		array = new Array(number);//数组定义
 		//将画布清空
 		$("#shulte").html("");
+		$("#shangyici").val("");
+		$("#button_count").val(-1);
+		$("#shulte_text").val(1);
 		showDiffGroup(moshi, 1, number);
+		//修改计时器
+		$("#button_count").attr("value",1);//页面数字是基数
+		startTime();//暂停时间
+		$(".span1 span").html("00");
+		count = 0;
+		$(".span1 span").html("00");
+		$("#start").html("开始计时");
 	})
 
 	//二维数组
@@ -200,6 +212,7 @@
 
 	//调用二维数组，拼接到页面
 	function showDiffGroup(num, min, max){
+		var moshi =$("#moshi").val();
 		var rsts = getDiffGroup(moshi, 1, max);//n*n二维数组
 		array = rsts;
 		//console.log(rsts.join('\n'));
@@ -236,6 +249,10 @@
 
 	//表格点击事件
 	function td_click(td_flag){
+		//获取模式数字
+		var moshi = $("#moshi").val();
+		var number = moshi * moshi;//数组n*n个数字
+		//获取当前格子的编号
 		var l=td_flag.toString().length;
 		var tdFlag = td_flag;
 		if(l==1){
