@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>带农历节日的万年历</title>
+<script type="text/javascript" src="../../js/wannianli.js"></script>
+<style type="text/css">
+	body{background-color: #F3F3F3}
+*{
+  font-family:courier;
+}
+.container{
+	padding-top: 60px;
+}
+.header{
+	position: fixed;
+	left: 0;
+	top: 0;
+}
+#content{
+    width: 350px;margin: 0 auto;
+
+}
+.smlb {
+    font-size: 20px; color: black; float: right; margin-right: 13%; margin-top: -54%;
+}
+
+.aorange {
+   font-weight: bold; font-size: 20px; color: #ff5f07; width:57px;
+}
+.day {
+   font-size: 18px; color: #000000; 
+}
+.day td{
+  color:#9F9E9E;
+}
+.one {
+   font-weight: normal; font-size: 20px; color: #000000; width:57px;
+}
+.bs {
+   font-size: 12px; color: #9F9E9E;width:57px;
+}
+.lb {
+   font-size: 16px; color: #0099ff
+}
+.sm {
+   font-size: 14px; color: #333399
+}
+.smz {
+   font-weight: bold; font-size: 14px; color: #0099ff
+}
+
+
+#cal-content{
+   height:40;text-align: center;background-color:"#FAFBFB";
+
+}
+.detallu{
+   width:100%; border:0; padding:2px; color: black;
+   
+}
+.lnotice{
+  margin-top: 34%;
+}
+#detail{
+   margin-top: 31px;text-align: center;background-color: #DEB887;
+}
+#oTime{
+  color: black ;text-align: center;font-family: 
+}
+
+.sm span{
+  color: black;
+
+}
+.thead span{
+   color: #DEB887;
+
+}
+#clock{
+    font-family: courier;margin-top: -23%;padding-bottom: 5%;
+  }
+/*年份，月份切换*/
+.year_select{
+  display:inline-block;padding-right: 23px;
+}
+.home_select{
+  display:inline-block; padding-right: 18px;
+}
+/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+select::-ms-expand { display: none; }
+.ch{
+  background-color:#DEB887;
+}
+.day td{
+  width:57px;color:black; text-align:center;
+}
+select {
+  margin-bottom: 9px; appearance: none;-moz-appearance: none;-webkit-appearance: none;border: 0; border-radius: 2px; color: #000000; padding-top: 6px; background-color: white; padding-bottom: 2px;
+}
+/*日历头部*/
+
+.table_head{
+    background-color: #DEB887;width: 347px;margin-left: -2px;text-align: center;
+  }
+
+.week{
+   border-spacing: 0;   
+}
+
+
+div.tishishgen0{ 
+  text-align:center; margin:50px 0 10px 0; color:#666
+}
+
+div.shenbox {
+    margin-top: 20px;
+}
+ {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-family: "microsoft yahei",Times New Roman;
+</style>
+</head>
+<body onload=initial();>
+	<!-- 标头-->
+	<div align="left" > 
+			<img height="50" width="50"  src="../../img/tubiao/1.png" border="0" title="返回上一页" style="background-repeat: no-repeat" onClick="javascript:history.back(-1);">
+			<div style="position:absolute;z-index: 10;left: 150px;top: -20px;">
+				<p align="center" style="font-size: 30px;color: black;font-weight:bold;">万年历</p>
+			</div>
+		</div>
+<div id="content">
+<!-- 显示日期详情 -->
+  <div id="detail">
+       <div id="date_content"></div>
+
+       <div id="animal_year"></div>
+        <!-- 显示时钟 -->
+        <p id="clock"></p>
+  </div>
+  <form name="calender_content" style="margin-top: -15px;">
+                  <table class="week">
+                    <tbody>
+                       <tr>
+                          <td class="ch">
+                                  <!-- 日历头部 -->
+                                 <table>
+                                     <tbody>
+                                           <tr class="day">
+                                                  <td>日</td>
+                                                  <td>一</td>
+                                                  <td>二</td>
+                                                  <td>三</td>
+                                                  <td>四</td>
+                                                  <td>五</td>
+                                                  <td>六</td>
+                                              </tr>
+                                         </tbody>
+                                  </table>
+                                  </tr>
+                                  </td>
+                                    <!-- 头部END -->
+                                 
+                 <!-- js动态的向表格写入日期 -->
+                            <script>
+                            var Num; //Num计算出日期位置
+                            for(i=0;i<6;i++) {
+
+                                    document.write('<table id="cal-content"><tr>');
+                                   
+                             for(j=0;j<7;j++) {
+                                Num = i*7+j;
+                                document.write('<td id="SD' + Num +'" onclick="addDay(' + Num +')" ');
+                        //周六 周日 假期样式设定
+                              if(j == 0|| j == 6)
+                              {
+                                    document.write(' class="aorange"');
+                               }else{
+                                    document.write(' class="one"');
+                              }
+                                    document.write('title=""> </td>')
+                             }
+
+                                document.write('</tr></table></td></tr><tr><td><table style="width:399;"><tr style="text-align:center"> ');
+                           //农历
+                           for(j=0;j<7;j++) {
+                              Num = i*7+j;
+                              document.write('<td id="LD' + Num +'" onclick="addDay(' + Num +')" class="bs" title=""> </td>')
+
+                           }
+                              document.write('</tr></table></td></tr>');
+                           
+                         }
+                         </script>  
+             <!-- 生成日期 END    -->
+                        </tr>
+                     </table>
+                   </td>
+                </tr>   
+              </tbody>
+            </table>
+             <table>
+               <tbody>
+                <tr>
+                  <td class="sm">
+                    <table class="table_head">
+                      <tbody>
+                      <tr>
+                        <td> 
+                        <!-- 选择年份菜单 -->
+                          <div class="year_select">
+                              <span onClick="BtN('year_d')"><img src="img/left.png"></span>
+                                <select onChange="chaCld()" name="SY">
+                                  <script>
+                                     for(i=1900;i<2050;i++) 
+                                    document.write('<option>'+i+"年")
+                                  </script>
+                                </select> 
+                              <span onClick="BtN('year_a')"><img src="img/right.png"></span> 
+                          </div>
+                          <!-- 回到当天菜单 -->
+                          <div  class="home_select">
+                               <span onClick="BtN('')"><img src="img/2.png" style="width:26px;height:26px"></span>
+                          </div>
+
+                          <!-- 选择月份菜单 -->
+                              <div style="display:inline-block;">
+                                  <span onClick="BtN('month_d')"><img src="img/left.png"></span>
+                                   <select onChange="chaCld()" name="SM">
+                                    <script>
+                                    for(i=1;i<13;i++) document.write('<option>'+i+"月")
+                                    </script>
+                                    </select> 
+                                  <span onClick="BtN('month_a')"><img src="img/right.png"></span>
+                              </div>
+                           </td>
+                       </tr>
+                     </tbody>
+                    </table>
+                  </td>
+                </tr> 
+             </tbody>
+           </table>
+      </form>
+</div>
+</body>
+</html>

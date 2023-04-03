@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>周易预测</title>
+	<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">	
+</head>
+<body>
+	<div class="container">
+		<div class="header"> 
+			<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+			<p class="title">周易预测</p>
+		</div>			
+		
+		<ul class="myList">
+			<li class="lis4" id="list0">
+				<p>万年历</p>
+			</li>
+			<li class="lis4" id="list1">
+				<p>六爻排盘</p>
+			</li>
+			<!--<li class="lis4" id="list2">
+				<p>八字排盘</p>
+			</li>
+			<li class="lis4" id="list3">
+				<p>阳宅风水排盘</p>
+			</li>-->
+			
+		</ul>
+	</div>
+
+	<script src="../../js/jquery-1.7.2.js"></script>
+	<script type="text/javascript">
+		$("#list0").on("click",function(){
+			window.location.href = "wannianli.html";
+		});
+		$("#list1").on("click",function(){
+			window.location.href = "liuyao.html";
+		});
+		$("#list2").on("click",function(){
+			window.location.href = "bazi.html";
+		});
+		$("#list3").on("click",function(){
+			window.location.href = "yangzhai.html";
+		});
+	</script>
+</body>
+</html>
