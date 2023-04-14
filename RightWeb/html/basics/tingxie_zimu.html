@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>随机听写训练</title>
+	<script type="text/javascript">
+	</script>
+	<script src="../../js/tingxie/createjs.min.js"></script>
+	<script src="../../js/tingxie/soundjs.min.js"></script>
+	<script src="../../js/jquery-1.7.2.js"></script>
+	<link rel="stylesheet" type="text/css"  href="../../css/tingxie.css"  charset="utf-8">
+	<style>
+		.playsound {
+		    position: relative;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    width: 100%;
+		    height: 200px;
+		    cursor: pointer;
+		}
+		.playsound .circle {
+		    fill: none;
+		    stroke-width: 3;
+		    stroke-opacity: 0.5;
+		}
+		.playsound .loader {
+		    fill: none;
+		    stroke: #2484FE;
+		    stroke-width: 3;
+		    stroke-linecap: round;
+		    stroke-dasharray: 0;
+		    transform-origin: center;
+		}
+	</style>
+</head>
+<body>
+	<h1><div>随机听写训练</div></h1>     
+	<!--选择词的个数-->
+			<div >
+			  <div id="num1" >
+				  <h3><p>请选择听写的数量：</p></h3>
+				<input type="hidden" id="changdu" value="0" />
+				<button type="button" onclick="getMoblieNum(3)">3</button>
+			    <button type="button" onclick="getMoblieNum(5)">5</button>
+			    <button type="button" onclick="getMoblieNum(10)">10</button>
+				<button type="button" onclick="getMoblieNum(15)">15</button>
+				<button type="button" onclick="getMoblieNum(20)">20</button>
+				<button type="button" onclick="getMoblieNum(26)">26</button>
+			  </div>
+			</div>
+			<br/>
+			
+	<!--播放按钮-->
+	<div class="playsound canplay">
+	    <svg t="1660889713455" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2334" xmlns:xlink="http://www.w3.org/1999/xlink" style="height: 40px;overflow: hidden;position: absolute;fill: #2484FE;padding-left: 7px;">
+		  <path d="M128 138.666667c0-47.232 33.322667-66.666667 74.176-43.562667l663.146667 374.954667c40.96 23.168 40.853333 60.8 0 83.882666L202.176 928.896C161.216 952.064 128 932.565333 128 885.333333v-746.666666z" p-id="2335" fill="#2484FE"></path>
+	    </svg>
+	    <svg width="100px" height="100px" viewBox="0 0 100 100">
+	        <circle class="circle" cx="50" cy="50" r="46"></circle>
+	        <circle class="loader" cx="50" cy="50" r="46"></circle>
+	    </svg>
+	</div>
+	<!-- 测评 -->
+	<div class="complete" id="ceping">
+		<div class="ceping_div">
+
+		</div>
+	</div>
+	<div id="sumbit">提交</div>
+	
+<script type="text/javascript">
+	var palying = false; //是否在播放
+	var questions_answer = []; //题目
+	var answer=[];
+	var spriteData = {
+		65: { start: 800, length: 1 },//A
+		66: { start: 6400, length: 1 },//B
+		67: { start: 12000, length: 1 },//C
+		68: { start: 17900, length: 1 },//D
+		69: { start: 23700, length: 1 },//E
+		70: { start: 30000, length: 1 },//F
+		71: { start: 36200, length: 1 },//G
+		72: { start: 42000, length: 1 },//H
+		73: { start: 48000, length: 1 },//I
+		74: { start: 54000, length: 1 },//J
+		75: { start: 60000, length: 1 },//K
+		76: { start: 65300, length: 1 },//L
+		77: { start: 71400, length: 1 },//M
+		78: { start: 77000, length: 1 },//N
+		79: { start: 83400, length: 1 },//O
+		80: { start: 89000, length: 1 },//P
+		81: { start: 94800, length: 1 },//Q
+		82: { start: 101000, length: 1 },//R
+		83: { start: 107000, length: 1 },//S
+		84: { start: 112700, length: 1 },//T
+		85: { start: 118700, length: 1 },//U
+		86: { start: 124700, length: 1 },//V
+		87: { start: 131000, length: 1 },//W
+		88: { start: 137000, length: 1 },//X
+		89: { start: 142700, length: 1 },//Y
+		90: { start: 148900, length: 1 },//Z
+	}
+	var ShengYinFileId ="ShengYinFileId";
+	//加载这个音频 ， 首先在文件头部访问sound这个类， 让后调用registerSound方法，然后传入文件的路径，和id
+	function loadSound() {
+		//注册声音源
+	    createjs.Sound.registerSound("../../music/26zimu.mp3",ShengYinFileId);
+		//标记声音源为mp3
+		createjs.Sound.alternateExtensions = ["mp3"];
+	}
+	//页面加载音频
+	$(function(){
+		loadSound();
+	}); 
+	//点击播放按钮
+	 $('.playsound').click(function() {
+		if ($(this).hasClass('canplay') && !palying) {
+			timerFun();
+		}
+	})
+	
+	//============获取相关的音频=======================
+	function getMoblieNum(number){
+		$("#changdu").val(number);
+		init_question(number);
+	}
+	function init_question(question_leng) {//初始化题目
+		var codes=[];
+		for(var i=65;i<=90;codes.push(i),i++);
+		//for(var i=97;i<=122;codes.push(i),i++);
+		console.log(codes);
+	
+		for (var i = 0; i < question_leng; i++) {
+			var num = Math.floor(Math.random() * 26); //生成0-26的随机数
+			questions_answer.push(codes[num]);
+			answer.push(codes[num]);
+			//questions_answer.push(codes[i]);
+		}
+			
+		$.each(questions_answer, function(i, v) {
+			var dom1 = i == 0 ? '<div class="matching-number-match active"></div>' : '<div class="matching-number-match"></div>';
+			console.log("样式拼接"+dom1);
+			$(".ceping_div").append(dom1);
+		})
+		$('.complete').hide();
+	}
+	var now_audio_dom = 'ShengYinFileId';//当前缓存好的音频
+	//遍历播放语音
+	function timerFun() {
+		var changdu = $("#changdu").val();
+		if(changdu==0){
+			alert("请选择听写的数量！");
+			return;
+		}
+		palying = true;
+		let lenzdy =questions_answer.length + 1;
+		for (let i = 0;i<lenzdy;i++) {
+			let aui = questions_answer[i];
+			(function (j) {
+				setTimeout(function() {
+					if(i<lenzdy) {
+						createjs.Sound.stop();
+						if(spriteData[aui]!=undefined){
+							var props = new createjs.PlayPropsConfig().set({
+								interrupt: createjs.Sound.INTERRUPT_ANY, 
+								offset :spriteData[aui].start,
+								loop: 0,//音频循环播放次数。默认是 '0-不循环', -1 - 无限循环
+								volume: 0.5 //声音的音量，0-1之间。注意：主音量应用于单个音量
+								});
+							createjs.Sound.play(now_audio_dom, props);
+						}else{
+							questions_answer=[];
+							$("#changdu").val(0);
+							palying = false;
+							$("#ceping").show();
+							return;
+						}
+					}
+				}, 1000 * j);
+			})(i);
+		}
+	}
+//==============结束===========================
+	</script>
+	</body>
+</html>
