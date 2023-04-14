@@ -1,249 +1,369 @@
 <!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>带农历节日的万年历</title>
-<script type="text/javascript" src="../../js/wannianli.js"></script>
-<style type="text/css">
-	body{background-color: #F3F3F3}
-*{
-  font-family:courier;
-}
-.container{
-	padding-top: 60px;
-}
-.header{
-	position: fixed;
-	left: 0;
-	top: 0;
-}
-#content{
-    width: 350px;margin: 0 auto;
-
-}
-.smlb {
-    font-size: 20px; color: black; float: right; margin-right: 13%; margin-top: -54%;
-}
-
-.aorange {
-   font-weight: bold; font-size: 20px; color: #ff5f07; width:57px;
-}
-.day {
-   font-size: 18px; color: #000000; 
-}
-.day td{
-  color:#9F9E9E;
-}
-.one {
-   font-weight: normal; font-size: 20px; color: #000000; width:57px;
-}
-.bs {
-   font-size: 12px; color: #9F9E9E;width:57px;
-}
-.lb {
-   font-size: 16px; color: #0099ff
-}
-.sm {
-   font-size: 14px; color: #333399
-}
-.smz {
-   font-weight: bold; font-size: 14px; color: #0099ff
-}
-
-
-#cal-content{
-   height:40;text-align: center;background-color:"#FAFBFB";
-
-}
-.detallu{
-   width:100%; border:0; padding:2px; color: black;
-   
-}
-.lnotice{
-  margin-top: 34%;
-}
-#detail{
-   margin-top: 31px;text-align: center;background-color: #DEB887;
-}
-#oTime{
-  color: black ;text-align: center;font-family: 
-}
-
-.sm span{
-  color: black;
-
-}
-.thead span{
-   color: #DEB887;
-
-}
-#clock{
-    font-family: courier;margin-top: -23%;padding-bottom: 5%;
-  }
-/*年份，月份切换*/
-.year_select{
-  display:inline-block;padding-right: 23px;
-}
-.home_select{
-  display:inline-block; padding-right: 18px;
-}
-/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
-select::-ms-expand { display: none; }
-.ch{
-  background-color:#DEB887;
-}
-.day td{
-  width:57px;color:black; text-align:center;
-}
-select {
-  margin-bottom: 9px; appearance: none;-moz-appearance: none;-webkit-appearance: none;border: 0; border-radius: 2px; color: #000000; padding-top: 6px; background-color: white; padding-bottom: 2px;
-}
-/*日历头部*/
-
-.table_head{
-    background-color: #DEB887;width: 347px;margin-left: -2px;text-align: center;
-  }
-
-.week{
-   border-spacing: 0;   
-}
-
-
-div.tishishgen0{ 
-  text-align:center; margin:50px 0 10px 0; color:#666
-}
-
-div.shenbox {
-    margin-top: 20px;
-}
- {
-    margin: 0;
-    padding: 0;
-    font-size: 14px;
-    font-family: "microsoft yahei",Times New Roman;
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>带农历的万年历</title>
+	<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">	
+	<script type="text/javascript" src="../../js/data_time.js" ></script>
+	<script type="text/javascript" src="../../js/jquery-1.7.2.js" ></script>
+</head>
+<style >
+	#content{
+		background-color: #DEB887;
+		width: 100%;
+		height: 1000px;
+	}
+	/*盒子div横向排列*/
+	.div-inline{ 
+		display:inline;
+	}
+	img{
+		width:25px;
+		height:25px;
+	}
+	#SY,#SM{
+		border: none;
+		padding: 6px 8px;
+	    text-align: center;
+	    text-decoration: none;
+	    display: inline-block;
+	    font-size: 20px;
+	}
 </style>
 </head>
-<body onload=initial();>
-	<!-- 标头-->
-	<div align="left" > 
-			<img height="50" width="50"  src="../../img/tubiao/1.png" border="0" title="返回上一页" style="background-repeat: no-repeat" onClick="javascript:history.back(-1);">
-			<div style="position:absolute;z-index: 10;left: 150px;top: -20px;">
-				<p align="center" style="font-size: 30px;color: black;font-weight:bold;">万年历</p>
-			</div>
+
+<body>
+	<div class="container">
+		<!-- 标头-->
+		<div class="header"> 
+			<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+			<p class="title">万年历</p>
 		</div>
-<div id="content">
-<!-- 显示日期详情 -->
-  <div id="detail">
-       <div id="date_content"></div>
+	
+		<div id="content">
+			<!-- 显示日期详情 -->
+		    <div id="detail" style="text-align: center; font-size: 25px;">
+		       <div id="date_content" style="margin:10 auto;">
+		       		<!--描述：公历年月日-->
+		       		<div id="gongli">
+		       			<p>公历：
+				       		<span class="time1"  id="g_year" style="width: 48px;" disabled> </span> 
+							<span class="time1"  id="g_month" style="width: 30px;" disabled> </span>
+							<span class="time1"  id="g_day" style="width: 30px;" disabled> </span>
+							<span class="time1"  id="g_zhoutian" style="width: 30px;" disabled> </span>
+						</p>
+		       		</div>
+		       		<!--描述：农历年月日-->
+		       		<div id="nongli">
+		       			<p>农历：
+				       		<span class="time1"  id="n_year" style="width: 48px;" disabled> </span> 
+							<span class="time1"  id="n_month" style="width: 30px;" disabled> </span>
+							<span class="time1"  id="n_day" style="width: 30px;" disabled> </span>
+						</p>
+		       		</div>
+		       		<!--描述：干支年月日-->
+		       		<div id="ganzhi">
+		       			<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				       		<span class="time1"  id="gz_year" style="width: 48px;" disabled> </span> 
+							<span class="time1"  id="gz_month" style="width: 30px;" disabled> </span>
+							<span class="time1"  id="gz_day" style="width: 30px;" disabled> </span>
+						</p>
+		       		</div>
+		       </div>
+			   <!--描述：生肖-->
+	       		<div id="animal_year" class="div-inline"><p> <span  id='shengxiao'></span> </p></div>
+	       		<div id="shizhong" >
+	       			 <!-- 显示时钟 -->
+    				<p id="clock"></p>
+	       		</div>
+		    </div>
+		    <!-- 显示日期详情 结束-->
+		 <!--描述：日历-->
+		 <div id="rili"  style="margin:10 auto;font-size: 25px;">
+		 	<!--日历头部-->
+		 	<div id="week" > 
+		 		<div style='width:2%;height:50px;display:inline;float:left' ></div>
+		 		<div  class="div-inline" style="width: 14%;height:50px;float:left;color: red;">日</div>
+		 		<div  class="div-inline" style="width: 14%;height:50px;float:left ">一</div>
+		 		<div  class="div-inline" style="width: 14%;height:50px;float:left ">二</div>
+		 		<div  class="div-inline" style="width: 14%;height:50px;float:left ">三</div>
+		 		<div  class="div-inline" style="width: 14%;height:50px;float:left ">四</div>
+		 		<div  class="div-inline" style="width: 14%;height:50px;float:left ">五</div>
+		 		<div  class="div-inline" style="width: 14%;height:50px;float:left;color: red;">六</div>
+		 	</div>
+		 	<!--日历体-->
+		 	<div id="rili_ti"> </div>
+		 	
+		 	<!--描述：尾部-->
+		 	 <div id="wei" style="clear: both; ">
+		 	 	<div style='width:2%;height:100px;display:inline;float:left' ></div>
+		 	 	<!-- 选择年份菜单 -->
+	          	<div class="div-inline" id="year_select">
+	              <span onClick="BtN('year_d')"><img src="../../img/wannianli/left.png"></span>
+	                <select onChange="chaCld()" name="SY" id="SY">
+	                  <script>
+	                     for(i=1900;i<2050;i++) 
+	                     document.write('<option>'+i+"年")
+	                  </script>
+	                </select> 
+	              <span onClick="BtN('year_a')"><img src="../../img/wannianli/right.png"></span> 
+	          	</div>
+	          	<!-- 回到当天菜单 -->
+	          	<div  class="div-inline">
+	               <span onClick="BtN('')"><img src="../../img/wannianli/2.png" style="width:30px;height:30px"></span>
+	          	</div>
+	
+	          	<!-- 选择月份菜单 -->
+	             <div class="div-inline" style="display:inline-block;" id="home_select">
+	                <span onClick="BtN('month_d')"><img src="../../img/wannianli/left.png"></span>
+	                   <select onChange="chaCld()" name="SM" id="SM">
+	                    <script>
+	                    	for(i=1;i<13;i++) document.write('<option>'+i+"月")
+	                    </script>
+	                    </select> 
+	                <span onClick="BtN('month_a')"><img src="../../img/wannianli/right.png"></span>
+	             </div>
+		 	 </div>
+		 </div>
+		 <!--日历结束-->
+		</div>
+	</div>
+	
+	
+	
+<script type="text/javascript" charset="UTF-8">
+//页面加载完后执行
+window.onload=function(){
+	chushi();
+}
+//初始化
+function chushi(){
+	//显示日期详情
+	var date = new Date();
+	var g_year = date.getFullYear(); //获取完整的年份(4位)
+	var g_month = date.getMonth()+1; //获取当前月份(0-11,0代表1月)
+	var g_day = date.getDate(); //获取当前日(1-31)
+	//公历日期
+	$("#g_year").text(g_year+"年");
+	$("#g_month").text(g_month+"月");
+	$("#g_day").text(g_day+"日");
+	
+	var data =  calendar.solar2lunar(g_year,g_month,g_day);
+	//console.log(JSON.stringify(data));
+	for (var key in data) {
+		//星期
+		var g_zhoutian = data["ncWeek"];//星期
+		$("#g_zhoutian").text(g_zhoutian);
+	 	//农历日期
+	 	var n_year = data["gzYear"];//年
+	 	var n_month = data["IMonthCn"];//月
+	 	var n_day = data["IDayCn"];//日
+	 	$("#n_year").text(n_year+"年");
+		$("#n_month").text(n_month);
+		$("#n_day").text(n_day);
+	 	//干支
+	 	var gz_year=data["gzYear"];//干支年
+	 	var gz_month = data["gzMonth"];//干支月
+	 	var gz_day = data["gzDay"];//干支日
+	 	$("#gz_year").text(gz_year+"年");
+		$("#gz_month").text(gz_month+"月");
+		$("#gz_day").text(gz_day+"日");
+		//生肖
+	 	var shengxiao = data["Animal"]//生肖
+	 	$("#shengxiao").text(shengxiao);
+	}
+	// 时钟clock
+	setInterval("oTime()",1000);
+	//日期体
+	setCalendar(g_year,g_month);
+	//年月（尾部）
+	$("#SY").val(g_year+"年"); 
+	$("#SM").val(g_month+"月"); 
+}
 
-       <div id="animal_year"></div>
-        <!-- 显示时钟 -->
-        <p id="clock"></p>
-  </div>
-  <form name="calender_content" style="margin-top: -15px;">
-                  <table class="week">
-                    <tbody>
-                       <tr>
-                          <td class="ch">
-                                  <!-- 日历头部 -->
-                                 <table>
-                                     <tbody>
-                                           <tr class="day">
-                                                  <td>日</td>
-                                                  <td>一</td>
-                                                  <td>二</td>
-                                                  <td>三</td>
-                                                  <td>四</td>
-                                                  <td>五</td>
-                                                  <td>六</td>
-                                              </tr>
-                                         </tbody>
-                                  </table>
-                                  </tr>
-                                  </td>
-                                    <!-- 头部END -->
-                                 
-                 <!-- js动态的向表格写入日期 -->
-                            <script>
-                            var Num; //Num计算出日期位置
-                            for(i=0;i<6;i++) {
 
-                                    document.write('<table id="cal-content"><tr>');
-                                   
-                             for(j=0;j<7;j++) {
-                                Num = i*7+j;
-                                document.write('<td id="SD' + Num +'" onclick="addDay(' + Num +')" ');
-                        //周六 周日 假期样式设定
-                              if(j == 0|| j == 6)
-                              {
-                                    document.write(' class="aorange"');
-                               }else{
-                                    document.write(' class="one"');
-                              }
-                                    document.write('title=""> </td>')
-                             }
+// 时钟clock
+function oTime() {
+   today = new Date();
+   var hou = today.getHours();
+   var min=today.getMinutes(); //分
+   var sec =today.getSeconds(); //秒
+   if(sec<10)
+      var sec ="0"+sec;
+   if(min<10)
+      var min= "0"+min;
+   if(hou<10)
+      var hou = "0"+hou;
+   clock.innerHTML = '<span id="oTime">'+hou+':'+min+':'+sec+'</span>';
+}
 
-                                document.write('</tr></table></td></tr><tr><td><table style="width:399;"><tr style="text-align:center"> ');
-                           //农历
-                           for(j=0;j<7;j++) {
-                              Num = i*7+j;
-                              document.write('<td id="LD' + Num +'" onclick="addDay(' + Num +')" class="bs" title=""> </td>')
+//日历体
+function setCalendar(year, month) {
+	//清空页面数据
+	var rili_ti = $("#rili_ti");
+	rili_ti.html("");	
+	// 获取本月月的长度（本月的天数）
+	var monthLength  = calendar.solarDays(year,month);
+	//获取行数
+	var hang=Math.ceil(monthLength/7);
+	
+	//获取起始位置
+	var lie = getLie(year, month);
+	var xuhao=1;
+	var k=0;
+	//日期拼接
+	for(var i=0;i<=hang;i++){	
+		//清空div样式，div换行
+		$("#rili_ti").append("<br/><div style='width:2%;height:120px;display:inline;float:left'></div>");
+		for(var j=0;j<7;j++){
+			//如果不为空，则开始拼接数据。
+			if(xuhao<=monthLength){
+				if(k>=lie){
+					//获取农历数据
+					var nongli = calendar.solar2lunar(year,month,xuhao);
+					var nongli_day;
+					for (var key in nongli) {
+						 nongli_day= nongli["IDayCn"] ;//日
+					}
+					//拼接数据
+					$("#rili_ti").append("<div style='width:14%;height:120px;display:inline;float:left;font-size: 25px;'  onclick='biaotou("+year+","+month+","+xuhao+")'><span>"+xuhao+"</span><br/><span>"+nongli_day+"</span></div>");
+					xuhao++;
+				}else{
+					//拼接空数据
+					$("#rili_ti").append("<div  style='width:14%;height:120px;display:inline;float:left;border:true;font-size: 25px;'></div>");
+				}
+			}else{
+				//拼接空数据
+				$("#rili_ti").append("<div  style='width:14%;height:120px;display:inline;float:left;border:true;font-size: 25px;'></div>");
+			}
+			k++;
+		}
+	}
+	
+}
+//获取1号的起始位置
+function getLie(year, month) {
+    // 获取本月月的长度（本月的天数）
+	var monthLength  = calendar.solarDays(year,month);
+	//获取行数
+	var hang=Math.ceil(monthLength/7);
+    // 获取月份的第一天星期几
+    var fistDayWeek = calendar.solar2lunar(year,month,1);
+    var lie;
+    for (var key in fistDayWeek) {
+		var fistWeek= fistDayWeek["ncWeek"];//星期几
+		//列从第几列开始排列的
+		switch(fistWeek) {
+			case "星期日":
+				lie=0;
+		        break;
+		     case "星期一":
+		        lie=1;
+		        break;
+		     case "星期二":
+		        lie=2;
+		        break;
+		    case "星期三":
+		        lie=3;
+		        break;
+		    case "星期四":
+		        lie=4;
+		        break;
+		    case "星期五":
+		        lie=5;
+		        break;
+		    case "星期六":
+		        lie=6;
+		        break;
+		} 
+		
+	}
+   return lie;
+}
 
-                           }
-                              document.write('</tr></table></td></tr>');
-                           
-                         }
-                         </script>  
-             <!-- 生成日期 END    -->
-                        </tr>
-                     </table>
-                   </td>
-                </tr>   
-              </tbody>
-            </table>
-             <table>
-               <tbody>
-                <tr>
-                  <td class="sm">
-                    <table class="table_head">
-                      <tbody>
-                      <tr>
-                        <td> 
-                        <!-- 选择年份菜单 -->
-                          <div class="year_select">
-                              <span onClick="BtN('year_d')"><img src="img/left.png"></span>
-                                <select onChange="chaCld()" name="SY">
-                                  <script>
-                                     for(i=1900;i<2050;i++) 
-                                    document.write('<option>'+i+"年")
-                                  </script>
-                                </select> 
-                              <span onClick="BtN('year_a')"><img src="img/right.png"></span> 
-                          </div>
-                          <!-- 回到当天菜单 -->
-                          <div  class="home_select">
-                               <span onClick="BtN('')"><img src="img/2.png" style="width:26px;height:26px"></span>
-                          </div>
+//标头信息修改
+function biaotou(g_year,g_month,g_day){
+	//公历日期
+	$("#g_year").text(g_year+"年");
+	$("#g_month").text(g_month+"月");
+	$("#g_day").text(g_day+"日");
+	
+	var data =  calendar.solar2lunar(g_year,g_month,g_day);
+	//console.log(JSON.stringify(data));
+	for (var key in data) {
+		//星期
+		var g_zhoutian = data["ncWeek"];//星期
+		$("#g_zhoutian").text(g_zhoutian);
+	 	//农历日期
+	 	var n_year = data["gzYear"];//年
+	 	var n_month = data["IMonthCn"];//月
+	 	var n_day = data["IDayCn"]//日
+	 	$("#n_year").text(n_year+"年");
+		$("#n_month").text(n_month);
+		$("#n_day").text(n_day);
+	 	//干支
+	 	var gz_year=data["gzYear"];//干支年
+	 	var gz_month = data["gzMonth"];//干支月
+	 	var gz_day = data["gzDay"];//干支日
+	 	$("#gz_year").text(gz_year+"年");
+		$("#gz_month").text(gz_month+"月");
+		$("#gz_day").text(gz_day+"日");
+		//生肖
+	 	var shengxiao = data["Animal"]//生肖
+	 	$("#shengxiao").text(shengxiao);
+	}
+}
 
-                          <!-- 选择月份菜单 -->
-                              <div style="display:inline-block;">
-                                  <span onClick="BtN('month_d')"><img src="img/left.png"></span>
-                                   <select onChange="chaCld()" name="SM">
-                                    <script>
-                                    for(i=1;i<13;i++) document.write('<option>'+i+"月")
-                                    </script>
-                                    </select> 
-                                  <span onClick="BtN('month_a')"><img src="img/right.png"></span>
-                              </div>
-                           </td>
-                       </tr>
-                     </tbody>
-                    </table>
-                  </td>
-                </tr> 
-             </tbody>
-           </table>
-      </form>
-</div>
+
+//年月-选择
+function chaCld(){
+	var year = $("#SY option:selected").val();
+	var month= $("#SM option:selected").val();
+	//更新日历体
+	setCalendar(parseInt(year),parseInt(month));
+}
+//年月-左右
+function BtN(year_month){
+	//向左-年
+	if(year_month=='year_d'){
+		var year = $("#SY option:selected").val();
+		$("#SY").val((parseInt(year)-1)+"年"); 
+		var month=$("#SM option:selected").val();
+		//更新日历体
+		setCalendar((parseInt(year)-1),parseInt(month));
+	}
+	//向右-年
+	if(year_month=='year_a'){
+		var year = $("#SY option:selected").val();
+		$("#SY").val((parseInt(year)+1)+"年"); 
+		var month=$("#SM option:selected").val();
+		//更新日历体
+		setCalendar((parseInt(year)+1),parseInt(month));
+	}
+	//向左-月
+	if(year_month=='month_d'){
+		var month = $("#SM option:selected").val();
+		$("#SM").val((parseInt(month)-1)+"月"); 
+		var year = $("#SY option:selected").val();
+		//更新日历体
+		setCalendar(parseInt(year),(parseInt(month)-1));
+	}
+	//向右-月
+	if(year_month=='month_a'){
+		var month = $("#SM option:selected").val();
+		$("#SM").val((parseInt(month)+1)+"月"); 
+		var year = $("#SY option:selected").val();
+		//更新日历体
+		setCalendar(parseInt(year),(parseInt(month)+1));
+	}
+	if(year_month==""){
+		$("#rili_ti").html("");
+		chushi();
+	}
+}
+
+</script>
 </body>
 </html>

@@ -1,15 +1,15 @@
 //禁用开发者工具F12
-document.onkeydown = function() {
+/* document.onkeydown = function() {
   console.log("123")
   if (window.event && window.event.keyCode == 123) {
     event.keyCode = 0;
     event.returnValue = false;
     return false;
   }
-};
+}; */
 
-isNS4 = (document.layers) ? true : false; //浏览器类型，判断是否是IE
-isIE4 = (document.all && !document.getElementById) ? true : false;
+isNS4 = (document.layers) ? true : false; //当前浏览器是Netscape 
+isIE4 = (document.all && !document.getElementById) ? true : false;//浏览器类型，判断是否是IE
 isIE5 = (document.all && document.getElementById) ? true : false;
 isNS6 = (!document.all && document.getElementById) ? true : false;
 var curX, curY, curX2, curY2, boxX, boxY, moving = 0,
@@ -23,7 +23,9 @@ var enemyydir = new Array(1, 1, 1, 1);
 
 
 if (isNS4 || isNS6) {
-   document.captureEvents(Event.MOUSEUP | Event.MOUSEDOWN | Event.MOUSEMOVE);
+   //document.captureEvents(Event.MOUSEUP | Event.MOUSEDOWN | Event.ACTION_MOVE);
+   //MotionEvent.ACTION_DOWN对应手势按下的时候、对应手势滑动的回调、对应手势抬起的回调
+   document.captureEvents(Event.ACTION_DOWN | Event.ACTION_MOVE | Event.ACTION_UP);
 }
 /*
 document.onmousedown = start;
@@ -151,43 +153,64 @@ function movenemies() {
 }
 
 function start(e) {
-console.log("开始")
-  if (started == 0) {
-    movenemies();
-    startclock();
-    started = 1;
-  }
+console.log("阻止默认的触摸事件 -开始");
+e.preventDefault();
+console.log("阻止默认的触摸事件 -结束");
+ 
+ 
+var ele = document.querySelector("#box");
+ele.addEventListener('touchmove',function(e){
+	console.log("isNS4:"+isNS4);
+	console.log("isNS6:"+isNS6);
+	//curX = (isNS4 || isNS6) ? e.pageX : window.event.x;
+	//curY = (isNS4 || isNS6) ? e.pageY : window.event.y;
+	var touch = event.targetTouches[0];
+	curX = (isNS4 || isNS6) ? touch.pageX : window.event.x;
+	curY = (isNS4 || isNS6) ? touch.pageY : window.event.y;
+	console.log("curX:"+curX);
+	console.log("curY:"+curY);
+  
+	curX2 = eval(curX - 40*1.4);
+	curY2 = eval(curY - 40*1.4);
 
-  curX = (isNS4 || isNS6) ? e.pageX : window.event.x;
-  curY = (isNS4 || isNS6) ? e.pageY : window.event.y;
+	boxX = eval(curX - 20*1.4);
+	boxY = eval(curY - 20*1.4);
 
-  curX2 = eval(curX - 40*1.4);
-  curY2 = eval(curY - 40*1.4);
+	var boxleft = giveposX('box');
+	var boxtop = giveposY('box');
 
-  boxX = eval(curX - 20*1.4);
-  boxY = eval(curY - 20*1.4);
+console.log("curX= "+curX +"curX2= "+curX2 )
+console.log("boxleft= "+boxleft +"curX2= "+curX2 )
+console.log("curY= "+curY +"curY2= "+curY2 )
+console.log("boxtop= "+boxtop)
 
-  var boxleft = giveposX('box');
-  var boxtop = giveposY('box');
+	  if (curX > boxleft && curX2 < boxleft && curY > boxtop && curY2 < boxtop) {
 
-  if (curX > boxleft && curX2 < boxleft && curY > boxtop && curY2 < boxtop) {
+		moving = 1;
+		setposX('box', boxX);
+		setposY('box', boxY);
 
-    moving = 1;
-    setposX('box', boxX);
-    setposY('box', boxY);
+		if (isNS4 || isNS6) {
 
-    if (isNS4 || isNS6) {
-
-      document.captureEvents(Event.MOUSEMOVE);
-    }
-  }
+		  document.captureEvents(Event.ACTION_MOVE);
+		}
+	  }
+	  
+	  //障碍物动作
+	  if (started == 0) {
+	    movenemies();
+	    startclock();
+	    started = 1;
+	  }
+ });
+ 
 }
 
 function stop(e) {
   console.log("结束")
   moving = 0;
   if (isNS4 || isNS6) {
-    document.releaseEvents(Event.MOUSEMOVE);
+    document.releaseEvents(Event.ACTION_MOVE);
   }
 }
 
@@ -195,14 +218,17 @@ function reset(e) {
   endclock();
   moving = 0;
   if (isNS4 || isNS6) {
-    document.releaseEvents(Event.MOUSEMOVE);
+    document.releaseEvents(Event.ACTION_MOVE);
   }
-  if (finaltime == 0) {
+ if (finaltime == 0) {
     finaltime = calctime();
     var truthBeTold = window.confirm('你 挑 战 持 了 ' + finaltime + ' 秒......\n\n\n点 击 确 认 返 回 训 练 工 具\n\n\n继 续 测 试， 请 点 取 消！');
     if (truthBeTold) {
-      parent.location.href = '/';
-    } else document.location.reload();
+      //parent.location.href = '/';
+	  document.location.reload();
+    } 
+	else 
+	document.location.reload();
   }
 }
 
