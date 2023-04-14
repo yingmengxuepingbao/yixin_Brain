@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-	<title>舒尔特-字母表</title>
+	<title>舒尔特-古诗表</title>
 	<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">	
 	<style>
 		#show{
@@ -37,8 +37,8 @@
 			box-shadow: 5px 5px 6px #888;
 		}
 		table,th,td {
-			color: #000000;
-			border: 1px solid #000000;
+			color: #fff;
+			border: 1px solid #fff;
 			font-size: 18px;
 		}
 		
@@ -95,23 +95,18 @@
 		<div id="mask"> 
 			<div class="wenzi">
 				<h1>使用说明</h1>
-				<p>1. 舒尔特-字母表格：此表格是一个5*5的表格。</p>
+				<p>1. 舒尔特-古诗表格：此表格是一个5*5的表格，请依次将 “早发白帝城” 的正确排序找出。</p>
 				<p>2.舒尔特训练的目的是拓宽你的视野能力，以及关键字抓取能力，</p>
-				<p>3.请盯着中间的数字，用余光扫视周围数字，尽量在25秒钟内，按顺序找完。</p>
-				<p>4.依次点击字母，将A-Y个字母按顺序找出。16秒为优秀；24秒为普通；28秒为合格；</p>
+				<p>3.请盯着中间的汉字，用余光扫视周围汉字，尽量在25秒钟内，按顺序找完。</p>
+				<p>4.依次点击汉字。16秒为优秀；24秒为普通；28秒为合格；</p>
 				<p>5. 每天任务：每天练习1到5次。</p>
-			</div>
-			<div hidden="hidden">
-				第一等级5*5的，16秒为优秀；24秒为普通；28秒为合格；
-				第二等级6*6的，22秒为优秀，28秒为普通；32秒为合格；
-				第三等级7*7的，28秒为优秀，34秒为普通；40秒为合格。
 			</div>
 			<button class="btn1">确定 </button>
 		</div>
 		<!--弹出提示-->
 		<div id="myNum">
 			<h2 class="title">提示</h2>
-			<p class="myMess">请点击字母：【<span class="mynum"></span>】</p>
+			<p class="myMess">请点击汉字：【<span class="mynum"></span>】</p>
 			<p class="ok" id="ok_id">确定</p>
 		</div>
 		<div id="myEnd">
@@ -158,6 +153,7 @@
 	<script type="text/javascript">
 		//页面加载执行		
 		$(document).ready(function (){
+			
 			$(".btn1").on("click",function(){
 				$("#mask").hide();
 			})
@@ -173,7 +169,19 @@
 				$("#myNum").hide();
 				$("#myEnd").hide();
 			})
+			//readFile("../../text/1.txt");
 		});
+		//获取1.txt中的文字
+		/*function readFile(filename){
+			var reader = new FileReader();//new一个FileReader实例
+			var str = reader.readAsText(File(filename));
+			alert(str);
+			return str;
+		}*/
+		
+		
+		
+		
 		//定义数组的截至数字
 	 	var number = 25;//数组25个数字
 		var array=new Array(number);//数组定义
@@ -309,7 +317,7 @@
 			var second = document.getElementById("second");
 			var ms = document.getElementById("ms");
 			var buttonEle = document.getElementById("start");
-		//console.log(count);
+		console.log(count);
 			
 			if(i % 2 == 0) {
 				buttonEle.innerHTML = "暂停计时";

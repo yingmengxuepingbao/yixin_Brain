@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-	<title>舒尔特-字母表</title>
+	<title>舒尔特-数字表</title>
 	<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">	
 	<style>
 		#show{
@@ -30,7 +30,7 @@
 			width: 80%;
 			line-height: 50px;
 			font-size: 20px;
-			color: #fff;
+			color: #FFFFFF;
 			background: orange;
 			border: none;
 			border-radius: 10px;
@@ -95,23 +95,18 @@
 		<div id="mask"> 
 			<div class="wenzi">
 				<h1>使用说明</h1>
-				<p>1. 舒尔特-字母表格：此表格是一个5*5的表格。</p>
+				<p>1. 舒尔特-数字表格：此表格是一个5*5的表格。</p>
 				<p>2.舒尔特训练的目的是拓宽你的视野能力，以及关键字抓取能力，</p>
 				<p>3.请盯着中间的数字，用余光扫视周围数字，尽量在25秒钟内，按顺序找完。</p>
-				<p>4.依次点击字母，将A-Y个字母按顺序找出。16秒为优秀；24秒为普通；28秒为合格；</p>
+				<p>4.依次点击数字，将1-25个数字按顺序找出。16秒为优秀；24秒为普通；28秒为合格；</p>
 				<p>5. 每天任务：每天练习1到5次。</p>
-			</div>
-			<div hidden="hidden">
-				第一等级5*5的，16秒为优秀；24秒为普通；28秒为合格；
-				第二等级6*6的，22秒为优秀，28秒为普通；32秒为合格；
-				第三等级7*7的，28秒为优秀，34秒为普通；40秒为合格。
 			</div>
 			<button class="btn1">确定 </button>
 		</div>
 		<!--弹出提示-->
 		<div id="myNum">
 			<h2 class="title">提示</h2>
-			<p class="myMess">请点击字母：【<span class="mynum"></span>】</p>
+			<p class="myMess">请点击数字【<span class="mynum"></span>】</p>
 			<p class="ok" id="ok_id">确定</p>
 		</div>
 		<div id="myEnd">
@@ -128,13 +123,13 @@
 		
 		<div class="header"> 
 			<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
-			<p class="title">舒尔特表-字母</p>
+			<p class="title">舒尔特表</p>
 		</div>
 		<div id="show">
-			<p>点击计时按钮后依次点击A-Y</p>
+			<p>点击计时按钮后依次点击1-25</p>
 			<!--表格显示    -->
 			<div id="myTable">
-				<input id="shulte_text" type="hidden" value="65" />
+				<input id="shulte_text" type="hidden" value="1" />
 				<div class="slide" id="shulte" align="center">
 				</div>
 			</div>	
@@ -163,11 +158,11 @@
 			})
 			$("#myNum").hide();
 			$("#myEnd").hide();
-			showDiffGroup(5, 1, number);//加载舒尔特表格
+			showDiffGroup(5, 1, number);
 			$("#ok_id").on("click",function(){
 				$("#myNum").hide();
 				$("#myEnd").hide();
-				startTime();//开始计时
+				startTime();
 			})
 			$("#ok_all").on("click",function(){
 				$("#myNum").hide();
@@ -182,8 +177,7 @@
 		function getDiffGroup(num, min, max) {
 		    var res = [];
 		    for (var i = min; i <= max; i++){ //从最小数开始 加一 到最大数
-		    	//大写字母A:65 由65开始计算
-		    	res.push(String.fromCharCode((64 + i)));//将所有的数 push到数组中
+		    	res.push(i);//将所有的数 push到数组中
 		    }
 			res.sort(function () { 
 				return 0.5 - Math.random(); //随机数排序
@@ -228,7 +222,7 @@
 		    		}
 		    	}
 		    }
-		    return -1;//没查找到返回-1
+		    return 0;//没查找到返回0
 		}
 	    
 		//表格点击事件
@@ -238,26 +232,24 @@
 		 	if(i<0 ||i % 2 == 0){//未点击
 				startTime();//自动计时
 			}
-		 	var flag = "00";//数组下标
+		 	var flag = 0;//数组下标
 		 	//循环遍历，查找数组的下标
 		    for(var i=1;i<=number;i++){
-		    	flag =findNumber(String.fromCharCode((64 + i)),array);//数字从A-Y开始查找。
+		    	 var flag =findNumber(i,array);//数字从1-25开始查找。
 		    	if(td_flag == flag){
 		    		break;
 		    	}
 		    }
-		    //获取点击的字母值。
+		    //获取点击数字的值。
 		    var td_val =$("#td"+flag).text();
-		    //将字母转化成数字
-		    var num_val = td_val.charCodeAt(0);
-		    //获取点击次数 从65开始
+		    //获取点击次数
 			var num=$("#shulte_text").val();
 			//判断点击次数是否比显示的个数少。
-			if((num-64)<=number){
+			if(num<=number){
 				//判断点击的数字为点击的次数，则正常排序，否则，排序错误，提示。
-				if(num== num_val){
+				if(td_val == num){
 					num++;
-					if((num-64)>number){//点击数字完毕,触发暂停事件
+					if(num>number){//点击数字完毕,触发暂停事件
 						$("#button_count").attr("value",1);//页面数字是基数
 						startTime();//暂停时间
 						//显示使用的时间
@@ -265,7 +257,7 @@
 						var minute = $("#minute").text();
 						var second = $("#second").text();
 						var ms = $("#ms").text();
-						$(".mynum").text(String.fromCharCode(num));
+						$(".mynum").text(num);
 						$(".shi").text(hour);
 						$(".fen").text(minute);
 						$(".miao").text(second);
@@ -280,7 +272,7 @@
 						$(".span1 span").html("00");
 						$("#start").html("开始计时");
 						count=0;//将时间秒数重新设置为0
-						$("#shulte_text").attr("value",65);//点击次数设置为65
+						$("#shulte_text").attr("value",1);//点击次数设置为1
 						$("#button_count").attr("value",-1);//计时时间设置为偶数
 						$("#shulte").empty(); //将舒尔特表的div清空
 						showDiffGroup(5, 1, number);//重新生成5*5舒尔特表
@@ -290,7 +282,7 @@
 					
 				}else{
 					//alert("请点击："+num);
-					$(".mynum").text(String.fromCharCode(num));
+					$(".mynum").text(num);
 					$("#myNum").show();
 					startTime();
 				}
@@ -309,7 +301,7 @@
 			var second = document.getElementById("second");
 			var ms = document.getElementById("ms");
 			var buttonEle = document.getElementById("start");
-		//console.log(count);
+		console.log(count);
 			
 			if(i % 2 == 0) {
 				buttonEle.innerHTML = "暂停计时";

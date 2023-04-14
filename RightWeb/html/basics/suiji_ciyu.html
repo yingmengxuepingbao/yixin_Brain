@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>随机词汇训练</title>
+</head>
+<body>
+	<h1><div>随机词汇训练</div></h1>     
+	<div>
+		<!--选择词的个数-->
+		<div >
+		  <div id="num1" >
+		    <button type="button" onclick="getMoblieNum(3)">3</button>
+		    <button type="button" onclick="getMoblieNum(5)">5</button>
+		    <button type="button"  onclick="getMoblieNum(10)">10</button>
+		    <button type="button"  onclick="getMoblieNum(20)">20</button>
+		  </div>
+		</div><br>
+		<div>
+			<!-- 记忆 -->
+			<div class="complete">
+				<div class="jiyi">
+				</div>
+				<div id="jiyi_complete"><div>记忆完成</div></div>
+			</div>
+
+			<!-- 测评 -->
+			<div class="complete" id="ceping" style="display:none">
+				<div class="ceping">
+
+				</div>
+			</div>
+			
+		</div>
+		<div id="sumbit"><div>提交</div></div>
+	</div>
+<script src="../../js/jquery-1.7.2.js"></script>
+<script type="text/javascript">
+	//============获取相关的汉字词组=======================
+	function getMoblieNum(number){
+		$('.jiyi').html("");
+		$('.ceping').html("");
+		$(".jiyi").show();
+		init_question(number);
+	}
+	var file_url="../../js/json/vocabulary.json";
+	var questions_answer=[];//题目
+	function init_question(question_leng) {//初始化题目
+		$.getJSON(file_url, function (data){
+			// console.log(data)
+			var question_bank=data;
+			for (var index = 0; index < question_leng; index++) {
+				var _length=question_bank.length;
+				var pos = Math.round(Math.random() * (question_bank.length - 1));
+				questions_answer.push(question_bank[pos])
+				var dom='<div>'+question_bank[pos]+'</div>';
+				$('.jiyi').append(dom)
+				var dom1='<div ><input type="text"></div>';
+				$('.ceping').append(dom1)
+				question_bank.splice(pos,1)
+			}
+			var sessionData={
+		
+				questions_answer:questions_answer
+			}
+		   
+			$('.complete').show();
+			 
+		})
+	}
+	//记忆完成
+	$("#jiyi_complete").click(function(){
+		$(".jiyi").hide();
+	})
+	//==============结束===========================
+	</script>
+	
+	</body>
+</html>

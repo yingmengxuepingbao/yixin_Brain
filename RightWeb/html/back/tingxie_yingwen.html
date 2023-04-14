@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>随机听写训练</title>
+	<script type="text/javascript">
+	</script>
+	<script src="../../js/tingxie/createjs.min.js"></script>
+	<script src="../../js/tingxie/soundjs.min.js"></script>
+	<script src="../../js/jquery-1.7.2.js"></script>
+	<link rel="stylesheet" type="text/css"  href="../../css/tingxie.css"  charset="utf-8">
+	<style>
+		.playsound {
+		    position: relative;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    width: 100%;
+		    height: 200px;
+		    cursor: pointer;
+		}
+		.playsound .circle {
+		    fill: none;
+		    stroke-width: 3;
+		    stroke-opacity: 0.5;
+		}
+		.playsound .loader {
+		    fill: none;
+		    stroke: #2484FE;
+		    stroke-width: 3;
+		    stroke-linecap: round;
+		    stroke-dasharray: 0;
+		    transform-origin: center;
+		}
+	</style>
+</head>
+<body>
+	<h1><div>随机听写训练</div></h1>     
+	<!--选择词的个数-->
+			<div >
+			  <div id="num1" >
+				  <h3><p>请选择听写的数量：</p></h3>
+				<input type="hidden" id="changdu" value="0" />
+			    <button type="button" onclick="getMoblieNum(5)">5</button>
+			    <button type="button" onclick="getMoblieNum(10)">10</button>
+				<button type="button" onclick="getMoblieNum(15)">15</button>
+				<button type="button" onclick="getMoblieNum(20)">20</button>
+				<button type="button" onclick="getMoblieNum(20)">26</button>
+			  </div>
+			</div>
+			<br/>
+			
+	<!--播放按钮-->
+	<div class="playsound canplay">
+	    <svg t="1660889713455" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2334" xmlns:xlink="http://www.w3.org/1999/xlink" style="height: 40px;overflow: hidden;position: absolute;fill: #2484FE;padding-left: 7px;">
+		  <path d="M128 138.666667c0-47.232 33.322667-66.666667 74.176-43.562667l663.146667 374.954667c40.96 23.168 40.853333 60.8 0 83.882666L202.176 928.896C161.216 952.064 128 932.565333 128 885.333333v-746.666666z" p-id="2335" fill="#2484FE"></path>
+	    </svg>
+	    <svg width="100px" height="100px" viewBox="0 0 100 100">
+	        <circle class="circle" cx="50" cy="50" r="46"></circle>
+	        <circle class="loader" cx="50" cy="50" r="46"></circle>
+	    </svg>
+	</div>
+	<!-- 测评 -->
+	<div class="complete" id="ceping">
+		<div class="ceping">
+
+		</div>
+	</div>
+	<div id="sumbit">提交</div>
+	
+<script type="text/javascript">
+	var palying = false; //是否在播放
+	var questions_answer = []; //题目
+	//26个音频
+	var  ShengYinFileId65 = "ShengYinFileId65";
+	var  ShengYinFileId66 = "ShengYinFileId66";
+	var  ShengYinFileId67 = "ShengYinFileId67";
+	var  ShengYinFileId68 = "ShengYinFileId68";
+	var  ShengYinFileId69 = "ShengYinFileId69";
+	var  ShengYinFileId70 = "ShengYinFileId70";
+	var  ShengYinFileId71 = "ShengYinFileId71";
+	var  ShengYinFileId72 = "ShengYinFileId72";
+	var  ShengYinFileId73 = "ShengYinFileId73";
+	var  ShengYinFileId74 = "ShengYinFileId74";
+	var  ShengYinFileId75 = "ShengYinFileId75";
+	var  ShengYinFileId76 = "ShengYinFileId76";
+	var  ShengYinFileId77 = "ShengYinFileId77";
+	var  ShengYinFileId78 = "ShengYinFileId78";
+	var  ShengYinFileId79 = "ShengYinFileId79";
+	var  ShengYinFileId80 = "ShengYinFileId80";
+	var  ShengYinFileId81 = "ShengYinFileId81";
+	var  ShengYinFileId82 = "ShengYinFileId82";
+	var  ShengYinFileId83 = "ShengYinFileId83";
+	var  ShengYinFileId84 = "ShengYinFileId84";
+	var  ShengYinFileId85 = "ShengYinFileId85";
+	var  ShengYinFileId86 = "ShengYinFileId86";
+	var  ShengYinFileId87 = "ShengYinFileId87";
+	var  ShengYinFileId88 = "ShengYinFileId88";
+	var  ShengYinFileId89 = "ShengYinFileId89";
+	var  ShengYinFileId90 = "ShengYinFileId90";
+	//加载这个音频 ， 首先在文件头部访问sound这个类， 让后调用registerSound方法，然后传入文件的路径，和id
+	function loadSound() {
+	    createjs.Sound.registerSound("../../music/yingwen/A.mp3",ShengYinFileId65);
+		createjs.Sound.registerSound("../../music/yingwen/B.mp3",ShengYinFileId66);
+		createjs.Sound.registerSound("../../music/yingwen/C.mp3",ShengYinFileId67);
+		createjs.Sound.registerSound("../../music/yingwen/D.mp3",ShengYinFileId68);
+		createjs.Sound.registerSound("../../music/yingwen/E.mp3",ShengYinFileId69);
+		createjs.Sound.registerSound("../../music/yingwen/F.mp3",ShengYinFileId70);
+		createjs.Sound.registerSound("../../music/yingwen/G.mp3",ShengYinFileId71);
+		createjs.Sound.registerSound("../../music/yingwen/H.mp3",ShengYinFileId72);
+		createjs.Sound.registerSound("../../music/yingwen/I.mp3",ShengYinFileId73);
+		createjs.Sound.registerSound("../../music/yingwen/J.mp3",ShengYinFileId74);
+		createjs.Sound.registerSound("../../music/yingwen/K.mp3",ShengYinFileId75);
+		createjs.Sound.registerSound("../../music/yingwen/L.mp3",ShengYinFileId76);
+		createjs.Sound.registerSound("../../music/yingwen/M.mp3",ShengYinFileId77);
+		createjs.Sound.registerSound("../../music/yingwen/N.mp3",ShengYinFileId78);
+		createjs.Sound.registerSound("../../music/yingwen/O.mp3",ShengYinFileId79);
+		createjs.Sound.registerSound("../../music/yingwen/P.mp3",ShengYinFileId80);
+		createjs.Sound.registerSound("../../music/yingwen/Q.mp3",ShengYinFileId81);
+		createjs.Sound.registerSound("../../music/yingwen/R.mp3",ShengYinFileId82);
+		createjs.Sound.registerSound("../../music/yingwen/S.mp3",ShengYinFileId83);
+		createjs.Sound.registerSound("../../music/yingwen/T.mp3",ShengYinFileId84);
+		createjs.Sound.registerSound("../../music/yingwen/U.mp3",ShengYinFileId85);
+		createjs.Sound.registerSound("../../music/yingwen/V.mp3",ShengYinFileId86);
+		createjs.Sound.registerSound("../../music/yingwen/W.mp3",ShengYinFileId87);
+		createjs.Sound.registerSound("../../music/yingwen/X.mp3",ShengYinFileId88);
+		createjs.Sound.registerSound("../../music/yingwen/Y.mp3",ShengYinFileId89);
+		createjs.Sound.registerSound("../../music/yingwen/Z.mp3",ShengYinFileId90);
+	}
+	//页面加载音频
+	$(function(){
+		loadSound();
+	}); 
+	
+	//点击播放按钮
+	 $('.playsound').click(function() {
+		if ($(this).hasClass('canplay') && !palying) {
+			timerFun();
+		}
+	})
+	
+	//============获取相关的音频=======================
+	function getMoblieNum(number){
+		$("#changdu").val(number);
+		init_question(number);
+	}
+	function init_question(question_leng) {//初始化题目
+		var codes=[];
+		for(var i=65;i<=90;codes.push(i),i++);
+		//for(var i=97;i<=122;codes.push(i),i++);
+		//console.log(codes);
+	
+		for (var i = 0; i < question_leng; i++) {
+			var num = Math.floor(Math.random() * 26); //生成0-26的随机数
+			questions_answer.push(codes[num]);
+		}
+			
+		$.each(questions_answer, function(i, v) {
+			var dom1 = i == 0 ? '<div class="matching-number-match active"></div>' : '<div class="matching-number-match"></div>';
+			$('.ceping').append(dom1);
+		})
+		$('.complete').hide();
+		
+	}
+	var now_audio_dom = 'ShengYinFileId';//当前缓存好的音频
+	//遍历播放语音
+	function timerFun() {
+		var changdu = $("#changdu").val();
+		if(changdu==0){
+			alert("请选择听写的数量！");
+			return;
+		}
+		palying = true;
+		let lenzdy =questions_answer.length;
+		for (let i = 0;i<lenzdy;i++) {
+			let aui = questions_answer[i];
+			console.log(aui);
+			(function (j) {
+				setTimeout(function() {
+					if(i<lenzdy) {
+						createjs.Sound.stop();
+						var props = new createjs.PlayPropsConfig().set({
+							interrupt: createjs.Sound.INTERRUPT_ANY, 
+							loop: 0,//音频循环播放次数。默认是 '0-不循环', -1 - 无限循环
+							volume: 0.5 //声音的音量，0-1之间。注意：主音量应用于单个音量
+							});
+						createjs.Sound.play(now_audio_dom+aui, props);
+					}
+				}, 1000 * j);
+			})(i);
+		}
+		$("#changdu").val(0);
+		$(".complete").show();
+		questions_answer=[];
+	}
+
+//==============结束===========================
+	</script>
+	</body>
+</html>
