@@ -4,12 +4,37 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
 		<title>欢迎来到-艺馨制造-注册页</title>
-		<link type="text/css"  href="../../css/login/login.css"  charset="utf-8"/>
-		<style>
-			
-		</style>
+		<link rel="stylesheet" type="text/css"  href="../../css/login/login.css"  charset="utf-8"/>
+		<script src="../../js/jquery-1.7.2.js"></script>
 	</head>
 	<body>
-		<p>已有账号？<a href="login.html">立即登录</a></p>
+		<div id="div-title">
+			<h3>欢迎注册</h3>
+		</div>
+		<div id="form-border2">
+			<label class="form-label" for="username">账&nbsp;号<font color='red'>*</font>&nbsp;</label>
+			<input id="username" class="input-text1 radius" type="text" placeholder="账号" /><br>
+			<label class="form-label" for="password">密&nbsp;码<font color='red'>*</font>&nbsp;</label>
+			<input id="password" class="input-text1 radius" type="password" placeholder="密码" /><br>
+			<label class="form-label" for="confirmPassword">确&nbsp;认<font color='red'>*</font>&nbsp;</label>
+			<input id="confirmPassword" class="input-text1 radius" type="password" placeholder="密码确认" /><br>
+			<label class="form-label" for="nickname">昵&nbsp;称&nbsp;&nbsp;&nbsp;</label>
+			<input id="nickname" class="input-text1 radius" type="text" placeholder="昵称" /><br>
+			<label class="form-label" for="sex">性&nbsp;别&nbsp;&nbsp;&nbsp;</label>
+			<input type="radio" name="sex" checked>男 <input type="radio" name="sex">女 <br>
+			<label class="form-label" for="realname">真&nbsp;名&nbsp;&nbsp;&nbsp;</label>
+			<input id="realname" class="input-text1 radius" type="text" placeholder="真实姓名" /><br>
+			<label class="form-label" for="face">头&nbsp;像&nbsp;&nbsp;&nbsp;</label>
+			<input id="face" class="input-text1 radius" type="text" placeholder="头像" /><br>
+			<label class="form-label" for="mobile">电&nbsp;话<font color='red'>*</font>&nbsp;</label>
+			<input id="mobile" class="input-text1 radius" type="text" placeholder="电话" /><br>
+			<label class="form-label" for="email">邮&nbsp;箱&nbsp;&nbsp;&nbsp;</label>
+			<input id="email" class="input-text1 radius" type="text" placeholder="邮箱" /><br>
+			<label class="form-label" for="birthday">生&nbsp;日&nbsp;&nbsp;&nbsp;</label>
+			<input id="birthday" class="input-text1 radius" type="text" placeholder="生日" /><br>
+			<input class="form-button  btn-primary radius" type="button" value="注册" id="register">
+			<p style="text-align: center;font-size: 15px;font-weight:bold;">已有账号？<a href="login.html">立即登录</a></p><br>
+		</div>
+		<script src="../../js/login/register.js"></script>
 	</body>
 </html>

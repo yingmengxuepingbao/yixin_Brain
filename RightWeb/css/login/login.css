@@ -27,6 +27,13 @@ body{
 	left: 0;
 	right: 0;
 }
+/* div样式 */
+#form-border2 {
+	background-color: rgba(220, 176, 212, 0.6);
+	width: 300px;
+	height: 480px;
+	margin: auto;
+}
 /* h3的样式 */
 #div-title {
 	text-align: center;
@@ -41,6 +48,8 @@ h3 {
 	height: 30px;
 	padding-left: 5px;
 	border-radius: 5px;
+	margin-top: 25px;
+	margin-bottom: 10px;
 }
 .form-label {
 	margin-left: 10px;
@@ -55,22 +64,15 @@ h3 {
 	font-size: 20px;
 	font-family: "宋体";
 }
-#userName{
-	margin-top: 25px;
-	margin-bottom: 10px;
-}
-#password {
-	margin-top: 25px;
-	margin-bottom: 10px;
-}
-#code_input{
-	margin-top: 25px;
-	margin-bottom: 10px;
-}
-#register {
-	margin-left: 70px;
-}
 
+.input-text1 {
+	width: 180px;
+	height: 28px;
+	padding-left: 5px;
+	border-radius: 5px;
+	margin-top: 3px;
+	margin-bottom: 5px;
+}
 /*按钮*/
 .btn{display:inline-block;cursor:pointer;text-align:center; font-weight:400;white-space:nowrap;vertical-align: middle;*zoom:1;-webkit-transition:background-color .1s linear;-moz-transition:background-color .1s linear;-o-transition:background-color .1s linear;transition:background-color .1s linear}
 a.btn:hover,a.btn:focus,a.btn:active,a.btn.active,a.btn.disabled,a.btn[disabled]{text-decoration:none}
