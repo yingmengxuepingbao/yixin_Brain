@@ -44,7 +44,7 @@
 	
 		<div id="content">
 			<!-- 显示日期详情 -->
-		    <div id="detail" style="text-align: center; font-size: 25px;">
+		    <div id="detail" style="text-align: left 10px; font-size: 25px;">
 		       <div id="date_content" style="margin:10 auto;">
 		       		<!--描述：公历年月日-->
 		       		<div id="gongli">
@@ -65,7 +65,7 @@
 		       		</div>
 		       		<!--描述：干支年月日-->
 		       		<div id="ganzhi">
-		       			<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		       			<p>四柱：
 				       		<span class="time1"  id="gz_year" style="width: 48px;" disabled> </span> 
 							<span class="time1"  id="gz_month" style="width: 30px;" disabled> </span>
 							<span class="time1"  id="gz_day" style="width: 30px;" disabled> </span>
@@ -73,8 +73,8 @@
 		       		</div>
 		       </div>
 			   <!--描述：生肖-->
-	       		<div id="animal_year" class="div-inline"><p> <span  id='shengxiao'></span> </p></div>
-	       		<div id="shizhong" >
+	       		<div id="animal_year" style="text-align:center" class="div-inline"><p> <span  id='shengxiao'></span> </p></div>
+	       		<div id="shizhong" style="text-align:center">
 	       			 <!-- 显示时钟 -->
     				<p id="clock"></p>
 	       		</div>
@@ -225,7 +225,11 @@ function setCalendar(year, month) {
 					var nongli = calendar.solar2lunar(year,month,xuhao);
 					var nongli_day;
 					for (var key in nongli) {
-						 nongli_day= nongli["IDayCn"] ;//日
+						if(nongli["isTerm"]==true){
+							nongli_day =nongli["Term"] ;//二十四节气
+						}else{
+							nongli_day= nongli["IDayCn"] ;//日
+						}
 					}
 					//拼接数据
 					$("#rili_ti").append("<div style='width:14%;height:120px;display:inline;float:left;font-size: 25px;'  onclick='biaotou("+year+","+month+","+xuhao+")'><span>"+xuhao+"</span><br/><span>"+nongli_day+"</span></div>");
