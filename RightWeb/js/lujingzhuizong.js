@@ -35,7 +35,10 @@ var datanum = 1;
 //1-5之间的随机数
 var numnew = 0;
 //答题计数
-var count = 0;
+var dadui_count = 0;
+var dacuo_count=0;
+//定时器
+var intervalId;
 //======================优雅的分割线=====================
 
 //页面加载执行
@@ -45,15 +48,21 @@ $(document).ready(function (){
     })
 
     $("#myEnd").hide();
-
-    $("#ok_id").on("click",function(){
-
-        $("#myEnd").hide();
-        startTime();
-    })
     $("#ok_all").on("click",function(){
-
         $("#myEnd").hide();
+		//将倒计时恢复成1分钟
+		$("#minute").text("01");
+		//将置灰的按钮恢复
+		$(".answerOptions").css("pointer-events","");  
+		$("#nextQuestion").css("pointer-events",""); 
+		//将计时器停止
+		if(intervalId!=null||intervalId!="" ||intervalId!=undefined){
+			//将计时器停止
+			clearInterval(intervalId);
+			intervalId=null;
+		}
+		//重新生成页面
+		paintPaths();
     })
     //线条加载-获取不重复的随机数
     protoDel();
@@ -65,7 +74,6 @@ $(document).ready(function (){
 });
 
 //拼接时间
-var intervalId;
 function daojishi( starttime,endtime) {
     var minute = document.getElementById("minute");
     var second = document.getElementById("second");
@@ -74,11 +82,24 @@ function daojishi( starttime,endtime) {
         if(starttime==0 && endtime==0){
             var dadui = $("#dadui").val();
             if(dadui<0){
+				if(dadui_count==0){
+					$("#dacuo_val").text("0");
+				}else{
+					$("#dadui_val").text(dadui_count);
+				}
+				if(dacuo_count==0){
+					$("#dacuo_val").text("0");
+				}else{
+					$("#dacuo_val").text(dacuo_count);
+				}
                 $("#myEnd").show();
-                $("#dadui").val(1);
-                return;
+				//将选项和下一题按钮置灰
+				$(".answerOptions").css("pointer-events","none"); 
+				$("#nextQuestion").css("pointer-events","none"); 
+				dadui_count=0;
+				dacuo_count=0;
+				return;
             }
-
         }
         //分钟不为0 秒钟为0
         if (endtime == 0) {
@@ -107,21 +128,24 @@ function daojishi( starttime,endtime) {
 //======================优雅的分割线=============================================
 //获取一个不重复的随机数
 function protoDel() {
-    var index = Math.floor((Math.random() * radonmarr.length));
-    console.log(radonmarr);
-    var temp = radonmarr[index];
-    if(temp==undefined){
-        $("#myEnd").show();
-        $(".myMess")
-    }
-    console.log("temp="+temp);
-    var num = radonmarr.indexOf(temp);//获取到取到值的索引
-    if(num==-1){
-        num = 9;
-    }
-    console.log(num);
-    radonmarr2 = radonmarr.splice(num,1);//删除后成为新的数组
-    randomize(temp);
+	if(radonmarr.length > 0){
+		var index = Math.floor((Math.random() * radonmarr.length));
+		console.log(radonmarr);
+		var temp = radonmarr[index];
+		if(temp==undefined){
+		    $("#myEnd").show();
+		    $(".myMess")
+		}
+		console.log("temp="+temp);
+		var num = radonmarr.indexOf(temp);//获取到取到值的索引
+		if(num==-1){
+		    num = 9;
+		}
+		console.log(num);
+		radonmarr2 = radonmarr.splice(num,1);//删除后成为新的数组
+		randomize(temp);
+	}
+    
 }
 //获取数据
 function randomize(data) {
@@ -239,7 +263,7 @@ function paintPaths() {
 //=====================优雅的分割线==============================
 //点击选项
 $("body").on("click", '.active-li', function () {
-    $(this).siblings('li').removeClass("active");  		// 删除其他兄弟元素的样式
+    $(this).siblings('li').removeClass("active"); // 删除其他兄弟元素的样式
     $(this).addClass("active");           // 添加当前元素的样式
     var button_count =$("#button_count").val();
     if(button_count < 0 ){
@@ -259,9 +283,10 @@ $("body").on("click", '.active-li', function () {
     let rightyour = $(this).attr("data-num");
     rightyour = Number(rightyour);
     if(rightyour == neewyour) {
-        count++;
-        $("#dadui_val").val(count);
-    }
+        dadui_count++;
+    }else{
+		dacuo_count++;
+	}
 });
 //点击下一题
 function nextQuestionStart(){
@@ -273,6 +298,8 @@ function nextQuestionStart(){
     numnew = Math.round(Math.random()*(1-5)+5);
     $(".shuzi_type li").css("background","");
     $(".heeader"+numnew).css("background","#caaa25");
+	$(".daan_type li").css("background","");
+	$(".active-li").removeClass("active");
     datanum = datanum + 1;//每点击下一组加一
     $(".answer_title span").text(numnew);//提交选项
     poiulast = [];//清空答案字母

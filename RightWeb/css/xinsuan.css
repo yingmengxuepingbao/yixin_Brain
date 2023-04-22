@@ -1,0 +1,96 @@
+#show{
+	background: #fff;
+}
+#show p{
+	text-align: left;
+	font-size: 18px;
+	color: red;
+	margin-top: 10px;
+	padding: 20px 0;
+	margin-left:0.5cm;
+}
+#daojishi{
+	font-size: 20px;
+	border: none;
+	width: 25%;
+}
+#mask{
+	position: fixed;
+	left: 0;
+	top: 0;
+	width:98.8%;
+	height: 99.3%;
+	background: #FFCCCC;
+	border: 2px solid #FFCCCC;
+	z-index: 99999;
+}
+#mask .btn{
+	width: 90%;
+	line-height: 50px;
+	background: #ffc0cb;
+	color: #fff;
+	border: none;
+	border-radius: 10px;
+	font-size: 20px;
+	margin-left: 5%;
+	margin-top: 20px;
+	box-shadow: 5px 5px 8px #888;
+}
+#myEnd{
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom:0;
+	margin: auto;
+	width: 65%;
+	height: 180px;
+	background: #fff;
+	border-radius: 5px;
+	overflow: hidden;
+}
+.title,#myEnd .title,#myEnd p{
+	text-align: center;
+	margin: 0;
+}
+
+#myEnd p{
+	font-size: 16px;
+}
+
+#myEnd .title{
+	height: 50px;
+	line-height: 50px;
+}
+#myEnd .myMess{
+	height: 80px;
+	padding: 0 10px;
+}
+#myEnd .ok{
+	height: 50px;
+	line-height: 50px;
+	background: aqua;
+}
+.sel{
+	width:50px; 
+	padding:10px 0; 
+	height:40px;
+	font-size:18px;
+	border: none;
+}
+.div_but{
+	background-color: #ffd8f3;
+}
+.div_but button{
+	border:2px solid #ffc0cb;
+	background: -webkit-linear-gradient(top,#ffc0cb,#ffc0cb);
+	background: -moz-linear-gradient(top,#ffc0cb,ffc0cb);
+	background: linear-gradient(top,#ffc0cb,#ffc0cb);
+	width: 30%;
+	height: 30px;
+	margin-left:30px;
+}
+table,th,td ,input{
+	border: 1px solid #ffd8f3;
+	font-size: 15px;
+}

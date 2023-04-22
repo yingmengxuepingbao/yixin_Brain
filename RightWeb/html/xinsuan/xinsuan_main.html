@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>心算练习</title>
+	<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">	
+</head>
+<body>
+	<div class="container">
+		
+		<div class="header"> 
+			<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+			<p class="title">心算练习</p>
+		</div>
+		
+		<ul class="myList">
+			<li class="lis5" id="list1">
+				<p>100内加法练习</p>
+			</li>
+			<li class="lis5" id="list2">
+				<p>100内加法练习</p>
+			</li>
+			<li class="lis5" id="list2">
+				<p>100内乘法练习</p>
+			</li>
+			<li class="lis5" id="list2">
+				<p>100内除法练习</p>
+			</li>
+			<li class="lis5" id="list2">
+				<p>三级运算练习</p>
+			</li>
+			
+		</ul>
+	</div>
+	
+	<script src="../../js/jquery-1.7.2.js"></script>
+	<script type="text/javascript">
+		$("#list1").on("click",function(){
+			window.location.href = "addWithinHundreds.html";
+		});
+	</script>
+</body>
+</html>

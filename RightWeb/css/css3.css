@@ -92,10 +92,14 @@ ul,p,div,button{
 	background: skyblue;	
 }
 .myList .lis3 p{
-	background: #00F000;	
+	background: #CCCC66;	
 }
 .myList .lis4 p{
-	background: #FFA042;	
+	background: #DEB887;	
+}
+.myList .lis5 p{
+	 background: #FFCCCC;
+	
 }
 
 
@@ -138,7 +142,7 @@ ul,p,div,button{
 	top: 0;
 	width:98.8%;
 	height: 99.3%;
-	background: aqua;
+	background: LightBlue;
 	border: 2px solid skyblue;
 	z-index: 99999;
 }

@@ -150,7 +150,9 @@
 		<h2 class="title">完成</h2>
 		<p class="myMess">
 			<input id="dadui" type="hidden" value="-1">
-			您答对题目<span id="dadui_val"> </span>道
+			您答对题目<span id="dadui_val" style="color: red;"> </span>道,
+			答错题目<span id="dacuo_val"  style="color: red;"> </span>道，
+			请继续加油！
 		</p>
 		<p class="ok" id="ok_all">确定</p>
 	</div>
@@ -184,7 +186,7 @@
 		<!--时间显示    -->
 		<div id="firstDiv">
 			<div id="twoDiv" align="center" >
-				<span class="span1"><span id="minute">02</span>:</span>
+				<span class="span1"><span id="minute">01</span>:</span>
 				<span class="span1"><span id="second">00 </span></span>
 				<button id="nextQuestion" onclick="nextQuestionStart()">下一题</button>
 				<input id="button_count" type="hidden" value="-1" />
