@@ -6,8 +6,50 @@ var cuowu_count = 0;
 var zhengque_count = 0;
 //答案数组
 let shuzu =[];
+//类型
+var type ;
 //页面加载执行		
 $(document).ready(function (){
+	//获取传入的类型
+	var req = GetRequest();
+	type = req['type'];
+	var typeText = "";
+	console.log(type)
+	//训练类型： 1,100以内的加法。2,100以内减法 3,多位数相加。4,多位数减法。5,多位数连加连减。6,多位数乘法。7,多位数除法。
+	 switch (type) { //判断当前题目类型
+		case '1':
+			typeText = "100以内加法";
+			break;
+		case '2':
+			typeText = "100以内减法（正数）";
+			break;
+		case '3':
+			typeText = "100以内乘法";
+			break;
+		case '4':
+			typeText = "100以内除法";
+			$("#yushu").show();
+			break;
+		case '5':
+			typeText = "多位数连加连减";
+			break;
+		case '6':
+			typeText = "多位数乘法";
+			break;
+		case '7':
+			typeText = "多位数除法";
+			break;
+		case '8':
+			typeText = "多为加法";
+			break;
+		case '9'://补数
+			typeText = "补数";
+			break;
+	    }
+		//将标题修改
+	    $("#tit_text").html(typeText);  
+		$("#tit_p").text(typeText);
+	
 	$(".btn").on("click",function(){
 		$("#mask").hide();
 		if(flag_dingshiqi==true){
@@ -30,7 +72,7 @@ $(document).ready(function (){
 		$("#myEnd").hide();
 		//将计时器恢复为1分钟
 		$("#second").val(1);
-		if(intervalId!=null||intervalId!="" ||intervalId!=undefined){
+		if(intervalId!=null||intervalId!="" ||intervalId!=undefined ||intervalId!="null"){
 			//将计时器停止
 			clearInterval(intervalId);
 			intervalId=null;
@@ -41,8 +83,17 @@ $(document).ready(function (){
 	var biao = "<tr class='pinjie-table'>";
 	var ge="";
 	for(var i=0 ;i<moshi;i++){
-		var shuhe = getShuHe();
-		console.log(shuhe);
+		var shuhe = "";
+		if(type!=undefined && type=='1'){
+			shuhe = getShuHe();
+		}else if(type!=undefined && type=='2'){
+			shuhe = getShuCha();
+		}else if(type!=undefined && type=='3'){
+			shuhe = getShuCheng();
+		}else if(type!=undefined && type=='4'){
+			shuhe = getShuchu();
+		}
+		
 		ge+="<td> <input style='width: 80%' readonly value='"+shuhe+"'/><input style='width: 80%;' id='shuzhi"+i+"' /></td>"
 	}
 	biao+=ge+"</tr>"
@@ -52,7 +103,7 @@ $(document).ready(function (){
   function random(min, max) {
 	return Math.floor(Math.random() * (max - min)) + min;
   }
-
+  //100以内的加法
  function getShuHe(){
 	 var fastOne=0;
 	 var nextOne=0;
@@ -67,12 +118,66 @@ $(document).ready(function (){
 	 console.log(shuzu);
 	 return fastOne+"+"+nextOne +"=";
  }
+ //100以内的减法
+ function getShuCha(){
+ 	 var fastOne=0;
+ 	 var nextOne=0;
+ 	 for (var i = 1; i <=2; i++) {
+ 		 if(i == 1){
+ 			fastOne = random(50, 100);
+ 		 }else{
+ 			nextOne = random(1, 50);
+ 		 }
+ 	 }
+ 	 shuzu.push(fastOne-nextOne);
+ 	 console.log(shuzu);
+ 	 return fastOne+"-"+nextOne +"=";
+ }
+ //100以内的乘法
+ function getShuCheng(){
+ 	 var fastOne=0;
+ 	 var nextOne=0;
+ 	 for (var i = 1; i <=2; i++) {
+ 		 if(i == 1){
+ 			fastOne = random(1, 100);
+ 		 }else{
+ 			nextOne = random(1, 100);
+ 		 }
+ 	 }
+ 	 shuzu.push(fastOne * nextOne);
+ 	 console.log(shuzu);
+ 	 return fastOne+"×"+nextOne +"=";
+ }
+ //100以内的除法
+ function getShuchu(){
+ 	 var fastOne=0;
+ 	 var nextOne=0;
+ 	 for (var i = 1; i <=2; i++) {
+ 		 if(i == 1){
+ 			fastOne = random(50, 100);
+ 		 }else{
+ 			nextOne = random(1, 50);
+ 		 }
+ 	 }
+	 var yushu = fastOne % nextOne;
+	/* var shang = (fastOne-yushu) / nextOne;
+	 if(yushu!=0){
+		shuzu.push(shang+"余"+yushu); 
+	 }else{
+		 shuzu.push(shang);
+	 }
+ 	 return fastOne+"÷"+nextOne +"="; */
+	 var chushu = fastOne-yushu;
+	 var shang = chushu /nextOne;
+	 shuzu.push(shang);
+	 return chushu +"÷"+nextOne+"="
+ }
  //练习数量
 $("#moshi").change(function(){
 	//自动任务不启动
 	flag_dingshiqi=false;
 	//将计时器停止
-	if(intervalId!=null||intervalId!="" ||intervalId!=undefined){
+	if(intervalId!=null||intervalId!="" ||intervalId!=undefined ||intervalId!="null"){
 		console.log("停止1："+intervalId)
 		//将计时器停止
 		clearInterval(intervalId);
@@ -85,7 +190,7 @@ $("#chongxin").click(function(){
 	//自动任务不启动
 	flag_dingshiqi=false;
 	//将计时器停止
-	if(intervalId!=null||intervalId!="" ||intervalId!=undefined){
+	if(intervalId!=null||intervalId!="" ||intervalId!=undefined ||intervalId!="null"){
 		console.log("停止2："+intervalId)
 		//将计时器停止
 		clearInterval(intervalId);
@@ -108,8 +213,16 @@ function lianxiti(){
 			var biao = "<tr class='pinjie-table'>";
 			var ge="";
 			for(var i=0 ;i<5;i++){
-				var shuhe = getShuHe();
-				console.log(shuhe);
+				var shuhe = "";
+				if(type!=undefined && type=='1'){
+					shuhe = getShuHe();
+				}else if(type!=undefined && type=='2'){
+					shuhe = getShuCha();
+				}else if(type!=undefined && type=='3'){
+					shuhe = getShuCheng();
+				}else if(type!=undefined && type=='4'){
+					shuhe = getShuchu();
+				}
 				ge+="<td> <input style='width: 80%;' readonly value='"+shuhe+"'/><input style='width: 80%;' id='shuzhi"+biaoji+"'/></td>"
 				biaoji++;
 			}
@@ -121,8 +234,16 @@ function lianxiti(){
 		var biao = "<tr class='pinjie-table'>";
 		var ge="";
 		for(var i=0 ;i<moshi;i++){
-			var shuhe = getShuHe();
-			console.log(shuhe);
+			var shuhe = "";
+			if(type!=undefined && type=='1'){
+				shuhe = getShuHe();
+			}else if(type!=undefined && type=='2'){
+				shuhe = getShuCha();
+			}else if(type!=undefined && type=='3'){
+				shuhe = getShuCheng();
+			}else if(type!=undefined && type=='4'){
+				shuhe = getShuchu();
+			}
 			ge+="<td> <input style='width: 50px;' readonly value='"+shuhe+"'/><input style='width: 50px;' id='shuzhi"+i+"' /></td>"
 		}
 		biao+=ge+"</tr>"
@@ -130,8 +251,7 @@ function lianxiti(){
 	}
 	//自动任务不启动
 	flag_dingshiqi=false;
-	if(intervalId!=null||intervalId!="" ||intervalId!=undefined){
-		console.log(intervalId);
+	if(intervalId!=null||intervalId!="" ||intervalId!=undefined ||intervalId!="null"){
 		//将计时器停止
 		clearInterval(intervalId);
 		intervalId=null;
@@ -173,7 +293,7 @@ function daojishi(starttime,endtime) {
 			cuowu_count = 0;
 			cuowu_count = 0;
 			//将计时器停止
-			if(intervalId!=null||intervalId!="" ||intervalId!=undefined){
+			if(intervalId!=null||intervalId!="" ||intervalId!=undefined ||intervalId!="null"){
 				//将计时器停止
 				clearInterval(intervalId);
 				intervalId=null;
@@ -232,3 +352,16 @@ $("#tijiao").click(function(){
 		intervalId=null;
 	}
 });
+//获取页面跳转的数据
+function GetRequest() {
+    var url = location.search; //获取url中"?"符后的字串
+    var theRequest = new Object();
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        strs = str.split("&");
+        for(var i = 0; i < strs.length; i ++) {
+            theRequest[strs[i].split("=")[0]]=strs[i].split("=")[1];
+        }
+    }
+    return theRequest;
+}

@@ -16,28 +16,37 @@
 		
 		<ul class="myList">
 			<li class="lis5" id="list1">
-				<p>100内加法练习</p>
+				<p>100内加法</p>
 			</li>
 			<li class="lis5" id="list2">
-				<p>100内加法练习</p>
+				<p>100内减法（正）</p>
 			</li>
-			<li class="lis5" id="list2">
-				<p>100内乘法练习</p>
+			<li class="lis5" id="list3">
+				<p>100内乘法</p>
 			</li>
-			<li class="lis5" id="list2">
-				<p>100内除法练习</p>
+			<li class="lis5" id="list4">
+				<p>100内除法</p>
 			</li>
-			<li class="lis5" id="list2">
-				<p>三级运算练习</p>
-			</li>
-			
+			<!-- <li class="lis5" id="list5">
+				<p>三级运算</p>
+			</li> -->
 		</ul>
 	</div>
 	
 	<script src="../../js/jquery-1.7.2.js"></script>
 	<script type="text/javascript">
+		//训练类型： 1,100以内的加法。2,100以内减法（正数） 3,100以内的乘法。4,100以内除法。5,多位数连加连减。6,多位数乘法专项训练。7,多位数除法。
 		$("#list1").on("click",function(){
-			window.location.href = "addWithinHundreds.html";
+			window.location.href = "addWithinHundreds.html?type=1";
+		});
+		$("#list2").on("click",function(){
+			window.location.href = "addWithinHundreds.html?type=2";
+		});
+		$("#list3").on("click",function(){
+			window.location.href = "addWithinHundreds.html?type=3";
+		});
+		$("#list4").on("click",function(){
+			window.location.href = "addWithinHundreds.html?type=4";
 		});
 	</script>
 </body>
