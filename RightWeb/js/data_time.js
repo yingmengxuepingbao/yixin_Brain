@@ -251,6 +251,21 @@ var calendar = {
   toGanZhi:function(offset) {
     return calendar.Gan[offset%10] + calendar.Zhi[offset%12];
   },
+   // 农历1900-2100的闰大小信息 return: hex 2 DateTime
+	getLeapYearTime:function(year, doubleMonth) {
+		var v = solarTermsTable[year - 1900];
+		var hex = [];
+		var s = 0;
+		var q;
+		for (; s < 30; s += 5) {
+			q = (+("0x" + v.substr(s, 5))).toString();
+			hex.push(q.substr(0, 1));
+			hex.push(q.substr(1, 2));
+			hex.push(q.substr(3, 1));
+			hex.push(q.substr(4, 2));
+		}
+		return new Date(year,parseInt(doubleMonth / 2, 10),hex[doubleMonth]);
+    },
   /**
    * 传入公历(!)y年获得该年第n个节气的公历日期
    * @param y公历年(1900-2100)；n二十四节气中的第几个节气(1~24)；从n=1(小寒)算起
@@ -269,6 +284,7 @@ var calendar = {
       parseInt('0x'+_table.substr(20,5)).toString(),
       parseInt('0x'+_table.substr(25,5)).toString()
     ];
+	
     var _calday = [
       _info[0].substr(0,1),
       _info[0].substr(1,2),
@@ -297,6 +313,25 @@ var calendar = {
     ];
     return parseInt(_calday[n-1]);
   },
+  
+  // 1900-2100各年的24节气日期表
+  solarTermsTable : ["9778397bd097c36b0b6fc9274c91aa", "97b6b97bd19801ec9210c965cc920e", "97bcf97c3598082c95f8c965cc920f", "97bd0b06bdb0722c965ce1cfcc920f", "b027097bd097c36b0b6fc9274c91aa", "97b6b97bd19801ec9210c965cc920e", "97bcf97c359801ec95f8c965cc920f", "97bd0b06bdb0722c965ce1cfcc920f", "b027097bd097c36b0b6fc9274c91aa", "97b6b97bd19801ec9210c965cc920e", "97bcf97c359801ec95f8c965cc920f", "97bd0b06bdb0722c965ce1cfcc920f", "b027097bd097c36b0b6fc9274c91aa", "9778397bd19801ec9210c965cc920e", "97b6b97bd19801ec95f8c965cc920f", "97bd09801d98082c95f8e1cfcc920f", "97bd097bd097c36b0b6fc9210c8dc2", "9778397bd197c36c9210c9274c91aa", "97b6b97bd19801ec95f8c965cc920e", "97bd09801d98082c95f8e1cfcc920f", "97bd097bd097c36b0b6fc9210c8dc2", "9778397bd097c36c9210c9274c91aa", "97b6b97bd19801ec95f8c965cc920e", "97bcf97c3598082c95f8e1cfcc920f", "97bd097bd097c36b0b6fc9210c8dc2", "9778397bd097c36c9210c9274c91aa", "97b6b97bd19801ec9210c965cc920e", "97bcf97c3598082c95f8c965cc920f", "97bd097bd097c35b0b6fc920fb0722", "9778397bd097c36b0b6fc9274c91aa", "97b6b97bd19801ec9210c965cc920e", "97bcf97c3598082c95f8c965cc920f", "97bd097bd097c35b0b6fc920fb0722", "9778397bd097c36b0b6fc9274c91aa", "97b6b97bd19801ec9210c965cc920e", "97bcf97c359801ec95f8c965cc920f", "97bd097bd097c35b0b6fc920fb0722", "9778397bd097c36b0b6fc9274c91aa", "97b6b97bd19801ec9210c965cc920e", "97bcf97c359801ec95f8c965cc920f", "97bd097bd097c35b0b6fc920fb0722", "9778397bd097c36b0b6fc9274c91aa", "97b6b97bd19801ec9210c965cc920e", "97bcf97c359801ec95f8c965cc920f", "97bd097bd07f595b0b6fc920fb0722", "9778397bd097c36b0b6fc9210c8dc2", "9778397bd19801ec9210c9274c920e", "97b6b97bd19801ec95f8c965cc920f", "97bd07f5307f595b0b0bc920fb0722", "7f0e397bd097c36b0b6fc9210c8dc2", "9778397bd097c36c9210c9274c920e", "97b6b97bd19801ec95f8c965cc920f", "97bd07f5307f595b0b0bc920fb0722", "7f0e397bd097c36b0b6fc9210c8dc2", "9778397bd097c36c9210c9274c91aa", "97b6b97bd19801ec9210c965cc920e", "97bd07f1487f595b0b0bc920fb0722", "7f0e397bd097c36b0b6fc9210c8dc2", "9778397bd097c36b0b6fc9274c91aa", "97b6b97bd19801ec9210c965cc920e", "97bcf7f1487f595b0b0bb0b6fb0722", "7f0e397bd097c35b0b6fc920fb0722", "9778397bd097c36b0b6fc9274c91aa", "97b6b97bd19801ec9210c965cc920e", "97bcf7f1487f595b0b0bb0b6fb0722", "7f0e397bd097c35b0b6fc920fb0722", "9778397bd097c36b0b6fc9274c91aa", "97b6b97bd19801ec9210c965cc920e", "97bcf7f1487f531b0b0bb0b6fb0722", "7f0e397bd097c35b0b6fc920fb0722", "9778397bd097c36b0b6fc9274c91aa", "97b6b97bd19801ec9210c965cc920e", "97bcf7f1487f531b0b0bb0b6fb0722", "7f0e397bd07f595b0b6fc920fb0722", "9778397bd097c36b0b6fc9274c91aa", "97b6b97bd19801ec9210c9274c920e", "97bcf7f0e47f531b0b0bb0b6fb0722", "7f0e397bd07f595b0b0bc920fb0722", "9778397bd097c36b0b6fc9210c91aa", "97b6b97bd197c36c9210c9274c920e", "97bcf7f0e47f531b0b0bb0b6fb0722", "7f0e397bd07f595b0b0bc920fb0722", "9778397bd097c36b0b6fc9210c8dc2", "9778397bd097c36c9210c9274c920e", "97b6b7f0e47f531b0723b0b6fb0722", "7f0e37f5307f595b0b0bc920fb0722", "7f0e397bd097c36b0b6fc9210c8dc2", "9778397bd097c36b0b70c9274c91aa", "97b6b7f0e47f531b0723b0b6fb0721", "7f0e37f1487f595b0b0bb0b6fb0722", "7f0e397bd097c35b0b6fc9210c8dc2", "9778397bd097c36b0b6fc9274c91aa", "97b6b7f0e47f531b0723b0b6fb0721", "7f0e27f1487f595b0b0bb0b6fb0722", "7f0e397bd097c35b0b6fc920fb0722", "9778397bd097c36b0b6fc9274c91aa", "97b6b7f0e47f531b0723b0b6fb0721", "7f0e27f1487f531b0b0bb0b6fb0722", "7f0e397bd097c35b0b6fc920fb0722", "9778397bd097c36b0b6fc9274c91aa", "97b6b7f0e47f531b0723b0b6fb0721", "7f0e27f1487f531b0b0bb0b6fb0722", "7f0e397bd097c35b0b6fc920fb0722", "9778397bd097c36b0b6fc9274c91aa", "97b6b7f0e47f531b0723b0b6fb0721", "7f0e27f1487f531b0b0bb0b6fb0722", "7f0e397bd07f595b0b0bc920fb0722", "9778397bd097c36b0b6fc9274c91aa", "97b6b7f0e47f531b0723b0787b0721", "7f0e27f0e47f531b0b0bb0b6fb0722", "7f0e397bd07f595b0b0bc920fb0722", "9778397bd097c36b0b6fc9210c91aa", "97b6b7f0e47f149b0723b0787b0721", "7f0e27f0e47f531b0723b0b6fb0722", "7f0e397bd07f595b0b0bc920fb0722", "9778397bd097c36b0b6fc9210c8dc2", "977837f0e37f149b0723b0787b0721", "7f07e7f0e47f531b0723b0b6fb0722", "7f0e37f5307f595b0b0bc920fb0722", "7f0e397bd097c35b0b6fc9210c8dc2", "977837f0e37f14998082b0787b0721", "7f07e7f0e47f531b0723b0b6fb0721", "7f0e37f1487f595b0b0bb0b6fb0722", "7f0e397bd097c35b0b6fc9210c8dc2", "977837f0e37f14998082b0787b06bd", "7f07e7f0e47f531b0723b0b6fb0721", "7f0e27f1487f531b0b0bb0b6fb0722", "7f0e397bd097c35b0b6fc920fb0722", "977837f0e37f14998082b0787b06bd", "7f07e7f0e47f531b0723b0b6fb0721", "7f0e27f1487f531b0b0bb0b6fb0722", "7f0e397bd097c35b0b6fc920fb0722", "977837f0e37f14998082b0787b06bd", "7f07e7f0e47f531b0723b0b6fb0721", "7f0e27f1487f531b0b0bb0b6fb0722", "7f0e397bd07f595b0b0bc920fb0722", "977837f0e37f14998082b0787b06bd", "7f07e7f0e47f531b0723b0b6fb0721", "7f0e27f1487f531b0b0bb0b6fb0722", "7f0e397bd07f595b0b0bc920fb0722", "977837f0e37f14998082b0787b06bd", "7f07e7f0e47f149b0723b0787b0721", "7f0e27f0e47f531b0b0bb0b6fb0722", "7f0e397bd07f595b0b0bc920fb0722", "977837f0e37f14998082b0723b06bd", "7f07e7f0e37f149b0723b0787b0721", "7f0e27f0e47f531b0723b0b6fb0722", "7f0e397bd07f595b0b0bc920fb0722", "977837f0e37f14898082b0723b02d5", "7ec967f0e37f14998082b0787b0721", "7f07e7f0e47f531b0723b0b6fb0722", "7f0e37f1487f595b0b0bb0b6fb0722", "7f0e37f0e37f14898082b0723b02d5", "7ec967f0e37f14998082b0787b0721", "7f07e7f0e47f531b0723b0b6fb0722", "7f0e37f1487f531b0b0bb0b6fb0722", "7f0e37f0e37f14898082b0723b02d5", "7ec967f0e37f14998082b0787b06bd", "7f07e7f0e47f531b0723b0b6fb0721", "7f0e37f1487f531b0b0bb0b6fb0722", "7f0e37f0e37f14898082b072297c35", "7ec967f0e37f14998082b0787b06bd", "7f07e7f0e47f531b0723b0b6fb0721", "7f0e27f1487f531b0b0bb0b6fb0722", "7f0e37f0e37f14898082b072297c35", "7ec967f0e37f14998082b0787b06bd", "7f07e7f0e47f531b0723b0b6fb0721", "7f0e27f1487f531b0b0bb0b6fb0722", "7f0e37f0e366aa89801eb072297c35", "7ec967f0e37f14998082b0787b06bd", "7f07e7f0e47f149b0723b0787b0721", "7f0e27f1487f531b0b0bb0b6fb0722", "7f0e37f0e366aa89801eb072297c35", "7ec967f0e37f14998082b0723b06bd", "7f07e7f0e47f149b0723b0787b0721", "7f0e27f0e47f531b0723b0b6fb0722", "7f0e37f0e366aa89801eb072297c35", "7ec967f0e37f14998082b0723b06bd", "7f07e7f0e37f14998083b0787b0721", "7f0e27f0e47f531b0723b0b6fb0722", "7f0e37f0e366aa89801eb072297c35", "7ec967f0e37f14898082b0723b02d5", "7f07e7f0e37f14998082b0787b0721", "7f07e7f0e47f531b0723b0b6fb0722", "7f0e36665b66aa89801e9808297c35", "665f67f0e37f14898082b0723b02d5", "7ec967f0e37f14998082b0787b0721", "7f07e7f0e47f531b0723b0b6fb0722", "7f0e36665b66a449801e9808297c35", "665f67f0e37f14898082b0723b02d5", "7ec967f0e37f14998082b0787b06bd", "7f07e7f0e47f531b0723b0b6fb0721", "7f0e36665b66a449801e9808297c35", "665f67f0e37f14898082b072297c35", "7ec967f0e37f14998082b0787b06bd", "7f07e7f0e47f531b0723b0b6fb0721", "7f0e26665b66a449801e9808297c35", "665f67f0e37f1489801eb072297c35", "7ec967f0e37f14998082b0787b06bd", "7f07e7f0e47f531b0723b0b6fb0721", "7f0e27f1487f531b0b0bb0b6fb0722"],
+  // 农历1900-2100的闰大小信息 return: hex 2 DateTime
+  getLeapYearTime:function(year, doubleMonth) {
+      var v = calendar.solarTermsTable[year - 1900];
+      var hex = [];
+      var s = 0;
+      var q;
+      for (; s < 30; s += 5) {
+          q = (+("0x" + v.substr(s, 5))).toString();
+          hex.push(q.substr(0, 1));
+          hex.push(q.substr(1, 2));
+          hex.push(q.substr(3, 1));
+          hex.push(q.substr(4, 2));
+      }
+      return new Date(year,parseInt(doubleMonth / 2, 10),hex[doubleMonth]);
+  },
+  
   /**
    * 传入农历数字月份返回汉语通俗表示法
    * @param lunar month
@@ -405,7 +440,36 @@ var calendar = {
     var gzY   =  calendar.toGanZhiYear(year);
     //月柱 1900年1月小寒以前为 丙子月(60进制12)
     var firstNode  = calendar.getTerm(year,(m*2-1));//返回当月「节」为几日开始
-    var secondNode = calendar.getTerm(year,(m*2));//返回当月「节」为几日开始
+	var oneJie = calendar.solarTerm[m*2-2];//第一个节的名称
+	
+    //var secondNode = calendar.getTerm(year,(m*2));//返回当月「节」为几日开始
+	var doubleMonth = (m - 1) * 2;
+	var jieri_towDay =  calendar.getLeapYearTime(year, doubleMonth+1);
+	var secondNode =jieri_towDay.getDate();
+	var towJie = calendar.solarTerm[m*2-1];//第二个节的名称
+	//根据当前日期，查找节气
+	var treeNode, treeJie;
+	if(d>secondNode){//如果当前日期大于第2个节气的日期，查找下一个节气
+		if(m+1>12){
+			var mm=1;
+			treeNode = calendar.getTerm(year,((mm)*2-1));
+			treeJie = calendar.solarTerm[(mm)*2-2];
+		}else{
+			treeNode = calendar.getTerm(year,((m+1)*2-1));
+			treeJie = calendar.solarTerm[(m+1)*2-2];
+		}
+	}
+	var fourNode, fourJie;
+	if(d<firstNode){//如果当前日期大小于第1个节气的日期，查找上一个节气
+		fourNode =  calendar.getLeapYearTime(year, doubleMonth).getDate() ;
+		if(m-1<1){
+			var mm =12;
+			fourJie = calendar.solarTerm[mm*2-1];//上一个月的第二个节的名称
+		}else{
+			fourJie = calendar.solarTerm[m*2-1];//上一个月的第二个节的名称
+		}
+		
+	}
     //依据12节气修正干支月
     var gzM   =  calendar.toGanZhi((y-1900)*12+m+11);
     if(d>=firstNode) {
@@ -444,7 +508,7 @@ var calendar = {
       
     //该日期所属的星座
     var astro = calendar.toAstro(m,d);
-    return {'lYear':year,'lMonth':month,'lDay':day,'Animal':calendar.getAnimal(year),'IMonthCn':(isLeap?"\u95f0":'')+calendar.toChinaMonth(month),'IDayCn':calendar.toChinaDay(day),'cYear':y,'cMonth':m,'cDay':d,'gzYear':gzY,'gzMonth':gzM,'gzDay':gzD,'kongwang':kongwang,'isToday':isToday,'isLeap':isLeap,'nWeek':nWeek,'ncWeek':"\u661f\u671f"+cWeek,'isTerm':isTerm,'Term':Term,'astro':astro};
+    return {'lYear':year,'lMonth':month,'lDay':day,'Animal':calendar.getAnimal(year),'IMonthCn':(isLeap?"\u95f0":'')+calendar.toChinaMonth(month),'IDayCn':calendar.toChinaDay(day),'cYear':y,'cMonth':m,'cDay':d,'gzYear':gzY,'gzMonth':gzM,'gzDay':gzD,'kongwang':kongwang,'isToday':isToday,'isLeap':isLeap,'nWeek':nWeek,'ncWeek':"\u661f\u671f"+cWeek,'isTerm':isTerm,'Term':Term,'astro':astro,'firstNode':firstNode,'secondNode':secondNode,'oneJie':oneJie,'towJie':towJie,'treeNode':treeNode,'treeJie':treeJie,'fourNode':fourNode,'fourJie':fourJie};
   },
   /**
    * 传入农历年月日以及传入的月份是否闰月获得详细的公历、农历object信息 <=>JSON
@@ -494,6 +558,49 @@ var calendar = {
     var cM   =  calObj.getUTCMonth()+1;
     var cD   =  calObj.getUTCDate();
     return calendar.solar2lunar(cY,cM,cD);
+  },
+  
+  getHourGanZhi:function(ri_tiangan,shi_dizhi){
+	var shizhu = "";
+	//日天干的下标
+	var ri_xiabiao = calendar.Gan.indexOf(ri_tiangan);
+	var shi_xiabiao = calendar.Zhi.indexOf(shi_dizhi);
+	if(ri_xiabiao==0 ||ri_xiabiao==5){
+		if(shi_xiabiao>=10){
+			shizhu =calendar.Gan[shi_xiabiao-10];
+		}else{
+			shizhu =calendar.Gan[shi_xiabiao];
+		}
+	}	
+	if(ri_xiabiao==1 ||ri_xiabiao==6){
+		if(2+shi_xiabiao>=10){
+			shizhu =calendar.Gan[2+shi_xiabiao-10];
+		}else{
+			shizhu =calendar.Gan[2+shi_xiabiao];
+		}
+	}	
+	if(ri_xiabiao==2 ||ri_xiabiao==7){
+		if(4+shi_xiabiao>=10){
+			shizhu =calendar.Gan[4+shi_xiabiao-10];
+		}else{
+			shizhu =calendar.Gan[4+shi_xiabiao];
+		}
+	}	
+	if(ri_xiabiao==3 ||ri_xiabiao==8){
+		if(6+shi_xiabiao>=10){
+			shizhu =calendar.Gan[6+shi_xiabiao-10];
+		}else{
+			shizhu =calendar.Gan[6+shi_xiabiao];
+		}
+	}	
+	if(ri_xiabiao==4 ||ri_xiabiao==9){
+		if(8+shi_xiabiao>=10){
+			shizhu =calendar.Gan[8+shi_xiabiao-10];
+		}else{
+			shizhu =calendar.Gan[8+shi_xiabiao];
+		}
+	}	
+	return shizhu+shi_dizhi;
   }
 };
 

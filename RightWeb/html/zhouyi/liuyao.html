@@ -11,6 +11,10 @@
 			.container{
 				padding-top: 60px;
 			}
+			.wenzi{
+				padding: 0 20px;
+				font-weight:bold;
+			}
 			.header{
 				position: fixed;
 				left: 0;
@@ -75,17 +79,22 @@
 			<div id="mask"> 
 				<div class="wenzi">
 					<h1>摇卦步骤</h1>
-					<p>所问之事：<input class="buzhou" type="text" id="question" style="width: 55%;"/></p>
+					<p>
+					<samp>起卦要求：</samp><br />
+					<samp style="margin-left: 20px;">1、准备三枚一样大小的铜钱或硬币。找一个安静的环境,集中精神,态度虔诚,不能有祈求好结果的心态。</samp><br />
+					<samp style="margin-left: 20px;">2、手上放三枚铜钱或硬币,双手合十。报:姓名+年龄+性别+现住地址+要问的事（尽量详细。如：做这件事好不好）</samp>
+					</p>
+					<p>所问之事：<input class="buzhou" type="text" id="question" style="width: 55%;width: 55%;padding:3px;border-radius:6px;"/></p>
 					<p>性别：<input type="radio"  name="sex" checked="checked" value="1">男</input><input type="radio" name="sex" value="0">女</input></p>
-					<p>记录三枚硬币或铜钱摇出来的结果：如：正正反 或 阴（阴变）/阳（阳变）</p>
-					<p>第一次正反：<input class="buzhou" type="text" id="one" style="width: 50%;"/> </p>
-					<p>第二次正反：<input class="buzhou" type="text" id="two" style="width: 50%;"/> </p>
-					<p>第三次正反：<input class="buzhou" type="text" id="three" style="width: 50%;"/> </p>
-					<p>第四次正反：<input class="buzhou" type="text" id="four" style="width: 50%;"/> </p>
-					<p>第五次正反：<input class="buzhou" type="text" id="five" style="width: 50%;"/> </p>
-					<p>第六次正反：<input class="buzhou" type="text" id="six" style="width: 50%;"/> </p>
+					<p>记录三枚硬币或铜钱摇出来的结果：如：正正反 或 阴(阴变) / 阳(阳变)</p>
+					<p>第一次正反：<input class="buzhou" type="text" id="one" style="width: 50%;padding:3px;border-radius:6px;"/> </p>
+					<p>第二次正反：<input class="buzhou" type="text" id="two" style="width: 50%;padding:3px;border-radius:6px;"/> </p>
+					<p>第三次正反：<input class="buzhou" type="text" id="three" style="width: 50%;padding:3px;border-radius:6px;"/> </p>
+					<p>第四次正反：<input class="buzhou" type="text" id="four" style="width: 50%;padding:3px;border-radius:6px;"/> </p>
+					<p>第五次正反：<input class="buzhou" type="text" id="five" style="width: 50%;padding:3px;border-radius:6px;"/> </p>
+					<p>第六次正反：<input class="buzhou" type="text" id="six" style="width: 50%;padding:3px;border-radius:6px;"/> </p>
+				<button class="btn1" style="background: #FFA042; margin-top: 10px">确定</button>
 				</div>
-				<button class="btn1" style="background: #FFA042;">确定</button>
 			</div>
 			<!-- 标头-->
 			<div class="header"> 
@@ -711,50 +720,50 @@
 				
 				if(flagName[i]=="阴"){
 					if(i==shi){
-						myLiuYao.push("- - 世");
-						myLiuYaoTwo.push("-  - ");
+						myLiuYao.push("▅ ▅ 世");
+						myLiuYaoTwo.push("▅ ▅ ");
 					}else if(i==ying){
-						myLiuYao.push("- - 应");
-						myLiuYaoTwo.push("-  -");
+						myLiuYao.push("▅ ▅ 应");
+						myLiuYaoTwo.push("▅ ▅");
 					}else{
-						myLiuYao.push("-  -");
-						myLiuYaoTwo.push("-  -");
+						myLiuYao.push("▅ ▅");
+						myLiuYaoTwo.push("▅ ▅");
 					}
 				}
 				if(flagName[i]=="阳"){
 					if(i==shi){
-						myLiuYao.push(" ——  世");
-						myLiuYaoTwo.push(" —— ");
+						myLiuYao.push(" ▅▅▅  世");
+						myLiuYaoTwo.push(" ▅▅▅ ");
 					}else if(i==ying){
-						myLiuYao.push(" ——  应");
-						myLiuYaoTwo.push(" —— ");
+						myLiuYao.push(" ▅▅▅  应");
+						myLiuYaoTwo.push(" ▅▅▅ ");
 					}else{
-						myLiuYao.push(" —— ");
-						myLiuYaoTwo.push(" —— ");
+						myLiuYao.push(" ▅▅▅ ");
+						myLiuYaoTwo.push(" ▅▅▅ ");
 					}
 				}
 				if(flagName[i]=="阴变"){
 					if(i==shi){
-						myLiuYao.push(" - - × 世 -->");
-						myLiuYaoTwo.push(" —— ");
+						myLiuYao.push(" ▅ ▅ × 世 -->");
+						myLiuYaoTwo.push(" ▅▅▅ ");
 					}else if(i==ying){
-						myLiuYao.push(" - - × 应 -->");
-						myLiuYaoTwo.push(" —— ");
+						myLiuYao.push(" ▅ ▅ × 应 -->");
+						myLiuYaoTwo.push(" ▅▅▅ ");
 					}else{
-						myLiuYao.push("- - ×  -->");
-						myLiuYaoTwo.push(" —— ");
+						myLiuYao.push("▅ ▅ ×  -->");
+						myLiuYaoTwo.push(" ▅▅▅ ");
 					}
 				}
 				if(flagName[i]=="阳变"){
 					if(i==shi){
-						myLiuYao.push(" —— · 世 -->");
-						myLiuYaoTwo.push("-  -");
+						myLiuYao.push(" ▅▅▅ O 世 -->");
+						myLiuYaoTwo.push("▅ ▅");
 					}else if(i==ying){
-						myLiuYao.push(" —— · 应 -->");
-						myLiuYaoTwo.push("-  -");
+						myLiuYao.push(" ▅▅▅ O 应 -->");
+						myLiuYaoTwo.push("▅ ▅");
 					}else{
-						myLiuYao.push(" —— ·  -->");
-						myLiuYaoTwo.push("-  -");
+						myLiuYao.push(" ▅▅▅ O  -->");
+						myLiuYaoTwo.push("▅ ▅");
 					}
 					
 				}

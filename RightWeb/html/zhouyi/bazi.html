@@ -1,9 +1,61 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>八字排盘</title>
-	</head>
-	<body>
-	</body>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<!-- 手机日历 -->
+	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<link rel="stylesheet" type="text/css" href="../../css/css3.css"/>
+	<link rel="stylesheet" href="../../css/bazi/bazi_date.css">
+	 <title>八字排盘</title>
+</head>
+<body>
+	<div class="container">
+		<!--遮罩层显示-->
+		<div id="mask" > 
+			<div class="wenzi">
+				<h1 style="margin-top:65px">四柱八字排盘</h1>
+				<p>性别：<input type="radio"  name="sex" checked="checked" value="1">男</input><input type="radio" name="sex" value="0">女</input></p>
+				<p>日期：
+				<input id="demo2" type="text" class="rili" data-toid-date="date1" data-toid-hour="hour1" 
+				name="input_date" placeholder="请选择日期" data-type="1" data-date=new Date() readonly="readonly"/>
+				<input type="hidden" id="date1" name="date">
+				<input type="hidden" id="hour1" name="hour">
+				<input type="hidden" id="yinli"/>
+				<input type="hidden" id="shizhi"/>
+				</p>
+				<button class="btn1" style="background: #FFA042; margin-top: 10px">开始排盘</button>
+			</div>
+		</div>
+		<!-- 标头-->
+		<div class="header"> 
+			<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+			<p class="title">四柱八字排盘</p>
+		</div>
+		<div id="show">
+			<div class="box-result">
+				<div class="jiben">
+					<i></i>
+					<samp style="size: 20px;">基本信息</samp>
+				</div>
+				<p id="xingbie"><b>性别：</b></p>
+				<p id="gongli_1"><b>公历：</b></p>
+				<p id="nongli_1"><b>农历：</b></p>
+				<p id="qianjie"><b>前节：</b></p>
+				<p id="houjie"><b>后节：</b></p>
+				<p id="bazi"><b>八字：</b></p>
+			</div>
+			
+		</div>
+	</div>
+	<!--页面日历显示-->
+	<script src="../../js/bazi/bazi_date.js?v=2030"></script>
+	<script src="../../js/jquery-1.7.2.js"></script>
+	<!--万年历js-->
+	<script src="../../js/data_time.js"></script>
+	<script src="../../js/bazi/bazi.js"></script>
+	
+</body>
 </html>

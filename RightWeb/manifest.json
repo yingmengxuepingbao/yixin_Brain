@@ -23,7 +23,7 @@
         "Audio": {
             "description": "访问麦克风"
         },
-        
+
         "Cache": {
             "description": "管理应用缓存"
         },
@@ -66,7 +66,7 @@
         "Storage": {
             "description": "管理应用本地数据"
         },
-        
+
         "Uploader": {
             "description": "管理文件上传任务"
         },
@@ -85,7 +85,7 @@
         "Maps": {
             "description": "管理地图插件"
         },
-        
+
         "Webview":{
         	"description": "窗口管理"
         },
