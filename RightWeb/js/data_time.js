@@ -251,21 +251,6 @@ var calendar = {
   toGanZhi:function(offset) {
     return calendar.Gan[offset%10] + calendar.Zhi[offset%12];
   },
-   // 农历1900-2100的闰大小信息 return: hex 2 DateTime
-	getLeapYearTime:function(year, doubleMonth) {
-		var v = solarTermsTable[year - 1900];
-		var hex = [];
-		var s = 0;
-		var q;
-		for (; s < 30; s += 5) {
-			q = (+("0x" + v.substr(s, 5))).toString();
-			hex.push(q.substr(0, 1));
-			hex.push(q.substr(1, 2));
-			hex.push(q.substr(3, 1));
-			hex.push(q.substr(4, 2));
-		}
-		return new Date(year,parseInt(doubleMonth / 2, 10),hex[doubleMonth]);
-    },
   /**
    * 传入公历(!)y年获得该年第n个节气的公历日期
    * @param y公历年(1900-2100)；n二十四节气中的第几个节气(1~24)；从n=1(小寒)算起
@@ -601,6 +586,48 @@ var calendar = {
 		}
 	}	
 	return shizhu+shi_dizhi;
-  }
+  },
+    getJie:function(yyyy,mm,dd){
+	  var xiabiao = mm-1;
+	  var sTermInfo = new Array(0,42467,85337,128867,173149,218072,263343,308563,353350,397447,440795,483532);
+	  var solarTerm = new Array("小寒","立春","惊蛰","清明","立夏","芒种","小暑","立秋","白露","寒露","立冬","大雪");
+	  var offDate = new Date( ( 31556925974.7*(yyyy-1900) + sTermInfo[xiabiao]*60000  ) + Date.UTC(1900,0,6,2,5) );
+	  var day;
+	  //小寒 少一天
+	  if(xiabiao==0){
+		   day = Number(offDate.getUTCDate())+1;
+	  }else{
+		  day = offDate.getUTCDate();
+	  }
+	  var dayName = solarTerm[xiabiao];
+	  var nexMonth ,nexday,nexdayName;
+	  if(dd>day){
+		  if(xiabiao+1>11){
+			  xiabiao=0;
+			  nexday =  new Date( ( 31556925974.7*(yyyy-1900) + sTermInfo[xiabiao]*60000  ) + Date.UTC(1900,0,6,2,5) ).getUTCDate();
+			  nexday = Number(nexday)+1;
+			  nexdayName = solarTerm[xiabiao];
+			  nexMonth=1;
+		  }else{
+			  nexday =  new Date( ( 31556925974.7*(yyyy-1900) + sTermInfo[xiabiao+1]*60000  ) + Date.UTC(1900,0,6,2,5) ).getUTCDate();
+			  nexdayName = solarTerm[xiabiao+1];
+			  nexMonth=Number(mm)+1;
+		  }
+	  }
+	  if(dd<day){
+		  if(xiabiao-1<0){
+			xiabiao=11;
+			nexday =  new Date( ( 31556925974.7*(yyyy-1900) + sTermInfo[xiabiao]*60000  ) + Date.UTC(1900,0,6,2,5) ).getUTCDate();
+			nexdayName = solarTerm[xiabiao];
+			nexMonth=12;
+		  }else{
+			nexday =  new Date( ( 31556925974.7*(yyyy-1900) + sTermInfo[xiabiao-1]*60000  ) + Date.UTC(1900,0,6,2,5) ).getUTCDate();
+			nexdayName = solarTerm[xiabiao-1];
+			nexMonth=mm-1;
+		  }
+	  }
+	  var ret={"month":mm,"day":day,"dayName":dayName,"nexMonth":nexMonth,"nexday":nexday,"nexdayName":nexdayName};
+      return(ret);
+	}
 };
 

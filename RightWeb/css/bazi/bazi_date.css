@@ -90,14 +90,11 @@
     margin: 1rem auto;
 }
 td{
-    background: rgba(255, 237, 224, 1);
-    /* font-size: 2rem; */
-    font-weight: bold;
+    background: #fffce0;
     line-height: 3rem;
 	outline-width: 3rem;
     color: #C4814D;
     text-align: center;
-    /* width: 1.3rem; */
     border-left: 1px solid rgba(230, 196, 171, 1);
     border-bottom: 1px solid rgba(230, 196, 171, 1);
     padding: 0 0.2rem;

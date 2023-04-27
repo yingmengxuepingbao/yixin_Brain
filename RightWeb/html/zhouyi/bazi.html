@@ -43,11 +43,35 @@
 				<p id="xingbie"><b>性别：</b></p>
 				<p id="gongli_1"><b>公历：</b></p>
 				<p id="nongli_1"><b>农历：</b></p>
-				<p id="qianjie"><b>前节：</b></p>
-				<p id="houjie"><b>后节：</b></p>
-				<p id="bazi"><b>八字：</b></p>
+				<p id="qianjie"><b>前节：</b> 
+				<input type="hidden" id="qianjie_day"/>
+				</p>
+				<p id="houjie"><b>后节：</b>
+				<input type="hidden" id="houjie_day"/>
+				</p>
+				<p id="bazi"><!-- <b>八字：</b> -->
+				<input type="hidden" id="gz_year"/>
+				<input type="hidden" id="gz_month"/>
+				<input type="hidden" id="gz_day"/>
+				<input type="hidden" id="gz_hour"/>
+				</p>
 			</div>
-			
+			<div >
+				<input type="hidden" id="zao"/>
+				<input type="hidden" id="nian_shishen"/>
+				<input type="hidden" id="yue_shishen"/>
+				<input type="hidden" id="shi_shishen"/>
+			    <table class="scbz">
+				</table>
+
+			</div>
+			<div class="box-result">
+				<div class="jiben">
+					<i></i>
+					<samp style="size: 20px;">大运</samp>
+				</div>
+				<p id="qiyun"><b>起运：</b></p>
+			</div>
 		</div>
 	</div>
 	<!--页面日历显示-->
