@@ -630,4 +630,3 @@ var calendar = {
       return(ret);
 	}
 };
-

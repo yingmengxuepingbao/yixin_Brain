@@ -39,7 +39,7 @@ $(document).ready(function (){
 
 function getSiZhu(){
 	var  date = $("#date1").val();
-	var n_year,n_month,n_day,gz_year,gz_month,gz_day,g_year,g_month,g_day,g_hour,qianjie,houjie,sanjie,sijie,jieqi_one,jieqi_two,jieqi_tree,jieqi_four;
+	var n_year,n_month,n_day,gz_year,gz_month,gz_day,g_year,g_month,g_day,g_hour,qianjie,houjie,sanjie,sijie,jieqi_one,jieqi_two,jieqi_tree,jieqi_four,kongwang;
 	var arr = date.split("-");
 	g_year = arr[0];
 	g_month = arr[1];
@@ -52,6 +52,7 @@ function getSiZhu(){
 	$("#nongli_1").append(yinli);
 	//根据公历转农历
 	var nongli_data = calendar.solar2lunar(g_year,g_month,g_day);
+	console.log(nongli_data); 
 	for (var key in nongli_data) {
 		 //干支
 		 gz_year = nongli_data["gzYear"];//干支年
@@ -59,15 +60,17 @@ function getSiZhu(){
 		 gz_day = nongli_data["gzDay"];//干支日
 		 //节气日
 		/* qianjie = nongli_data["firstNode"];//当月「节」为几日开始
-		 houjie = nongli_data["secondNode"];//当月「节」为几日开始
-		 sanjie = nongli_data["treeNode"]; //下一个月的第一个节
-		 sijie =  nongli_data["treeNode"]; //上一个月的第二个节
+		 houjie = nongli_data["secondNode"];//当月「气」为几日开始
+		 sanjie = nongli_data["treeNode"]; //下一个月的节
+		 sijie =  nongli_data["treeNode"]; //上一个月的气
 		 sijie = nongli_data["fourNode"] ;
 		 //节气名
 		 jieqi_one = nongli_data["oneJie"];
 		 jieqi_two = nongli_data["towJie"];
 		 jieqi_tree = nongli_data["treeJie"];
 		 jieqi_four = nongli_data["fourJie"]; */
+		 //空亡
+		 kongwang = nongli_data["kongwang"];
 	}
 	/* //判断八字在那两个节气之间
 	if(g_day>qianjie && g_day<houjie){
@@ -106,7 +109,7 @@ function getSiZhu(){
 		$("#houjie").append(g_year+"年"+g_month+"月"+qianjie+"日（"+jieqi_one+"）");
 		$("#houjie_day").val(qianjie);
 	} */
-	//判断八字在哪两个节之间
+	//判断八字在哪两个节之间 八字只用节
 	var jie_data = calendar.getJie(g_year,g_month,g_day);
 	var oneJie,oneJieName,oneMonthJie,twoJie,twoJieName,towMonthJie;
 	for (var key in jie_data) {
@@ -123,6 +126,8 @@ function getSiZhu(){
 	//后节
 	$("#houjie").append(g_year+"年"+towMonthJie+"月"+twoJie+"日（"+twoJieName+"）");
 	$("#houjie_day").val(twoJie);
+	//空亡
+	$("#kongwang").append(kongwang);
 	
 	var shizhi = $("#shizhi").val();
 	var gz_hour = calendar.getHourGanZhi(gz_day.substring(0,1),shizhi);
@@ -130,6 +135,7 @@ function getSiZhu(){
 	$("#gz_month").val(gz_month);
 	$("#gz_day").val(gz_day);
 	$("#gz_hour").val(gz_hour);
+	
 	//四柱八字
 	/* $("#bazi").append(gz_year + gz_month +gz_day +gz_hour); */
 }
@@ -562,38 +568,53 @@ function getQiYun(){
 	g_day = arr[2];
 	var tiangan = $("#gz_year").val().substring(0,1);
 	var zao = $("#zao").val();
+	var shunxu;
 	if(zao=="乾造"){
-		if(yang.indexOf(tiangan)){
+		if(yang.indexOf(tiangan) != -1){
 			qiyun_nian = (Number(houjie_day)-Number(g_day));
 			qiyun_yue = qiyun_nian%3;
 			qiyun_nian = (qiyun_nian-qiyun_yue) / 3;//三天为1年
 			qiyun_yue = qiyun_yue * 4;//一天为4个月，一小时为5天
+			shunxu="顺";
 		}
-		if(yin.indexOf(tiangan)){
+		if(yin.indexOf(tiangan)!= -1){
 			qiyun_nian = (Number(g_day)-Number(qianjie_day)) ;
 			qiyun_yue = qiyun_nian%3;
 			qiyun_nian = (qiyun_nian-qiyun_yue) / 3;//三天为1年
 			qiyun_yue = qiyun_yue * 4;//一天为4个月，一小时为5天
+			shunxu="逆";
 		}
 	}
 	if(zao=="坤造"){
-		if(yang.indexOf(tiangan)){
+		if(yang.indexOf(tiangan)!= -1){
 			qiyun_nian = (Number(g_day)-Number(qianjie_day));
 			qiyun_yue = qiyun_nian%3;
 			qiyun_nian = (qiyun_nian-qiyun_yue) / 3;//三天为1年
 			qiyun_yue = qiyun_yue * 4;//一天为4个月，一小时为5天
+			shunxu="逆";
 		}
-		if(yin.indexOf(tiangan)){
+		if(yin.indexOf(tiangan)!= -1){
 			qiyun_nian = (Number(houjie_day)-Number(g_day));
 			qiyun_yue = qiyun_nian%3;
 			qiyun_nian = (qiyun_nian-qiyun_yue) / 3;//三天为1年
 			qiyun_yue = qiyun_yue * 4;//一天为4个月，一小时为5天
+			shunxu="顺";
 		}
 	}
 	//如何是负数获取绝对值
 	qiyun_nian = Math.abs(qiyun_nian);
 	qiyun_yue = Math.abs(qiyun_yue);
+	$("#qiYunData").val(qiyun_nian);
 	$("#qiyun").append(qiyun_nian+"岁"+qiyun_yue+"月");
+	//大运排盘
+	var daYunArr =  paiDaYun(shunxu);
+	var dayunDiv="";
+	var nianfen =Number(arr[0]) ;
+	for(var i=0;i<daYunArr.length;i++){
+		nianfen += Number(qiyun_nian);
+		dayunDiv +="<div class='dayunDiv'>"+ daYunArr[i]+"<p>"+ nianfen +"</p> </div>";
+	}
+	$("#dayun").append(dayunDiv);
 }
 //藏干
 function getCangGan(dizhi,tiangan){
@@ -628,3 +649,45 @@ function getCangGan(dizhi,tiangan){
 	}
 	return retArr;
 } 
+//大运-排十步大运
+function paiDaYun(shunxu){
+	var tiangan=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+	var dizhi=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+	var qiYunData = $("#qiYunData").val();
+	var gz_month  =$("#gz_month").val();
+	var yue_gan = gz_month.substring(0,1);
+	var yue_zhi = gz_month.substring(1,2);
+	var yuegan_biao,yuezhi_biao;
+	yuegan_biao = tiangan.indexOf(yue_gan);
+	yuezhi_biao = dizhi.indexOf(yue_zhi);
+	var daYunArr=[];
+	if(shunxu=="顺"){
+		for(var i =1 ;i<=10;i++){
+			var t_biao = Number(yuegan_biao)+i;
+			if(t_biao>9){
+				t_biao = t_biao-9;
+			}
+			var d_biao = Number(yuezhi_biao)+i;
+			if(d_biao>11){
+				d_biao = d_biao-11;
+			}
+			daYunArr.push(tiangan[t_biao] +""+ dizhi[d_biao]);
+		}
+	}
+	if(shunxu=="逆"){
+		for(var i =0 ;i<=10;i++){
+			if(i!=0){
+				var t_biao = Number(yuegan_biao)-i;
+				if(t_biao<0){
+					t_biao = Number(t_biao)+10;
+				}
+				var d_biao = Number(yuezhi_biao)-i;
+				if(d_biao<0){
+					d_biao = Number(d_biao)+12;
+				}
+				daYunArr.push(tiangan[t_biao] +""+ dizhi[d_biao]);
+			}
+		}
+	}
+	return daYunArr;
+}

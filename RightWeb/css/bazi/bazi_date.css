@@ -69,20 +69,6 @@
 .box-result b {
     color: #C4814D;
 }
-.jiben{
-    font-size: 1rem;
-    line-height: 2rem;
-    color: #C4814D;
-    margin-bottom: 0.1rem;
-}
-.jiben i{
-    display: inline-block;
-    width: 0.04rem;
-    height: 0.56rem;
-    margin-right: 0.04rem;
-    background: #C4814D;
-    float: left;
-}
 .scbz{
     width: 330px;
 	height: 200px;
@@ -98,4 +84,16 @@ td{
     border-left: 1px solid rgba(230, 196, 171, 1);
     border-bottom: 1px solid rgba(230, 196, 171, 1);
     padding: 0 0.2rem;
+}
+.dayunDiv{
+	display: inline-block;  /*转为行内块儿 */
+	width: 30px;
+	height: 40px;
+	text-align: center;
+	line-height: 20px;
+	color: #C4814D;
+}
+.dayunDiv p{
+	font-size: 10px;
+	color: black;
 }
