@@ -605,7 +605,7 @@ function getQiYun(){
 	qiyun_nian = Math.abs(qiyun_nian);
 	qiyun_yue = Math.abs(qiyun_yue);
 	$("#qiYunData").val(qiyun_nian);
-	$("#qiyun").append(qiyun_nian+"岁"+qiyun_yue+"月");
+	$("#qiyun").append(qiyun_nian+"岁"+qiyun_yue+"个月");
 	//大运排盘
 	var daYunArr =  paiDaYun(shunxu);
 	var dayunDiv="";
