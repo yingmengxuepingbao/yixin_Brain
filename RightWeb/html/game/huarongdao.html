@@ -1,0 +1,424 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title>数字迷宫-华容道</title>
+	<link rel="stylesheet" type="text/css"  href="../../css/css3.css"  charset="utf-8">
+	<style>
+		#show{
+			background: #fff;
+		}
+		#show p{
+			text-align: center;
+			font-size: 22px;
+			color: red;
+			margin-top: 10px;
+			padding: 20px 0;
+		}
+		#firstDiv{
+			margin-top: 20px;
+		}
+		.span1{
+			font-size: 20px;
+		}
+		.span1 span{
+			font-size: 28px;
+		}
+		#start{
+			margin-top: 5px;
+			width: 80%;
+			line-height: 50px;
+			font-size: 20px;
+			color: #FFFFFF;
+			background: orange;
+			border: none;
+			border-radius: 10px;
+			box-shadow: 5px 5px 6px #888;
+		}
+		table,th,td {
+			color: #000000;
+			border: 1px solid #000000;
+			font-size: 18px;
+		}
+
+		#myEnd{
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom:0;
+			margin: auto;
+			width: 65%;
+			height: 180px;
+			background: #fff;
+			border-radius: 5px;
+			overflow: hidden;
+		}
+		.title,#myEnd .title,#myEnd p{
+			text-align: center;
+			margin: 0;
+		}
+
+		#myEnd p{
+			font-size: 16px;
+		}
+
+		#myEnd .title{
+			height: 50px;
+			line-height: 50px;
+		}
+		#myEnd .myMess{
+			height: 80px;
+			padding: 0 10px;
+		}
+		#myEnd .ok{
+			height: 50px;
+			line-height: 50px;
+			background: aqua;
+		}
+	</style>
+</head>
+
+<body>
+<div class="container">
+
+	<!--遮罩层显示-->
+	<div id="mask2">
+		<div class="wenzi">
+			<h1>使用说明</h1>
+			<p>1.华容道-数字表格：此表格是一个可选的表格。</p>
+			<p>2.在尽量短的时间内用尽量少的步数完成数字排序，</p>
+			<p>3.训练注意力广度、注意力转移的敏捷性、演绎和归纳推理能力、空间想象力。</p>
+			<p>4.每天任务：每天练习1到5次。</p>
+		</div>
+		<button class="btn2">确定</button>
+	</div>
+	<div id="myEnd">
+		<h2 class="title">完成</h2>
+		<p class="myMess">
+			您用时：
+			<span class="shi">1323</span>时
+			<span class="fen">23213</span>分
+			<span class="miao">23213</span>秒
+			<span class="ms">23213</span>毫秒
+		</p>
+		<p class="ok" id="ok_all">确定</p>
+	</div> 
+	
+	<div class="header">
+		<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+		<p class="title">数字迷宫-华容道</p>
+	</div>
+	<div id="show">
+		<p>请选择练习的模式：
+			<select id="moshi">
+				<option value="3"  selected="selected">3*3</option>
+				<option value="4">4*4</option>
+				<option value="5">5*5</option>
+				<option value="6">6*6</option>
+				<option value="7">7*7</option>
+				<option value="8">8*8</option>
+				<option value="9">9*9</option>
+			</select>
+		</p>
+		<!--表格显示    -->
+		<div id="myTable">
+			<input id="huarongdao_text" type="hidden" value="1" />
+			<div class="slide" id="huarongdao" align="center">
+			</div>
+		</div>
+		<input type="hidden" value="" id="shangyici">
+		<!--时间显示    -->
+		<div id="firstDiv">
+			<div id="twoDiv" align="center" >
+				<span class="span1"><span id="hour">00 </span>时</span>
+				<span class="span1"><span id="minute">00 </span>分</span>
+				<span class="span1"><span id="second">00 </span>秒</span>
+				<span class="span1"><span id="ms">00 </span>毫秒</span><br />
+				<button id="start" onclick="startTime()">开始计时</button>
+				<input id="button_count" type="hidden" value="-1" />
+			</div>
+		</div>
+	</div>
+	
+	<script src="../../js/jquery-1.7.2.js"></script>
+	<script type="text/javascript">
+		//页面加载执行
+		$(document).ready(function (){
+			$(".btn2").on("click",function(){
+				$("#mask2").hide();
+			})
+	
+			$("#myEnd").hide();
+			//切换的模式
+			var moshi =$("#moshi").val();
+			//定义数组的截至数字
+			var number = moshi * moshi;//数组n*n个数字
+			var array=new Array(number);//数组定义
+			showDiffGroup(moshi, 1, number); //画出华容道
+			$("#ok_id").on("click",function(){
+				$("#myEnd").hide();
+				startTime();
+			})
+			$("#ok_all").on("click",function(){
+	
+				$("#myEnd").hide();
+			})
+		});
+		
+		var count = 0;//时间秒数记录
+		//模式切换
+		$("#moshi").change(function(){
+			//获取模式数字
+			var moshi = $("#moshi").val();
+			var number = moshi * moshi;//数组n*n个数字
+			//将画布清空
+			$("#huarongdao").html("");
+			$("#shangyici").val("");
+			$("#button_count").val(-1);
+			$("#huarongdao_text").val(1);
+			showDiffGroup(moshi, 1, number);
+			//修改计时器
+			$("#button_count").attr("value",1);//页面数字是基数
+			startTime();//暂停时间
+			$(".span1 span").html("00");
+			count = 0;
+			$(".span1 span").html("00");
+			$("#start").html("开始计时");
+		})
+	
+		//二维数组
+		function getDiffGroup(shuzi, min, max) {
+			var res = [];
+			for (var i = min; i <= max; i++){ //从最小数开始 加一 到最大数
+				res.push(i);//将所有的数 push到数组中
+			}
+			res.sort(function () {
+				return 0.5 - Math.random(); //随机数排序
+			});
+			var rst = [];
+			for (var i = 0; i < res.length; i=Number(i)+Number(shuzi)){
+				var chunk = res.slice(i, Number(i)+Number(shuzi));
+				rst.push(chunk);//数组中放入截取后的数组
+			}
+			return rst;
+		}
+		
+		//为空的下标
+		var xiabiao ;
+	
+		//调用二维数组，拼接到页面
+		function showDiffGroup(num, min, max){
+			var moshi =$("#moshi").val();
+			var rsts = getDiffGroup(moshi, 1, max);//n*n二维数组
+			array = rsts;
+			//拼接table
+			var str ="<table border='1' width='350' height='350' cellspacing='0' cellpadding='0' bgcolor='#CCCC66'>";
+			// 循环遍历二维数组
+			for(var i = 0;i<rsts.length;i++){//循环最外面的数组
+				str+="<tr>";
+				for(var j = 0 ;j<rsts[i].length;j++){//循环里面的数组
+				    //如果是最后一个数字，将表格置空
+					if(rsts[i][j] == max){
+						//记录下标
+						xiabiao = i+''+j ;
+						str+= "<td align='center' id='td"+i+j+"' name='"+(i+""+j)+"' onClick = 'td_click("+(i+''+j)+")' value='' style='background-color:#6C6C6C'> </td>";//拼接<td>
+					}else{
+						str+= "<td align='center' id='td"+i+j+"' name='"+(i+""+j)+"' onClick = 'td_click("+(i+''+j)+")' value='"+rsts[i][j]+"'>"+rsts[i][j]+"</td>";//拼接<td>
+					}
+				}
+				str+="</tr>";
+			}
+			str+="</table>";
+			//将table添加到div中
+			$("#huarongdao").append(str);
+		}
+		
+		//表格点击事件
+		function td_click(td_flag){
+			//当前空格下标：xiabiao 要移动的下标：td_flag
+			updatePositionFun(td_flag);
+			
+			//点击表格时，判断是否已经点击计时按钮，若未点击，自动计时
+			var i = $("#button_count").val();
+			if(i<0 ||i % 2 == 0){//未点击
+				startTime();//自动计时
+			}
+		}
+		//判断要移动的下标是否可移动。
+		function moved(td_flag){
+			var moshi =$("#moshi").val();
+			//如果是 0 ，moshi-1  , (moshi-1)0 ,(moshi-1)(moshi-1)  即4个角的位置
+			//左上角
+			if(xiabiao == Number('00') ){
+				if(td_flag == Number('10')  || td_flag == Number('1') || td_flag == Number('01')  ){
+					return true;
+				}
+			}else if(xiabiao == Number("0" + (moshi-1)) ){ //右上角
+				if(td_flag == moshi-2  || td_flag == Number('1'+(moshi-1))){
+					return true;
+				}
+			}else if(xiabiao == Number((moshi-1)+'0') ){ //左下角
+				if(td_flag == Number((moshi-2)+'0')  || td_flag == Number((moshi-1)+'1')  ){
+					return true;
+				}
+			}else if(xiabiao ==  Number((moshi-1)+""+(moshi-1)) ){//右下角
+				if(td_flag == Number((moshi-2)+""+(moshi-1))  || td_flag == Number((moshi-1)+""+(moshi-2)) ){
+					return true;
+				}
+			}else{//如果空格不是4个角的
+				//最上面一行中间空, 可以下移，左移，右移
+				if( Number(xiabiao) >= 1 &&  Number(xiabiao) < moshi){
+					if(td_flag == Number("1"+Number(xiabiao)%10) ||td_flag ==  Number(xiabiao)-1 || td_flag ==  Number(xiabiao)+1){
+						return true;
+					}
+				} else
+				//最左侧中间为空，可以上移，右移动，下移
+				if(Number(xiabiao) >= 10 && Number(xiabiao) % 10 ==0){
+					
+					if(td_flag == ((xiabiao/10)-1)+"0" || td_flag == Number(xiabiao)+1 || td_flag == Number(((Number(xiabiao)/10)+1)+"0") ){
+						return true;
+					}
+				}else
+				//最右侧中间为空，可以上移  下移  左移
+				if(Number(xiabiao) >= Number("1"+(moshi-1)) && Number(xiabiao) <= Number((moshi-1)+""+(moshi-1))  && Number(xiabiao) % 10 ==(moshi-1)){
+					if(td_flag == Number((moshi-1)) ||td_flag  == Number((Math.floor(Number(xiabiao)/10)-1)+""+(moshi-1) )|| td_flag == Number((Math.floor(Number(xiabiao)/10)+1)+""+(moshi-1)) || td_flag == Number(xiabiao)-1 ){
+						return true;
+					}
+				}else
+				//最下面中间为空 ，可以上移，左移，右移
+				if(Number(xiabiao) > Number((moshi-1)+"0") && Number(xiabiao) < Number((moshi-1)+""+(moshi-1)) ){
+					if(td_flag == Number((Math.floor(Number(xiabiao)/10)-1)+""+(Number(xiabiao)%10)) || td_flag == (Number(xiabiao)-1) || td_flag == (Number(xiabiao)+1) ){
+						return true;
+					}
+				}
+				//其余中间的为空，上下左右皆可移动
+				else{
+					if(td_flag == Number(xiabiao)%10 ||td_flag == Number((Math.floor(Number(xiabiao)/10)-1) +""+ (Number(xiabiao)%10) )  || td_flag == Number((Math.floor(Number(xiabiao)/10)+1)+""+(Number(xiabiao)%10)) || td_flag == (Number(xiabiao)-1) || td_flag == Number(xiabiao)+1 ){
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+		// 更新格子交换后的颜色、数值
+		function updatePositionFun(td_flag) {
+			//判断要移动的下标是否可移动。
+			if(moved(td_flag) == true){
+				//如果可移动，交换颜色数值
+				$("#td"+xiabiao).css("background-color","#CCCC66");
+				if(td_flag < 10){
+					td_flag = "0"+td_flag;
+				}
+				//要移动的显示值
+				var num_zhi = $("#td"+td_flag).text();
+				$("#td"+xiabiao).attr("value",num_zhi);
+				$("#td"+xiabiao).html(num_zhi);
+				
+				$("#td"+td_flag).css("background-color","#6C6C6C");
+				$("#td"+td_flag).attr("value","");
+				$("#td"+td_flag).html("");
+				xiabiao = td_flag;
+				var moshi =$("#moshi").val();
+				var max = moshi * moshi - 1 ;
+				if(num_zhi == max) {
+					isGameOver();
+				}
+			}
+		}
+		
+		
+		// 判断游戏是否通关
+		function isGameOver() {
+			//获取模式数字
+			var moshi = $("#moshi").val();
+			var number = moshi * moshi ;//数组n*n个数字
+			var tongguan =false;
+			var rsts = getDiffGroup(moshi, 1, number);//n*n二维数组
+			var zhi=1;
+			k: for(var i = 0;i<rsts.length;i++){//循环最外面的数组
+				for(var j = 0 ;j<rsts[i].length;j++){//循环里面的数组
+					//循环出下标的值
+					if($("#td"+i+j).val() == zhi){
+						zhi++;
+					}else{
+						break k;
+					}
+				}
+			}
+			if(zhi == number){
+				$("#button_count").attr("value",1);//页面数字是基数
+				startTime();//暂停时间
+				//显示使用的时间
+				var hour = $("#hour").text();
+				var minute = $("#minute").text();
+				var second = $("#second").text();
+				var ms = $("#ms").text();
+				
+				$(".shi").text(hour);
+				$(".fen").text(minute);
+				$(".miao").text(second);
+				$(".ms").text(ms);
+				$("#myEnd").show();
+				$(".span1 span").html("00");
+				$("#start").html("开始计时");
+				count=0;//将时间秒数重新设置为0
+			}
+			
+		}
+	
+		//拼接时间
+		var intervalId;
+		function startTime() {
+			var i = $("#button_count").val();
+			if(i<0){
+				i = 0;
+			}
+			var hour = document.getElementById("hour");
+			var minute = document.getElementById("minute");
+			var second = document.getElementById("second");
+			var ms = document.getElementById("ms");
+			var buttonEle = document.getElementById("start");
+	
+			if(i % 2 == 0) {
+				buttonEle.innerHTML = "暂停计时";
+				intervalId = setInterval(function() {
+					count += 1;
+					var thehour = parseInt(count / 360000);
+					var theminute = parseInt(count / 6000 % 60);
+					var thesecond = parseInt(count / 100 % 60);
+					var thems = parseInt(count % 100);
+	
+					if(thehour >= 10) {
+						hour.innerHTML = thehour + " ";
+					} else {
+						hour.innerHTML = "0" + thehour + " ";
+					}
+	
+					if(theminute >= 10) {
+						minute.innerHTML = theminute + " ";
+					} else {
+						minute.innerHTML = "0" + theminute + " ";
+					}
+	
+					if(thesecond >= 10) {
+						second.innerHTML = thesecond + " ";
+					} else {
+						second.innerHTML = "0" + thesecond + "  ";
+					}
+					if(thems >= 10) {
+						ms.innerHTML = thems + "&nbsp;";
+					} else {
+						ms.innerHTML = "0" + thems + "&nbsp;";
+					}
+				}, 10)
+			} else {
+				buttonEle.innerHTML = "计时继续";
+				clearInterval(intervalId);
+			}
+			$("#button_count").attr("value",++i);//页面数字自加1
+		}
+	</script>
+</body>
+</html>

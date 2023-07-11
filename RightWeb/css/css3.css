@@ -158,6 +158,28 @@ ul,p,div,button{
 	margin-top: 20px;
 	box-shadow: 5px 5px 8px #888;
 }
+#mask2{
+	position: fixed;
+	left: 0;
+	top: 0;
+	width:98.8%;
+	height: 99.3%;
+	background: #CCCC66;
+	border: 2px solid skyblue;
+	z-index: 99999;
+}
+#mask2 .btn2{
+	width: 90%;
+	line-height: 50px;
+	background: #9BCD9B;
+	color: #fff;
+	border: none;
+	border-radius: 10px;
+	font-size: 20px;
+	margin-left: 5%;
+	margin-top: 20px;
+	box-shadow: 5px 5px 8px #888;
+}
 /*.wenzi{
 	padding: 0 20px;
 }*/

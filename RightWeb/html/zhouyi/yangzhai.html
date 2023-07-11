@@ -1,9 +1,52 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<meta charset="UTF-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<!-- 手机日历 -->
+		<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<link rel="stylesheet" type="text/css" href="../../css/css3.css"/>
+		<link rel="stylesheet" href="../../css/bazi/bazi_date.css">
+		<link rel="stylesheet" type="text/css" href="../../css/fengshui/fengshui.css"/>
 		<title>阳宅风水排盘</title>
 	</head>
 	<body>
+		<div class="container">
+			<!--遮罩层显示-->
+			<div id="mask" > 
+				<div class="wenzi">
+					<h1 style="margin-top:65px">阳宅风水排盘</h1>
+					<p>坐向：
+						<select id="zuoxiang">
+							<option value="">请选择坐向</option>
+							<option value="1">坐北朝南</option>
+							<option value="3">坐东朝西</option>
+							<option value="9">坐南朝北</option>
+							<option value="7">坐西朝东</option>
+							<option value="2">坐西南朝东北</option>
+							<option value="4">坐东南朝西北</option>
+							<option value="6">坐西北朝东南</option>
+							<option value="8">坐东北朝西南</option>
+						</select>
+					</p>
+					<p>时间：
+					<input id="db" type="text" class="rili" placeholder="请选择日期" data-date=new Date() readonly="readonly" />
+					</p>
+					<button class="btn1" style="background: #FFA042; margin-top: 10px">开始排盘</button>
+				</div>
+			</div>
+			<!-- 标头-->
+			<div class="header"> 
+				<img src="../../img/tubiao/1.png" onClick="javascript:history.back(-1);">
+				<p class="title">阳宅风水排盘</p>
+			</div>
+			<div id="show">
+			</div>
+		</div>
+	<!--页面日历显示-->
+	<script src="../../js/jquery-1.7.2.js"></script>
+	<script src="../../js/fengshui/fengshui.js"></script>
 	</body>
 </html>

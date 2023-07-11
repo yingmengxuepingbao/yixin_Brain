@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MyHtml.html</title>    
+  </head> 
+  <body>
+  <canvas id="mycanvas" width="600px" height="600px"></canvas>
+  </body>
+  <script type="text/javascript">
+    //绘制棋盘设置每行有14个单元格，共有196个格子，格子大小为30 X 30
+    var aa=14;
+    var chess = document.getElementById("mycanvas");
+    var context = chess.getContext('2d');
+    function drawChessBoard(){//绘画
+        for(var i=0;i<aa+1;i++){
+            context.strokeStyle='gray';//可选区域
+            context.moveTo(15+i*30,15);//垂直方向画15根线，相距30px;
+            context.lineTo(15+i*30,15+30*aa);
+            context.stroke();
+            context.moveTo(15,15+i*30);//水平方向画15根线，相距30px;棋盘为14*14；
+            context.lineTo(15+30*aa,15+i*30);
+            context.stroke();
+        }
+    }
+    drawChessBoard();
+
+   //设置两个相邻的格子是否是相同的,二维数组access
+   var access = [];
+   for(var i = 0 ; i < aa*aa ; i++){
+       access[i] = [];
+      for(var j = 0 ; j< aa*aa ; j++){
+         access[i][j] = -1;
+      }
+   }
+
+    //生成迷宫时候用到的并查集
+     var  arr = [];
+    for(var j=0;j<196;j++){
+      arr[j] = j;
+    }
+    function search(a){
+       while(a != arr[a]){
+         a = arr[a];
+        }
+        return a;
+    }
+    function union(a,b){
+       var  pa = search(a);
+       var  pb = search(b);
+       arr[pb] = pa;
+    }
+    
+
+    function getnei(a)//获得邻居号  random
+    {
+        var y = parseInt(a/aa);//要精确成整数
+        var x = a%aa;
+        var mynei=new Array();//储存邻居
+        if(x-1>=0){mynei.push(y*aa+x-1);}//左节点
+        if(x+1<14){mynei.push(y*aa+x+1);}//右节点
+        if(y+1<14){mynei.push((y+1)*aa+x);}//
+        if(y-1>=0){mynei.push((y-1)*aa+x);}//
+        var ran=parseInt(Math.random() * mynei.length );
+        return mynei[ran];
+    }
+
+    function drawline(a,b)//划线，要判断是上下还是左右
+    {
+        var y1=parseInt(a/aa);
+        var x1=a%aa;   //横坐标
+        var y2=parseInt(b/aa);
+        var x2=b%aa;
+        var x3 = x1<x2?x1:x2;
+        if(y1-y2==0){   //左右方向的点  需要上下划线 x1是较小值
+           context.clearRect(15+(x3+1)*30-1, 15+y2*30+1,2,28); 
+        }else{
+           context.clearRect(x1*30+15+1, ((y1+y2)/2+1)*30-1,28,2);
+        }
+    }
+     
+     // drawline(18,32);
+    while(search(0)!=search(195))//主要思路
+    {
+        var num = parseInt(Math.random() * aa*aa );//产生一个小于196的随机数
+        var neighbour=getnei(num);
+        if(search(num)==search(neighbour)){continue;}
+        else//不在一个上
+        {
+            drawline(num,neighbour);//划线
+            union(num,neighbour);
+            access[num][neighbour] = 1;
+            access[neighbour][num] = 1;
+        }
+    }
+    
+    //在(0,0)位置上画一个蓝色方框
+    var currentLine=0;
+    var currentCol=0;
+    context.fillStyle = "blue";
+    context.fillRect(currentLine*30+2+15,currentCol*30+2+15,25,25);
+    
+    //在(13,13)上画一个绿色方框
+    context.fillStyle = "green";
+    context.fillRect(13*30+2+15,13*30+2+15,25,25);
+    context.fillStyle = "blue";
+    
+    //监听键盘上下左右键
+    document.onkeydown=function(e){
+     var tempLine = currentLine;
+     var tempCol = currentCol;
+     var isExceed = false;
+     e=window.event||e;
+     var num =  e.keyCode;
+      switch(e.keyCode){
+        case 37: //左键
+          currentLine--;
+          if(currentLine < 0 || currentLine > 13 || !checkAccess(tempLine,tempCol , currentLine ,currentCol)){
+             currentLine++;
+            isExceed = true;
+            break;
+          }
+          break;
+        case 38: //上键
+          currentCol--;
+          if(currentCol < 0 || currentCol > 13 || !checkAccess(tempLine,tempCol , currentLine ,currentCol)){
+            currentCol++;
+            isExceed = true;
+            break;
+          }
+          break;
+        case 39: //右键
+          currentLine++;
+          if(currentLine < 0 || currentLine > 13 || !checkAccess(tempLine,tempCol , currentLine ,currentCol)){
+            currentLine--;
+            isExceed = true;
+            break;
+          }
+          break;
+        case 40: //下键
+          currentCol++;
+          if(currentCol < 0 || currentCol > 13 || !checkAccess(tempLine,tempCol , currentLine ,currentCol)){
+            currentCol--;
+            isExceed = true;
+            break;
+          }
+          break;
+        default:
+          break;
+      }
+      if( (num == 37 || num == 38 || num == 39 || num == 40 ) && !isExceed){
+           context.clearRect(tempLine*30+2+15, tempCol*30+2+15, 25, 25);
+           context.fillRect(currentLine*30+2+15,currentCol*30+2+15,25,25);
+      }
+      checkSucess(currentLine ,currentCol );
+    }
+
+    function checkAccess(tempLine,tempCol , currentLine ,currentCol){
+        var oldSeq = tempCol*14+tempLine;
+        var newSeq = currentCol*14+currentLine;
+        if(access[oldSeq][newSeq] == 1 || access[newSeq][oldSeq] == 1 ){
+            return true;
+        }else{
+           return false;
+        }
+    }
+    
+    function  checkSucess(currentLine ,currentCol ){
+       if(currentLine == 13 && currentCol == 13){
+          alert("success!");
+          window.location.reload();
+          return ;
+       }
+    }
+    
+  </script>
+</html>
