@@ -107,6 +107,7 @@ ul,p,div,button{
 	position: fixed;
 	left: 0;
 	top: 0;
+	width:99.8%;
 	height: 99.3%;
 	background: wheat;
 	border: 2px solid orange;
