@@ -128,7 +128,6 @@
 			<div class="slide" id="huarongdao" align="center">
 			</div>
 		</div>
-		<input type="hidden" value="" id="shangyici">
 		<!--时间显示    -->
 		<div id="firstDiv">
 			<div id="twoDiv" align="center" >
@@ -175,7 +174,6 @@
 			var number = moshi * moshi;//数组n*n个数字
 			//将画布清空
 			$("#huarongdao").html("");
-			$("#shangyici").val("");
 			$("#button_count").val(-1);
 			$("#huarongdao_text").val(1);
 			showDiffGroup(moshi, 1, number);
@@ -321,8 +319,9 @@
 				$("#td"+td_flag).html("");
 				xiabiao = td_flag;
 				var moshi =$("#moshi").val();
-				var max = moshi * moshi - 1 ;
-				if(num_zhi == max) {
+				var max = (moshi * moshi) - 1 ;
+				if(Number(num_zhi) == Number(max)) {
+					console.log("判断是否结束游戏")
 					isGameOver();
 				}
 			}
@@ -341,6 +340,7 @@
 				for(var j = 0 ;j<rsts[i].length;j++){//循环里面的数组
 					//循环出下标的值
 					if($("#td"+i+j).val() == zhi){
+						console.log($("#td"+i+j).val() +"值："+zhi)
 						zhi++;
 					}else{
 						break k;
@@ -348,6 +348,7 @@
 				}
 			}
 			if(zhi == number){
+				//修改计时器
 				$("#button_count").attr("value",1);//页面数字是基数
 				startTime();//暂停时间
 				//显示使用的时间
@@ -364,6 +365,11 @@
 				$(".span1 span").html("00");
 				$("#start").html("开始计时");
 				count=0;//将时间秒数重新设置为0
+				$("#shulte_text").attr("value",1);//点击次数设置为1
+				$("#button_count").attr("value",1);//计时时间设置为偶数
+				
+				$("#huarongdao").empty(); //将华容道表的div清空
+				showDiffGroup(moshi, 1, number);//重新生成n*n华容道表
 			}
 			
 		}
