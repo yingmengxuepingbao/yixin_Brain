@@ -124,7 +124,6 @@
 		</p>
 		<!--表格显示    -->
 		<div id="myTable">
-			<input id="huarongdao_text" type="hidden" value="1" />
 			<div class="slide" id="huarongdao" align="center">
 			</div>
 		</div>
@@ -161,7 +160,6 @@
 				startTime();
 			})
 			$("#ok_all").on("click",function(){
-	
 				$("#myEnd").hide();
 			})
 		});
@@ -175,7 +173,6 @@
 			//将画布清空
 			$("#huarongdao").html("");
 			$("#button_count").val(-1);
-			$("#huarongdao_text").val(1);
 			showDiffGroup(moshi, 1, number);
 			//修改计时器
 			$("#button_count").attr("value",1);//页面数字是基数
@@ -184,6 +181,8 @@
 			count = 0;
 			$(".span1 span").html("00");
 			$("#start").html("开始计时");
+			//修改计时器
+			$("#button_count").attr("value",-1);//页面数字是基数
 		})
 	
 		//二维数组
@@ -318,12 +317,8 @@
 				$("#td"+td_flag).attr("value","");
 				$("#td"+td_flag).html("");
 				xiabiao = td_flag;
-				var moshi =$("#moshi").val();
-				var max = (moshi * moshi) - 1 ;
-				if(Number(num_zhi) == Number(max)) {
-					console.log("判断是否结束游戏")
-					isGameOver();
-				}
+				//判断游戏是否结束
+				isGameOver();
 			}
 		}
 		
@@ -339,8 +334,7 @@
 			k: for(var i = 0;i<rsts.length;i++){//循环最外面的数组
 				for(var j = 0 ;j<rsts[i].length;j++){//循环里面的数组
 					//循环出下标的值
-					if($("#td"+i+j).val() == zhi){
-						console.log($("#td"+i+j).val() +"值："+zhi)
+					if($("#td"+i+j).text() == zhi){
 						zhi++;
 					}else{
 						break k;
@@ -348,9 +342,6 @@
 				}
 			}
 			if(zhi == number){
-				//修改计时器
-				$("#button_count").attr("value",1);//页面数字是基数
-				startTime();//暂停时间
 				//显示使用的时间
 				var hour = $("#hour").text();
 				var minute = $("#minute").text();
@@ -362,22 +353,30 @@
 				$(".miao").text(second);
 				$(".ms").text(ms);
 				$("#myEnd").show();
+
+				//将画布清空
+				$("#huarongdao").html("");
+				showDiffGroup(moshi, 1, number);
+				$("#button_count").attr("value",1);//页面数字是基数
+				startTime();//暂停时间
+				count = 0;
+				//修改计时器
 				$(".span1 span").html("00");
 				$("#start").html("开始计时");
-				count=0;//将时间秒数重新设置为0
-				$("#shulte_text").attr("value",1);//点击次数设置为1
-				$("#button_count").attr("value",1);//计时时间设置为偶数
-				
-				$("#huarongdao").empty(); //将华容道表的div清空
-				showDiffGroup(moshi, 1, number);//重新生成n*n华容道表
+				$("#button_count").attr("value",1);//页面数字是基数
+				//延时器
+				var timer = window.setTimeout(function func2() {
+				  //修改计时器
+				  $("#button_count").attr("value",-1);//页面数字是基数
+			   },20)
 			}
-			
 		}
 	
 		//拼接时间
 		var intervalId;
 		function startTime() {
 			var i = $("#button_count").val();
+			console.log(i);
 			if(i<0){
 				i = 0;
 			}
@@ -386,7 +385,7 @@
 			var second = document.getElementById("second");
 			var ms = document.getElementById("ms");
 			var buttonEle = document.getElementById("start");
-	
+	console.log(i % 2 == 0)
 			if(i % 2 == 0) {
 				buttonEle.innerHTML = "暂停计时";
 				intervalId = setInterval(function() {
